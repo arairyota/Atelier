@@ -17,6 +17,7 @@ public:
 	void Update();
 	void Draw();
 	void Set(XMFLOAT3 position, XMFLOAT3 scale, CTexture* texture);
+	void DamegeEffect();
 };
 
 #endif // !BILLBOARD_H
