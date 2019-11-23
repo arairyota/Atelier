@@ -9,7 +9,7 @@ public:
 	BattleJudg();
 	~BattleJudg();
 
-	static unsigned int DamageJudg(float attack, float def);
+	static unsigned int DamageJudg(float attack, float def, XMFLOAT3 position);
 	static bool IsDeath(int hp) {
 		if (hp < 0) {
 			return true;

@@ -108,22 +108,22 @@ void Billboard::Set(XMFLOAT3 position, XMFLOAT3 scale, CTexture* texture)
 	_scale = scale;
 	_Texture = texture;
 
-	_vertex[0].Position = XMFLOAT3(-0.5f * _scale.x, 0.5f * _scale.y, 0.0f);
+	_vertex[0].Position = XMFLOAT3(-0.5f, 0.5f, 0.0f);
 	_vertex[0].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	_vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	_vertex[0].TexCoord = XMFLOAT2(0, 0);	//テクスチャ座標
 
-	_vertex[1].Position = XMFLOAT3(0.5f * _scale.x, 0.5f * _scale.y, 0.0f);
+	_vertex[1].Position = XMFLOAT3(0.5f, 0.5f, 0.0f);
 	_vertex[1].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	_vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	_vertex[1].TexCoord = XMFLOAT2(1, 0);
 
-	_vertex[2].Position = XMFLOAT3(-0.5f * _scale.x, -0.5f * _scale.y, 0.0f);
+	_vertex[2].Position = XMFLOAT3(-0.5f, -0.5f, 0.0f);
 	_vertex[2].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	_vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	_vertex[2].TexCoord = XMFLOAT2(0, 1);
 
-	_vertex[3].Position = XMFLOAT3(0.5f * _scale.x, -0.5f * _scale.y, 0.0f);
+	_vertex[3].Position = XMFLOAT3(0.5f, -0.5f, 0.0f);
 	_vertex[3].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	_vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	_vertex[3].TexCoord = XMFLOAT2(1, 1);

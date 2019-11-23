@@ -154,6 +154,10 @@ void Player::Attack()
 				this->_position.z += _len.z;
 			}
 
+			if (_atkAnimData.nowFlame == 90) {
+				enemy->_stats._life -= BattleJudg::DamageJudg(this->_stats._atk, enemy->_stats._def, _position);
+			}
+
 			//90~180まで
 			if (_atkAnimData.nowFlame > 90 && _atkAnimData.nowFlame < 180)
 			{
@@ -163,7 +167,7 @@ void Player::Attack()
 
 			//180フレーム後
 			if (_atkAnimData.nowFlame == 180) {
-				enemy->_stats._life -= BattleJudg::DamageJudg(this->_stats._atk, enemy->_stats._def);
+				
 				_stats._waitTime += ENEMY_ATTACK_WAIT_TIME;
 				//SortTurn::Sort(); //ここで呼ぶ必要なくね？
 				_atkAnimData.is_Finish = true;
