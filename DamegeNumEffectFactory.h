@@ -1,48 +1,43 @@
 /*****************************************************************************
-DamegeNumEffect.h
-DamegeNumEffect.h
+template.h
+DamegeNumEffectFactory.h
 name	:新井 崚太
-data	:2019/08/03 14:15:54
+data	:2019/11/22 11:12:12
 *****************************************************************************/
-#ifndef DamegeNumEffect_H
-#define DamegeNumEffect_H
+#ifndef DamegeNumEffectFactory_H
+#define DamegeNumEffectFactory_H
 
 //////////////////////////////////////////////////////////////////////////////
 //ヘッダーファイルインクルード
 //////////////////////////////////////////////////////////////////////////////
-#include "billboard.h"
+
 
 //////////////////////////////////////////////////////////////////////////////
 //define定義
 //////////////////////////////////////////////////////////////////////////////
-#define LIFE_SPAN (120)
 
 //////////////////////////////////////////////////////////////////////////////
 //前方宣言
 //////////////////////////////////////////////////////////////////////////////
 
+
 //////////////////////////////////////////////////////////////////////////////
-//DamegeNumEffectクラス
+//DamegeNumEffectFactoryクラス
 //////////////////////////////////////////////////////////////////////////////
-class DamegeNumEffect : public Billboard{
+class DamegeNumEffectFactory {
 private:
-	unsigned short _beginFrame;
-	unsigned short _nowFrame;
+	static DamegeNumEffectFactory* _instance;
 
 public:
-	void Init();
-	void Uninit();
-	void Update();
-	void Draw();
-	void Set(XMFLOAT3 position, int damegeNum);
+	static void CreateInstance();
+	
 
-protected:
+	static void Delete();
 
+	static DamegeNumEffectFactory* GetInstance();
+
+	void CreateEffect(XMFLOAT3 position, int numDamege);
 };
 
-#endif // !DamegeNumEffect_H
+#endif // !DamegeNumEffectFactory_H
 
-//void Init();
-//void Uninit();
-//void Update();
-//void Draw();

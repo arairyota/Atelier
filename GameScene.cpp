@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "object2D.h"
 #include "ItemManager.h"
+#include "DamegeNumEffectFactory.h"
 #include "polygon.h"
 #include "Timer.h"
 #include "Flag.h"
@@ -34,7 +35,7 @@ GameScene::~GameScene()
 void GameScene::Init()
 {
 	TextureManager::Create();
-
+	DamegeNumEffectFactory::CreateInstance();
 	Timer::Init();
 	ItemManager::Create();
 	ItemManager::GetInstance()->AllLoad();
@@ -75,6 +76,8 @@ void GameScene::Uninit()
 
 	Scene::Uninit();
 	Timer::Uninit();
+
+	DamegeNumEffectFactory::Delete();
 
 	ItemManager::GetInstance()->AllUnLoad();
 	ItemManager::Delete();

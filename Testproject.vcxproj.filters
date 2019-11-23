@@ -43,6 +43,9 @@
     <Filter Include="GameSubsutance\UI\Gauge">
       <UniqueIdentifier>{d8cfa4a8-1c0e-48b2-90c8-f4600a32943b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSubsutance\Effect">
+      <UniqueIdentifier>{118b54fe-4854-473d-baf4-42d0b8bcce8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="pixelShader.hlsl">
@@ -155,9 +158,6 @@
     <ClCompile Include="ResultScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DamegeNumEffect.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -184,6 +184,15 @@
     </ClCompile>
     <ClCompile Include="Gauge.cpp">
       <Filter>GameSubsutance\UI\Gauge</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DamegeNumEffect.cpp">
+      <Filter>GameSubsutance\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="DamegeNumEffectFactory.cpp">
+      <Filter>GameSubsutance\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -325,9 +334,6 @@
     <ClInclude Include="SortTurn.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DamegeNumEffect.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -360,6 +366,15 @@
     </ClInclude>
     <ClInclude Include="Gauge.h">
       <Filter>GameSubsutance\UI\Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>GameSubsutance\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="DamegeNumEffect.h">
+      <Filter>GameSubsutance\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="DamegeNumEffectFactory.h">
+      <Filter>GameSubsutance\Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

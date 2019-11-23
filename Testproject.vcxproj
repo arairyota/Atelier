@@ -44,6 +44,8 @@
     <ClCompile Include="CharacterUI.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="DamegeNumEffect.cpp" />
+    <ClCompile Include="DamegeNumEffectFactory.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="Flag.cpp" />
@@ -106,6 +108,14 @@
     </ClInclude>
     <ClInclude Include="CObject.h" />
     <ClInclude Include="DamegeNumEffect.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="DamegeNumEffectFactory.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
       <SubType>
       </SubType>
     </ClInclude>

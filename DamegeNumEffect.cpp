@@ -1,11 +1,13 @@
 #include "main.h"
 #include "renderer.h"
 #include "texture.h"
+#include "manager.h"
 #include "TextureManager.h"
 #include "billboard.h"
 #include "Timer.h"
 #include "GameObject.h"
 #include "DamegeNumEffect.h"
+#include "scene.h"
 
 void DamegeNumEffect::Init()
 {
@@ -23,6 +25,11 @@ void DamegeNumEffect::Uninit()
 
 void DamegeNumEffect::Update()
 {
+	if ((Timer::GetNowTime() - _beginFrame) > LIFE_SPAN) {
+		CManager::GetScene()->DestroyGameObject(this);
+	}
+	
+
 	Billboard::Update();
 }
 
@@ -52,6 +59,6 @@ void DamegeNumEffect::Set(XMFLOAT3 position, int damegeNum)
 	//	Billboard::Set(position, XMFLOAT3(5.0f, 5.0f, 5.0f), NUMBER, damegeNum);
 	//	damegeNum /= 10;
 	//}
-	Billboard::Set(position, XMFLOAT3(5.0f, 5.0f, 5.0f), TextureManager::GetInstance()->GetTexture(NUMBER));
+	Billboard::Set(position, XMFLOAT3(10.0f, 10.0f, 10.0f), TextureManager::GetInstance()->GetTexture(NUMBER));
 }
 

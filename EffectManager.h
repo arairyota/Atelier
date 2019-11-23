@@ -1,48 +1,54 @@
 /*****************************************************************************
-DamegeNumEffect.h
-DamegeNumEffect.h
+template.h
+EffectManager.h
 name	:新井 崚太
-data	:2019/08/03 14:15:54
+data	:2019/11/18 14:15:12
 *****************************************************************************/
-#ifndef DamegeNumEffect_H
-#define DamegeNumEffect_H
+#ifndef EffectManager_H
+#define EffectManager_H
 
 //////////////////////////////////////////////////////////////////////////////
 //ヘッダーファイルインクルード
 //////////////////////////////////////////////////////////////////////////////
-#include "billboard.h"
+#include <vector>
 
 //////////////////////////////////////////////////////////////////////////////
 //define定義
 //////////////////////////////////////////////////////////////////////////////
-#define LIFE_SPAN (120)
 
 //////////////////////////////////////////////////////////////////////////////
 //前方宣言
 //////////////////////////////////////////////////////////////////////////////
+class GameObject;
 
 //////////////////////////////////////////////////////////////////////////////
-//DamegeNumEffectクラス
+//EffectManagerクラス
 //////////////////////////////////////////////////////////////////////////////
-class DamegeNumEffect : public Billboard{
+class EffectManager {
 private:
-	unsigned short _beginFrame;
-	unsigned short _nowFrame;
+	static EffectManager* _instance;
+	std::vector<GameObject*> _effectList;
 
 public:
-	void Init();
-	void Uninit();
-	void Update();
-	void Draw();
-	void Set(XMFLOAT3 position, int damegeNum);
+	static void Create() {
+		if (_instance == nullptr) {
+			_instance = new EffectManager;
+		}
+	}
 
-protected:
+	static void Delete() {
+		if (_instance != nullptr) {
+			delete _instance;
+			_instance = nullptr;
+		}
+	}
 
+	static auto GetInstance() {
+		if (_instance != nullptr) {
+			return _instance;
+		}
+	}
 };
 
-#endif // !DamegeNumEffect_H
+#endif // !EffectManager_H
 
-//void Init();
-//void Uninit();
-//void Update();
-//void Draw();
