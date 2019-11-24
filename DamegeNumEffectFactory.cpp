@@ -53,7 +53,9 @@ void DamegeNumEffectFactory::CreateEffect(XMFLOAT3 position, int numDamege)
 
 
 	for (int i = digit - 1; i >= 0; --i) {
-
+		CountStopValue /= 10;
+		
+		int num = damege / CountStopValue;
 		DamegeNumEffect* effect = scene->AddGameObject<DamegeNumEffect>(TYPE_EFFECT);
 		effect->Set(position, numDamege);
 	}
