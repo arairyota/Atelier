@@ -38,7 +38,7 @@ void DamegeNumEffect::Draw()
 	Billboard::Draw();
 }
 
-void DamegeNumEffect::Set(XMFLOAT3 position, int damegeNum)
+void DamegeNumEffect::Set(XMFLOAT3 position, int damegeNum, float transX)
 {
 	////カンスト数値を求める
 	//int CountStopValue = 1;
@@ -59,6 +59,6 @@ void DamegeNumEffect::Set(XMFLOAT3 position, int damegeNum)
 	//	Billboard::Set(position, XMFLOAT3(5.0f, 5.0f, 5.0f), NUMBER, damegeNum);
 	//	damegeNum /= 10;
 	//}
-	Billboard::Set(position, XMFLOAT3(10.0f, 10.0f, 10.0f), TextureManager::GetInstance()->GetTexture(NUMBER));
+	Billboard::DamegeNumEffect(position, XMFLOAT3(10.0f, 10.0f, 10.0f), damegeNum, transX);
 }
 

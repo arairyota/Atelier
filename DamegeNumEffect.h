@@ -34,7 +34,7 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-	void Set(XMFLOAT3 position, int damegeNum);
+	void Set(XMFLOAT3 position, int damegeNum, float transX);
 
 protected:
 

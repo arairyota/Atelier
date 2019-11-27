@@ -15,6 +15,8 @@ void Billboard::Init()
 	_rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	_scale    = XMFLOAT3(1.0f, 1.0f, 1.0f);
 
+	_transPos = XMFLOAT3(0.0f, 0.0f, 0.0f);
+
 	_vertex[0].Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	_vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	_vertex[0].Diffuse = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
@@ -87,10 +89,12 @@ void Billboard::Draw()
 	_cameraView.r[1].m128_f32[3] = 0.0f;
 	_cameraView.r[2].m128_f32[3] = 0.0f;
 
-	world = _cameraView;
+	world = XMMatrixTranslation(-_transPos.x, _transPos.y, _transPos.z);
+	world *= _cameraView;
 	world *= XMMatrixScaling(_scale.x, _scale.y, _scale.z);
 	
 	world *= XMMatrixTranslation(_position.x, _position.y, _position.z);
+	
 	//world *= XMMatrixRotationRollPitchYaw(_rotation.x, _rotation.y, _rotation.z);
 	
 	CRenderer::SetWorldMatrix(&world);
@@ -127,6 +131,57 @@ void Billboard::Set(XMFLOAT3 position, XMFLOAT3 scale, CTexture* texture)
 	_vertex[3].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	_vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	_vertex[3].TexCoord = XMFLOAT2(1, 1);
+
+	//頂点データ
+	//D3D11_BUFFER_DESC bd; //バッファデータ
+	//ZeroMemory(&bd, sizeof(bd));
+	//bd.ByteWidth = sizeof(VERTEX3D) * 4; //頂点数
+	//bd.Usage = D3D11_USAGE_DEFAULT;
+	//bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	//bd.CPUAccessFlags = 0;
+
+	//D3D11_SUBRESOURCE_DATA sd; //サブリソースデータ
+	//ZeroMemory(&sd, sizeof(sd));
+	//sd.pSysMem = _vertex;
+	//
+	//CRenderer::GetDevice()->CreateBuffer(&bd, &sd, &_VertexBuffer);
+
+	//頂点バッファの上書き
+	D3D11_MAPPED_SUBRESOURCE msr;
+	CRenderer::GetDeviceContext()->Map(_VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
+	memcpy(msr.pData, _vertex, sizeof(VERTEX3D) * 4);
+	CRenderer::GetDeviceContext()->Unmap(_VertexBuffer, 0);
+}
+
+void Billboard::DamegeNumEffect(XMFLOAT3 position, XMFLOAT3 scale, int texcoord, float transX)
+{
+	float u0 = texcoord / 10.0f;
+	float u1 = u0 + 0.1f;
+	_position = position;
+	_transPos.x = -transX;
+	//_rotation = rotation;
+	_scale = scale;
+	_Texture = TextureManager::GetInstance()->GetTexture(NUMBER);
+
+	_vertex[0].Position = XMFLOAT3(-0.5f, 0.5f, 0.0f);
+	_vertex[0].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	_vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	_vertex[0].TexCoord = XMFLOAT2(u0, 0);	//テクスチャ座標
+
+	_vertex[1].Position = XMFLOAT3(0.5f, 0.5f, 0.0f);
+	_vertex[1].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	_vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	_vertex[1].TexCoord = XMFLOAT2(u1, 0);
+
+	_vertex[2].Position = XMFLOAT3(-0.5f, -0.5f, 0.0f);
+	_vertex[2].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	_vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	_vertex[2].TexCoord = XMFLOAT2(u0, 1);
+
+	_vertex[3].Position = XMFLOAT3(0.5f, -0.5f, 0.0f);
+	_vertex[3].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	_vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	_vertex[3].TexCoord = XMFLOAT2(u1, 1);
 
 	//頂点データ
 	//D3D11_BUFFER_DESC bd; //バッファデータ
