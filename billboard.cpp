@@ -159,6 +159,8 @@ void Billboard::DamegeNumEffect(XMFLOAT3 position, XMFLOAT3 scale, int texcoord,
 	float u1 = u0 + 0.1f;
 	_position = position;
 	_transPos.x = -transX;
+	_transPos.y = 1.0f;
+	_transPos.z = -1.0f;
 	//_rotation = rotation;
 	_scale = scale;
 	_Texture = TextureManager::GetInstance()->GetTexture(NUMBER);
