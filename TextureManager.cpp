@@ -16,7 +16,10 @@ void TextureManager::Create()
 
 void TextureManager::Derete()
 {
-	if (_instance != nullptr) delete _instance;
+	if (_instance != nullptr) { 
+		delete _instance; 
+		_instance = nullptr;
+	}
 }
 
 bool TextureManager::AllLoad()

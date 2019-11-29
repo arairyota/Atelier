@@ -6,6 +6,7 @@
 #include "object3D.h"
 #include "Flag.h"
 #include "gameActor.h"
+#include "SortTurn.h"
 #include "ItemBase.h"
 #include "ItemPoach.h"
 #include "camera.h"
@@ -132,7 +133,6 @@ void Player::FirstAction()
 
 void Player::Attack()
 {
-	//‚±‚±‚©‚ç‰ü—Ç
 	std::vector<Enemy*> enemys = CManager::GetScene()->GetGameObjects<Enemy>(TYPE_ENEMY);
 	if (enemys.front() == nullptr) return;
 	for (Enemy* enemy : enemys) {
@@ -179,6 +179,8 @@ void Player::Attack()
 			if (_atkAnimData.is_Finish) {
 				if (BattleJudg::IsDeath(enemy->_stats._life)) {
 					CManager::GetScene()->DestroyGameObject(enemy);
+					SortTurn::Sort();
+
 				}
 				this->InitAnimData();
 				

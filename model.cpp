@@ -14,7 +14,7 @@ void CModel::Draw()
 	// インデックスバッファ設定
 	CRenderer::SetIndexBuffer( m_IndexBuffer );
 
-	for( unsigned short i = 0; i < 1; i++ )
+	for( unsigned short i = 0; i < m_SubsetNum; i++ )
 	{
 		// マテリアル設定
 		CRenderer::SetMaterial( m_SubsetArray[i].Material.Material );

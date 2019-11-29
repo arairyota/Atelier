@@ -30,16 +30,23 @@ class SortTurn {
 private:
 	static std::list<GameActor*> _GameActor;
 	std::list<GameActor*>::iterator it = _GameActor.begin();
+
 public:
 	//右と左比較する(昇順)
 	static bool comp(GameActor* la, GameActor* ra) {
 		return la->_stats._waitTime < ra->_stats._waitTime;
+	}
+
+	//HPが０か判定する関数ポインタとして使う
+	static bool LifeIsDestory(GameActor* actor) {
+		return actor->GetLife() < 0;
 	}
 	
 	//[](GameActor& la, GameActor& ra) { return (la._stats._spd > ra._stats._spd); }
 
 	static void Sort() {
 		if (_GameActor.front() == nullptr) return;
+		_GameActor.remove_if(LifeIsDestory);
 		_GameActor.sort(comp);
 	};
 
@@ -71,6 +78,11 @@ public:
 	static void SetActor(GameActor* actor) {
 		_GameActor.push_back(actor);
 	}
+
+	static void AllDestory() {
+		_GameActor.clear();
+	}
+	
 protected:
 
 };

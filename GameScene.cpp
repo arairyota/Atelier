@@ -71,6 +71,8 @@ void GameScene::Uninit()
 	_bgm->Unload();
 	delete _bgm;
 
+	SortTurn::AllDestory();
+
 	TextureManager::GetInstance()->AllUnLoad();
 	TextureManager::Derete();
 

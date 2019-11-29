@@ -2,7 +2,7 @@
 #include "scene.h"
 
 
-const CHARACTER_STATS puni = CHARACTER_STATS(1000.0f, 1.0f, 100.0f, 35.0f, 0.0f, 10.0f);
+const CHARACTER_STATS puni = CHARACTER_STATS(300.0f, 1.0f, 100.0f, 35.0f, 0.0f, 10.0f);
 const CHARACTER_STATS araisan = CHARACTER_STATS(300.0f, 300.0f, 300.0f, 123.0f, 0.0f, 20.0f);
 
 class CAudioClip;
