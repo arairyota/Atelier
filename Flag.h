@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FLAG_H
+#define FLAG_H
 
 //2i”ƒƒ‚
 //1		0001
@@ -56,3 +57,4 @@ public:
 
 };
 
+#endif // !FLAG_H

@@ -12,6 +12,7 @@
 #include <windows.h>
 #include <assert.h>
 
+#include <typeinfo>
 #include <vector>
 #include <algorithm>
 #include <d3d11.h>

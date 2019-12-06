@@ -1,10 +1,10 @@
 #include "main.h"
 #include "renderer.h"
 #include "manager.h"
-#include "bullet.h"
-#include "model.h"
+#include "enemy.h"
 #include "scene.h"
-#include <vector>
+#include "model.h"
+#include "bullet.h"
 
 void Bullet::Init()
 {

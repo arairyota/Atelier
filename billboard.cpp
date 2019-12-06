@@ -1,8 +1,8 @@
 #include "main.h"
 #include "renderer.h"
 #include "manager.h"
-#include "TextureManager.h"
 #include "texture.h"
+#include "TextureManager.h"
 #include "billboard.h"
 
 #include "object3D.h"

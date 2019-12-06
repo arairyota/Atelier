@@ -6,6 +6,7 @@
 #include "Flag.h"
 #include "gameActor.h"
 #include "SortTurn.h"
+#include "camera.h"
 #include "enemy.h"
 #include "player.h"
 #include "BattleJudg.h"

@@ -12,6 +12,7 @@
 #include "TextureManager.h"
 #include "ItemBase.h"
 #include "ItemManager.h"
+#include "TargetSelect.h"
 #include "ItemPoach.h"
 #include "scene.h"
 

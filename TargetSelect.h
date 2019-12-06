@@ -1,4 +1,7 @@
-#pragma once
+#ifndef TargetSelect_H
+#define	TargetSelect_H
+
+
 #include "object3D.h"
 
 
@@ -28,3 +31,4 @@ public:
 	void ChangePhase();		//‚±‚ñ‚ÈİŒv‚ğ‚µ‚½‚±‚Æ–{“–‚É\‚µ–ó‚È‚¢‚Æ‚¨‚à‚Á‚Ä‚¢‚é
 };
 
+#endif

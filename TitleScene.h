@@ -1,4 +1,8 @@
-#pragma once
+#ifndef TitleScene_H
+#define	TitleScene_H
+
+
+
 #include "scene.h"
 
 class CAudioClip;
@@ -14,3 +18,4 @@ public:
 	void Update()override;
 };
 
+#endif

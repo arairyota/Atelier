@@ -7,6 +7,7 @@
 #include "TextureManager.h"
 #include "ItemManager.h"
 #include "scene.h"
+#include "ResultScene.h"
 #include "GameScene.h"
 #include "TitleScene.h"
 #include "input.h"

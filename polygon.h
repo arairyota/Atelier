@@ -2,7 +2,6 @@
 #define POLYGON_H
 
 #include "Object2d.h"
-#include "texture.h"
 
 class CPolygon : public Object2D {
 private:

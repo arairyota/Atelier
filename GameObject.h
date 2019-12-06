@@ -6,6 +6,8 @@
 
 #define ROTASION_SPEED (5.0f)
 
+class CTexture;
+
 class GameObject {
 private:
 	bool _isDestroy = false;

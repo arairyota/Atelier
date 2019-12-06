@@ -69,6 +69,7 @@
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="ResultScene.cpp" />
+    <ClCompile Include="scene.cpp" />
     <ClCompile Include="skillUi.cpp" />
     <ClCompile Include="TargetSelect.cpp" />
     <ClCompile Include="texture.cpp" />

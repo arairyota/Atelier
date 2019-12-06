@@ -1,4 +1,5 @@
 #include "main.h"
+#include "manager.h"
 #include "renderer.h"
 #include "model.h"
 #include "ModelLoader.h"

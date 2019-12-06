@@ -2,7 +2,7 @@
 #define CAMERA_H
 
 #include "GameObject.h"
-#include "playerInterface.h"
+
 
 class CCamera : public GameObject
 {

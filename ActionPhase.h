@@ -1,5 +1,10 @@
 #pragma once
+#ifndef ACTION_PHASE_H
+#define ACTION_PHASE_H
+
+#include <vector>
 #include <list>
+
 class Player;
 class Enemy;
 class GameActor;
@@ -23,3 +28,4 @@ public:
 
 };
 
+#endif // !ACTION_PHASE_H

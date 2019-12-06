@@ -34,6 +34,7 @@ public:
 	XMFLOAT3 GetCameraPosition()override;
 	Enemy* GetEnemy() { return this; };
 	float GetLife() { return _stats._life; }
+	GameActor* GetGameActor() { return this; }
 };
 
 #endif // !ENEMY_H

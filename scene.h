@@ -1,27 +1,11 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <list>
 #include <typeinfo>
+#include <list>
 #include <vector>
-#include "renderer.h"
+
 #include "GameObject.h"
-#include "camera.h"
-#include "Mesh.h"
-#include "MeshCylinder.h"
-#include "MeshField.h"
-#include "MeshWall.h"
-#include "model.h"
-#include "polygon.h"
-#include "player.h"
-#include "enemy.h"
-#include "billboard.h"
-#include "ModelLoader.h"
-#include "Town.h"
-#include "playerInterface.h"
-#include "TargetSelect.h"
-#include "BattleJudg.h"
-#include "ActionPhase.h"
 
 static enum list_type {
 	TYPE_zero = 0,
@@ -45,41 +29,14 @@ public:
 	virtual ~Scene() {}
 	virtual void Init() = 0;
 
-	virtual void Uninit() {
-		for (int cnt = 0; cnt < TYPE_LIST_MAX; cnt++) {
-			for (GameObject* object : _GameObject[cnt]) {
-				object->Uninit();
-				delete object;
-			}
-			_GameObject[cnt].clear();
-		}
-	}
+	virtual void Uninit();
 
-	virtual void Update() {
-		for (int cnt = 0; cnt < TYPE_LIST_MAX; cnt++) {
-			for (GameObject* object : _GameObject[cnt]) {
-				object->Update();
-			}
-			_GameObject[cnt]._Remove_if([](GameObject* object) { 
-				return object->Destroy(); }); //[]ñºëOÇÃÇ»Ç¢ä÷êî(ÇÃà¯êî){ÇÃèàóù}
-		}
-	}
+	virtual void Update();
 
-	virtual void Draw() {
-		for (int cnt = 0; cnt < TYPE_LIST_MAX; cnt++) {
-			for (GameObject* object : _GameObject[cnt]) {
-				object->Draw();
-			}
-		}
-	}
+	virtual void Draw();
 
 	template<typename T>
-	auto* AddGameObject(int Layer) {
-		T* object = new T();
-		_GameObject[Layer].push_back(object);
-		object->Init();
-		return object;
-	}
+	auto* AddGameObject(int Layer);
 
 	//
 	template <typename T>
@@ -98,16 +55,28 @@ public:
 
 	//ï°êîìñÇΩÇËîªíË
 	template <typename T>
-	std::vector<T*> GetGameObjects(int layer) {
-		std::vector<T*> objects;
-		for (GameObject* object : _GameObject[layer]) {
-			if (typeid(*object) == typeid(T)) {
-				objects.push_back((T*)object);
-			}
-		}
-		return objects;
-	}
+	std::vector<T*> GetGameObjects(int layer);
 
 };
 
+template<typename T>
+inline auto* Scene::AddGameObject(int Layer)
+{
+	T* object = new T();
+		_GameObject[Layer].push_back(object);
+		object->Init();
+		return object;
+}
+
+template<typename T>
+inline std::vector<T*> Scene::GetGameObjects(int layer)
+{
+	std::vector<T*> objects;
+	for (GameObject* object : _GameObject[layer]) {
+		if (typeid(*object) == typeid(T)) {
+			objects.push_back((T*)object);
+		}
+	}
+	return objects;
+}
 #endif // !SCENE_H

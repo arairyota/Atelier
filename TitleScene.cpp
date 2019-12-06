@@ -1,10 +1,10 @@
 #include "main.h"
 #include <list>
 #include <vector>
+#include "manager.h"
 #include "renderer.h"
 #include "GameObject.h"
 #include "scene.h"
-#include "manager.h"
 #include "GameScene.h"
 #include "TitleScene.h"
 #include "input.h"

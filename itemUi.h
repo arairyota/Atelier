@@ -1,4 +1,8 @@
-#pragma once
+#ifndef ItemUI_H
+#define	ItemUI_H
+
+
+
 #include "actionUi.h"
 
 class CPolygon;
@@ -20,3 +24,4 @@ private:
 	
 };
 
+#endif

@@ -4,6 +4,8 @@
 #include "input.h"
 #include "GameObject.h"
 #include "object3D.h"
+#include "gameActor.h"
+
 #include "Flag.h"
 #include "gameActor.h"
 #include "SortTurn.h"
@@ -11,6 +13,7 @@
 #include "ItemPoach.h"
 #include "camera.h"
 #include "ModelAnimation.h"
+#include "MeshField.h"
 #include "player.h"
 #include "enemy.h"
 #include "model.h"
@@ -133,10 +136,10 @@ void Player::FirstAction()
 
 void Player::Attack()
 {
-	std::vector<Enemy*> enemys = CManager::GetScene()->GetGameObjects<Enemy>(TYPE_ENEMY);
-	if (enemys.front() == nullptr) return;
-	for (Enemy* enemy : enemys) {
-		if (enemy->GetEnemy()->_stats._isHit) {
+	auto enemys = SortTurn::GetGameActorList<Enemy>();
+	if (SortTurn::GetGameActorList<Enemy>().front() == nullptr) return;
+	for (auto* enemy : enemys) {
+		if (enemy->GetGameActor()->_stats._isHit) {
 			//‰Šú‰»
 			if (_atkAnimData.nowFlame == 0) {
 				XMFLOAT3 that = enemy->GetPosition();
@@ -180,7 +183,7 @@ void Player::Attack()
 				if (BattleJudg::IsDeath(enemy->_stats._life)) {
 					CManager::GetScene()->DestroyGameObject(enemy);
 					SortTurn::Sort();
-
+					BattleJudg::IsClear(SortTurn::GetGameActorList<Enemy>().size());
 				}
 				this->InitAnimData();
 				

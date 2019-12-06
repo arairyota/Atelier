@@ -1,10 +1,11 @@
 #include "main.h"
 #include "manager.h"
-#include "texture.h"
+//#include "texture.h"
 #include "GameObject.h"
 #include "DamegeNumEffectFactory.h"
-#include "BattleJudg.h"
 #include "scene.h"
+#include "ResultScene.h"
+#include "BattleJudg.h"
 
 unsigned int BattleJudg::_numDamege = 0;
 
@@ -39,4 +40,26 @@ unsigned int BattleJudg::DamageJudg(float attack, float def, XMFLOAT3 position)
 	DamegeNumEffectFactory::GetInstance()->CreateEffect(position, _numDamege);
 
 	return _numDamege;
+}
+
+bool BattleJudg::IsDeath(int hp)
+{
+	if (hp < 0) {
+		return true;
+	}
+	else return false;
+}
+
+void BattleJudg::IsClear(int size)
+{
+	if (size == 0) {
+		//ƒ^ƒCƒgƒ‹‚É–ß‚é
+		CManager::SetScene<ResultScene>();
+		int a = 0;
+
+	}
+}
+
+void BattleJudg::Init()
+{
 }

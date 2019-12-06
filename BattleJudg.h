@@ -1,7 +1,7 @@
-#pragma once
-#include "BattleTransition.h"
+#ifndef BATTLEJUDG_H
+#define BATTLEJUDG_H
 
-class BattleJudg : public BattleTransition
+class BattleJudg
 {
 	static unsigned int _numDamege;
 
@@ -10,16 +10,13 @@ public:
 	~BattleJudg();
 
 	static unsigned int DamageJudg(float attack, float def, XMFLOAT3 position);
-	static bool IsDeath(int hp) {
-		if (hp < 0) {
-			return true;
-		}
-		else return false;
-};
+	static bool IsDeath(int hp);
+	static void IsClear(int size);
 
-	void Init() {};
+	void Init() ;
 	void Uninit() {};
 	void Update() {};
 	void Draw() {};
 };
 
+#endif // BATTLEJUDG_H

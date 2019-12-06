@@ -1,18 +1,15 @@
-#include <vector>
+#include <list>
 #include "main.h"
-#include "renderer.h"
 #include "manager.h"
-#include "object3D.h"
-#include "gameActor.h"
-#include "ItemBase.h"
-#include "ItemManager.h"
+#include "renderer.h"
 #include "Flag.h"
-#include "enemy.h"
-#include "player.h"
-#include "BattleJudg.h"
 #include "SortTurn.h"
+#include "gameActor.h"
+#include "player.h"
+#include "enemy.h"
+//
 #include "ActionPhase.h"
-#include "scene.h"
+//#include "scene.h"
 
 Player* ActionPhase::_player;
 std::vector<Enemy*>ActionPhase::_enemys;

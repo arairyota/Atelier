@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RESULTSCENE_H
+#define RESULTSCENE_H
 
 #include "scene.h"
 
@@ -13,3 +14,4 @@ public:
 	void Update();
 };
 
+#endif // !RESULTSCENE_H

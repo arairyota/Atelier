@@ -32,6 +32,7 @@ public:
 	Player* GetPlayer() { return this; };
 	XMFLOAT3 GetCameraPosition()override;
 	float GetLife() { return _stats._life; }
+	GameActor* GetGameActor() { return this; }
 
 	
 };

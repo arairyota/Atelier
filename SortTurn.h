@@ -82,6 +82,17 @@ public:
 	static void AllDestory() {
 		_GameActor.clear();
 	}
+
+	template <typename T>
+	static std::list<GameActor*> GetGameActorList() {
+		std::list<GameActor*> actors;
+		for (GameActor* actor : _GameActor) {
+			if (typeid(*actor) == typeid(T)) {
+				actors.push_back((T*)actor);
+			}
+		}
+		return actors;
+	}
 	
 protected:
 

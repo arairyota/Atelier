@@ -1,5 +1,4 @@
 #include "main.h"
-#include "renderer.h"
 #include "texture.h"
 #include "polygon.h"
 #include "actionUi.h"

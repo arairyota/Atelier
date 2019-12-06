@@ -3,6 +3,7 @@
 #include "manager.h"
 #include "gameActor.h"
 #include "input.h"
+#include "model.h"
 #include "camera.h"
 #include "player.h"
 #include "enemy.h"

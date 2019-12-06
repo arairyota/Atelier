@@ -1,4 +1,8 @@
-#pragma once
+#ifndef AUDIO_H
+#define AUDIO_H
+
+
+
 
 #include <xaudio2.h>
 
@@ -34,3 +38,4 @@ private:
 
 };
 
+#endif // !AUDIO_H

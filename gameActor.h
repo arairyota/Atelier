@@ -54,6 +54,7 @@ public:
 
 	virtual XMFLOAT3 GetCameraPosition()=0;
 	virtual float GetLife()=0;
+	virtual GameActor* GetGameActor() { return this; }
 
 protected:
 	XMFLOAT3 _cameraPosition;

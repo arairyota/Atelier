@@ -1,4 +1,9 @@
-#pragma once
+#ifndef SkillUI_H
+#define	SkillUI_H
+
+#endif[
+
+
 #include "actionUi.h"
 class skillUi :
 	public actionUi

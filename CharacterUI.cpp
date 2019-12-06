@@ -1,10 +1,13 @@
 #include "main.h"
+
 #include "renderer.h"
-#include "CharacterUI.h"
 #include "manager.h"
+#include "texture.h"
+#include "TextureManager.h"
 #include "gameActor.h"
 #include "polygon.h"
 #include "Gauge.h"
+#include "CharacterUI.h"
 #include "scene.h"
 
 CharacterUI::CharacterUI()

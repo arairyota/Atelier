@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ATTACK_H
+#define ATTACK_H
+
 
 class Player;
 class Enemy;
@@ -18,3 +20,4 @@ public:
 	void Set(Player* player, Enemy* enemy);
 };
 
+#endif // !ATTACK_H

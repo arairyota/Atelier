@@ -1,8 +1,8 @@
-#pragma once
-#include "object2D.h"
+#ifndef ACTION_UI_H
+#define ACTION_UI_H
+
 #include "polygon.h"
 
-class CPolygon;
 //////////////////////////////////////////////////////////////////////////////
 //攻撃、アイテム、スキルなんかに継承するクラス
 //////////////////////////////////////////////////////////////////////////////
@@ -31,3 +31,8 @@ public:
 class attackUi : public actionUi {
 
 };*/
+
+
+
+
+#endif // !ACTION_UI_H

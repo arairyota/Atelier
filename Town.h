@@ -1,4 +1,8 @@
-#pragma once
+#ifndef Town_H
+#define	Town_H
+
+
+
 #include "object3D.h"
 class ModelLoader;
 class Town : public object3D
@@ -18,3 +22,4 @@ public:
 	void Set(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 scale);
 };
 
+#endif

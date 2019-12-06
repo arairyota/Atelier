@@ -1,16 +1,14 @@
 #include "main.h"
 #include "manager.h"
 #include "renderer.h"
-#include "texture.h"
-#include "GameObject.h"
-#include "object2D.h"
-#include "polygon.h"
 #include "input.h"
 #include "actionUi.h"
-#include "attackUi.h"
 #include "Flag.h"
+#include "camera.h"
 #include "TargetSelect.h"
+
 #include "scene.h"
+#include "attackUi.h"
 
 void attackUi::Init()
 {

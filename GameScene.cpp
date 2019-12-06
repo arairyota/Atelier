@@ -2,6 +2,11 @@
 #include <list>
 #include <vector>
 #include "renderer.h"
+#include "manager.h"
+
+#include "TextureManager.h"
+#include "audio_clip.h"
+#include "input.h"
 #include "GameObject.h"
 #include "object2D.h"
 #include "ItemManager.h"
@@ -11,17 +16,27 @@
 #include "Flag.h"
 #include "gameActor.h"
 #include "scene.h"
-#include "manager.h"
-#include "GameScene.h"
+
 #include "TitleScene.h"
 #include "ResultScene.h"
-#include "input.h"
+#include "camera.h"
+#include "MeshField.h"
+#include "Town.h"
+#include "player.h"
+#include "enemy.h"
+#include "playerInterface.h"
+#include "ActionPhase.h"
 #include "SortTurn.h"
-#include "audio_clip.h"
 #include "ItemPoach.h"
 #include "OriBomd.h"
+#include "GameScene.h"
+
 
  std::list<GameActor*>SortTurn::_GameActor;
+
+ static const CHARACTER_STATS puni = CHARACTER_STATS(300.0f, 1.0f, 100.0f, 35.0f, 0.0f, 10.0f);
+ static const CHARACTER_STATS araisan = CHARACTER_STATS(300.0f, 300.0f, 300.0f, 123.0f, 0.0f, 20.0f);
+
 
 GameScene::GameScene()
 {

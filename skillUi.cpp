@@ -2,10 +2,13 @@
 #include "manager.h"
 #include "renderer.h"
 #include "input.h"
+#include "scene.h"
+#include "TargetSelect.h"
+#include "camera.h"
 #include "texture.h"
 #include "actionUi.h"
 #include "skillUi.h"
-#include "scene.h"
+
 #include "Flag.h"
 
 skillUi::skillUi()

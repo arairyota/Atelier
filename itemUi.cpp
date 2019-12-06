@@ -1,19 +1,20 @@
 #include "main.h"
 #include "renderer.h"
 #include "manager.h"
+#include "input.h"
+#include "scene.h"
 #include "GameScene.h"
+#include "GameObject.h"
 #include "SortTurn.h"
-#include "ItemBase.h"
-#include "ItemManager.h"
+
 #include "ItemPoach.h"
 #include "skillUi.h"
 #include "actionUi.h"
-#include "itemUi.h"
-#include "input.h"
+
+
 #include "Flag.h"
 #include "OriBomd.h"
-#include "scene.h"
-
+#include "itemUi.h"
 
 itemUi::itemUi()
 {

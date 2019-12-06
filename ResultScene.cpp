@@ -1,15 +1,18 @@
 #include "main.h"
 #include <list>
 #include <vector>
+#include "input.h"
 #include "renderer.h"
+#include "manager.h"
 #include "GameObject.h"
 #include "scene.h"
-#include "manager.h"
 #include "TitleScene.h"
-#include "input.h"
-#include "audio_clip.h"
 
+#include "audio_clip.h"
 #include "ResultScene.h"
+
+
+
 
 
 ResultScene::ResultScene()
