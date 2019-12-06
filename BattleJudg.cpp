@@ -50,14 +50,15 @@ bool BattleJudg::IsDeath(int hp)
 	else return false;
 }
 
-void BattleJudg::IsClear(int size)
+bool BattleJudg::IsClear(int size)
 {
 	if (size == 0) {
 		//ƒ^ƒCƒgƒ‹‚É–ß‚é
 		CManager::SetScene<ResultScene>();
 		int a = 0;
-
+		return true;
 	}
+	return false;
 }
 
 void BattleJudg::Init()

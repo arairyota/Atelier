@@ -11,7 +11,7 @@ public:
 
 	static unsigned int DamageJudg(float attack, float def, XMFLOAT3 position);
 	static bool IsDeath(int hp);
-	static void IsClear(int size);
+	static bool IsClear(int size);
 
 	void Init() ;
 	void Uninit() {};

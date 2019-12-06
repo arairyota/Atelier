@@ -183,7 +183,8 @@ void Player::Attack()
 				if (BattleJudg::IsDeath(enemy->_stats._life)) {
 					CManager::GetScene()->DestroyGameObject(enemy);
 					SortTurn::Sort();
-					BattleJudg::IsClear(SortTurn::GetGameActorList<Enemy>().size());
+					if (BattleJudg::IsClear(SortTurn::GetGameActorList<Enemy>().size())) return;
+					
 				}
 				this->InitAnimData();
 				
