@@ -21,7 +21,7 @@ public:
 	virtual void Draw() {};
 
 	void SetDestroy() { _isDestroy = true; };
-
+	bool GetDestroy() { return _isDestroy; }
 	bool Destroy() {
 		if (_isDestroy) {
 			this->Uninit();

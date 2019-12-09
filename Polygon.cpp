@@ -33,6 +33,7 @@ void CPolygon::Uninit()
 {
 	if (_VertexBuffer == nullptr) return;
 	_VertexBuffer->Release();
+
 }
 
 void CPolygon::Update()

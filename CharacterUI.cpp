@@ -26,7 +26,9 @@ void CharacterUI::Init()
 
 void CharacterUI::Update()
 {
+	if (_actor == nullptr) return;
 	_hp = _actor->GetLife();
+	if (_hp < 0) _hp = 0;
 }
 
 void CharacterUI::Set(GameActor* player)

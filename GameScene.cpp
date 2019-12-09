@@ -34,8 +34,8 @@
 
  std::list<GameActor*>SortTurn::_GameActor;
 
- static const CHARACTER_STATS puni = CHARACTER_STATS(300.0f, 1.0f, 100.0f, 35.0f, 0.0f, 10.0f);
- static const CHARACTER_STATS araisan = CHARACTER_STATS(300.0f, 300.0f, 300.0f, 123.0f, 0.0f, 20.0f);
+ static const CHARACTER_STATS puni = CHARACTER_STATS(100.0f, 1.0f, 100.0f, 35.0f, 0.0f, 10.0f);
+ static const CHARACTER_STATS araisan = CHARACTER_STATS(10.0f, 300.0f, 300.0f, 123.0f, 0.0f, 20.0f);
 
 
 GameScene::GameScene()
@@ -52,6 +52,7 @@ void GameScene::Init()
 	TextureManager::Create();
 	DamegeNumEffectFactory::CreateInstance();
 	Timer::Init();
+	Flag::Init();
 	ItemManager::Create();
 	ItemManager::GetInstance()->AllLoad();
 	_bgm = new CAudioClip;
@@ -107,6 +108,11 @@ void GameScene::Update()
 
 	Scene::Update();
 	ActionPhase::Update();
+
+	if (CInput::GetKeyTrigger('P')) {
+		int a = 0; //デバッグ
+	}
+
 	if (CInput::GetKeyTrigger(VK_SPACE)) {
 		CManager::SetScene<ResultScene>();
 	}

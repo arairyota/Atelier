@@ -36,7 +36,8 @@ void Scene::Update()
 {
 	for (int cnt = 0; cnt < TYPE_LIST_MAX; cnt++) {
 		for (GameObject* object : _GameObject[cnt]) {
-			object->Update();
+			
+			if( !object->GetDestroy()) object->Update();	//消すフラグが立ってなかったら更新
 		}
 		_GameObject[cnt]._Remove_if([](GameObject* object) {
 			return object->Destroy(); }); //[]名前のない関数(の引数){の処理}

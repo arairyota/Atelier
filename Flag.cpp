@@ -5,6 +5,13 @@ unsigned char Flag::_GamePhaseFlag = 0x00;
 unsigned char Flag::_SelectActionFlag = 0x00;
 bool Flag::_TurnLoopFlag = false;
 
+void Flag::Init()
+{
+	_GamePhaseFlag = FLAG_INIT; 
+	_SelectActionFlag = FLAG_INIT; 
+	_TurnLoopFlag = false;
+}
+
 void Flag::SetGamePhase(int PhaseFlag)
 {
 	_GamePhaseFlag = PhaseFlag;

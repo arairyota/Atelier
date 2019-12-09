@@ -32,13 +32,7 @@ class ItemPoach : public CPolygon{
 private:
 	std::vector<ItemBase*>_ItemPoachList;
 	//CPolygon* _polygonPoach[ITEMPOACH_MAX];
-	const XMFLOAT2 PoachPosition[ITEMPOACH_MAX] = {
-		XMFLOAT2(-200.0f,-200.0f), XMFLOAT2(-100.0f,-200.0f),XMFLOAT2(0.0f,-200.0f),XMFLOAT2(100.0f,-200.0f),XMFLOAT2(200.0f,-200.0f),
-		XMFLOAT2(-200.0f,-100.0f), XMFLOAT2(-100.0f,-100.0f),XMFLOAT2(0.0f,-100.0f),XMFLOAT2(100.0f,-100.0f),XMFLOAT2(200.0f,-100.0f),
-		XMFLOAT2(-200.0f,0.0f),    XMFLOAT2(-100.0f,0.0f),   XMFLOAT2(0.0f,0.0f),   XMFLOAT2(100.0f,0.0f),   XMFLOAT2(200.0f,0.0f),
-		XMFLOAT2(-200.0f,100.0f),  XMFLOAT2(-100.0f,100.0f), XMFLOAT2(0.0f,100.0f), XMFLOAT2(100.0f,100.0f), XMFLOAT2(200.0f,100.0f),
-		XMFLOAT2(-200.0f,200.0f),  XMFLOAT2(-100.0f,200.0f), XMFLOAT2(0.0f,200.0f), XMFLOAT2(100.0f,200.0f), XMFLOAT2(200.0f,200.0f),
-	};	//êeíÜêSç¿ïWÇ©ÇÁÇÃà⁄ìÆó 
+	
 
 	unsigned int _select;
 	short int _waitFrame = 0;

@@ -43,6 +43,8 @@ public:
 	Flag() { _GamePhaseFlag = FLAG_INIT; _SelectActionFlag = FLAG_INIT; _TurnLoopFlag = false; };
 	~Flag() {};
 
+	static void Init();
+
 	static void SetGamePhase(int PhaseFlag);
 	static int GetGamePhase();
 

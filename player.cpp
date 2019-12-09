@@ -7,7 +7,6 @@
 #include "gameActor.h"
 
 #include "Flag.h"
-#include "gameActor.h"
 #include "SortTurn.h"
 #include "ItemBase.h"
 #include "ItemPoach.h"
@@ -38,6 +37,9 @@ void Player::Init()
 void Player::Uninit()
 {
 	//_model->Unload();
+	
+	CManager::GetScene()->DestroyGameObject(_charaUI);
+
 	_testModel->Unload();
 }
 
@@ -180,17 +182,23 @@ void Player::Attack()
 			_atkAnimData.nowFlame++;
 
 			if (_atkAnimData.is_Finish) {
+				this->InitAnimData();
+
+				enemy->SetHit(false);
+				this->_stats._nowTurn = false;
+				Flag::SetTurnLoopFlag(false);
+
 				if (BattleJudg::IsDeath(enemy->_stats._life)) {
 					CManager::GetScene()->DestroyGameObject(enemy);
 					SortTurn::Sort();
 					if (BattleJudg::IsClear(SortTurn::GetGameActorList<Enemy>().size())) return;
 					
 				}
-				this->InitAnimData();
-				
-				enemy->SetHit(false);
-				this->_stats._nowTurn = false;
-				Flag::SetTurnLoopFlag(false);
+				//this->InitAnimData();
+				//
+				//enemy->SetHit(false);
+				//this->_stats._nowTurn = false;
+				//Flag::SetTurnLoopFlag(false);
 			}
 		}
 	}

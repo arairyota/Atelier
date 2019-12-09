@@ -126,14 +126,18 @@ void Enemy::Attack()
 			_atkAnimData.nowFlame++;
 
 			if(_atkAnimData.is_Finish){
-				if (BattleJudg::IsDeath(player->_stats._life)) {
-					CManager::GetScene()->DestroyGameObject(player);
-				}
 				this->InitAnimData();
 				CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->Init();
 				player->SetHit(false);
 				this->_stats._nowTurn = false;
 				Flag::SetTurnLoopFlag(false);
+
+				if (BattleJudg::IsDeath(player->_stats._life)) {
+					CManager::GetScene()->DestroyGameObject(player);
+					SortTurn::Sort();
+					if (BattleJudg::IsClear(SortTurn::GetGameActorList<Player>().size())) return;
+				}
+				
 			}
 		}
 	}

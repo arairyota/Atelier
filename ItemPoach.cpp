@@ -16,6 +16,14 @@
 #include "ItemPoach.h"
 #include "scene.h"
 
+static const XMFLOAT2 PoachPosition[ITEMPOACH_MAX] = {
+		XMFLOAT2(-200.0f,-200.0f), XMFLOAT2(-100.0f,-200.0f),XMFLOAT2(0.0f,-200.0f),XMFLOAT2(100.0f,-200.0f),XMFLOAT2(200.0f,-200.0f),
+		XMFLOAT2(-200.0f,-100.0f), XMFLOAT2(-100.0f,-100.0f),XMFLOAT2(0.0f,-100.0f),XMFLOAT2(100.0f,-100.0f),XMFLOAT2(200.0f,-100.0f),
+		XMFLOAT2(-200.0f,0.0f),    XMFLOAT2(-100.0f,0.0f),   XMFLOAT2(0.0f,0.0f),   XMFLOAT2(100.0f,0.0f),   XMFLOAT2(200.0f,0.0f),
+		XMFLOAT2(-200.0f,100.0f),  XMFLOAT2(-100.0f,100.0f), XMFLOAT2(0.0f,100.0f), XMFLOAT2(100.0f,100.0f), XMFLOAT2(200.0f,100.0f),
+		XMFLOAT2(-200.0f,200.0f),  XMFLOAT2(-100.0f,200.0f), XMFLOAT2(0.0f,200.0f), XMFLOAT2(100.0f,200.0f), XMFLOAT2(200.0f,200.0f),
+};	//e’†SÀ•W‚©‚ç‚ÌˆÚ“®—Ê
+
 void ItemPoach::Init()
 {
 	Scene* scene = CManager::GetScene();
@@ -44,7 +52,7 @@ void ItemPoach::Init()
 	for (auto& item : ItemManager::GetInstance()->GetItemList()) {
 		_ItemPoachList.push_back(item);
 		item->SetPolygon(scene->AddGameObject<CPolygon>(TYPE_WIDGET));
-		item->GetPolygon()->Set(XMFLOAT2(0.0f, 0.0f), INIT_XMFLOAT2, XMFLOAT2(1.0f, 1.0f), world, item->GetTexture());
+		item->GetPolygon()->Set(XMFLOAT2(PoachPosition[cnt]), INIT_XMFLOAT2, XMFLOAT2(1.0f, 1.0f), world, item->GetTexture());
 		cnt++;
 	}
 	cnt = 0;
@@ -109,6 +117,7 @@ void ItemPoach::Update()
 		}
 
 		if (CInput::GetKeyTrigger('E')) {
+			//_ItemPoachList[_select].
 			TargetSelect* targetSelect = CManager::GetScene()->AddGameObject<TargetSelect>(TYPE_OBJECT);
 			targetSelect->Set(FLAG_ITEM_SELECT);
 			_isFirst = true;
