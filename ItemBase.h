@@ -36,7 +36,8 @@ private:
 
 public:
 	ItemBase() {
-		_scale = XMFLOAT3(2.0f, 2.0f, 2.0f);
+		_scale = XMFLOAT3(12.0f, 12.0f, 12.0f);
+		_animFrame = 0;
 	};
 
 	CTexture* GetTexture() {
@@ -62,6 +63,8 @@ protected:
 	int _num;	//ç°âΩå¬Ç©
 	CPolygon* _polygon; //2DÉ|ÉäÉSÉì
 	Billboard* _billboard;
+
+	int _animFrame = 0;
 };
 
 #endif // !ItemBase_H

@@ -43,8 +43,8 @@ void itemUi::Update()
 	if (Flag::GetGamePhase() == FLAG_ITEM_SELECT) {
 		if (_isFirst) {
 			Scene* scene = CManager::GetScene();
-			ItemPoach* itemPoach = scene->AddGameObject<ItemPoach>(TYPE_WIDGET);
-			//itemPoach->Init();
+			ItemPoach* itemPoach = scene->GetGameObject<ItemPoach>(TYPE_WIDGET);
+			itemPoach->SetDrawFlag(true);
 			_isFirst = false;
 		}
 	}

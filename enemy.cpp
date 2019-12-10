@@ -95,7 +95,7 @@ void Enemy::Attack()
 				_len.x /= (float)90;
 				_len.z /= (float)90;
 				CCamera* camera = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA);
-				camera->Set(this->GetCameraPosition(), _PLAYERPOSITION);
+				camera->Set(this->GetCameraPosition(), player->GetPosition());
 			}
 
 			//90ƒtƒŒ[ƒ€‚É‚È‚é‚Ü‚Å‚â‚é

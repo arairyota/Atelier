@@ -41,6 +41,7 @@ void TargetSelect::Uninit()
 
 void TargetSelect::Update()
 {
+	if (Flag::GetGamePhase() != FLAG_TARGET_SELECT) return;
 		if (_isFirst) {
 			Scene* scene = CManager::GetScene();
 			GameActor* player = SortTurn::GetGameActorFront();
@@ -128,7 +129,8 @@ void TargetSelect::ChangePhase()
 	Scene* scene = CManager::GetScene();
 
 	if (_oldSelectMode == FLAG_ITEM_SELECT) {
-		ItemPoach* itemPoach = scene->AddGameObject<ItemPoach>(TYPE_WIDGET);
+		ItemPoach* itemPoach = scene->GetGameObject<ItemPoach>(TYPE_WIDGET);
+		itemPoach->SetDrawFlag(true);
 		return;
 	}
 

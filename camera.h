@@ -1,6 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#define CAMERA_SPEED (10)
+
 #include "GameObject.h"
 
 
@@ -25,9 +27,24 @@ private:
 
 	bool is_enable;
 
-	
+	XMVECTOR _transFront;
+	XMVECTOR _transRight;
+	XMVECTOR _transUp;
+
+	XMVECTOR _ViewFront;
+	XMVECTOR _ViewRight;
+	XMVECTOR _ViewUp;
+
 public:
-	CCamera() {};
+	CCamera() {
+		_transRight = XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
+		_transUp = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+
+		_transRight = XMVector3Cross(_transFront, _transUp);
+		_transRight = XMVector3Normalize(_transRight);
+		_transUp = XMVector3Normalize(_transUp);
+		_transFront = XMVector3Normalize(_transFront);
+	};
 	void Init();
 	void Uninit();
 	void Update();

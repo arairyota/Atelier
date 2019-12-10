@@ -1,12 +1,16 @@
 #include "main.h"
 #include "renderer.h"
 #include "manager.h"
+#include "SortTurn.h"
 #include "Flag.h"
 #include "TextureManager.h"
 #include "texture.h"
 #include "GameObject.h"
 #include "object3D.h"
 #include "gameActor.h"
+#include "player.h"
+#include "enemy.h"
+#include "camera.h"
 #include "billboard.h"
 #include "OriBomd.h"
 #include "scene.h"
@@ -48,7 +52,24 @@ void OriBomd::Draw()
 
 void OriBomd::Use(XMFLOAT3 position)
 {
-	Scene* scene = CManager::GetScene();
-	_billboard = scene->AddGameObject<Billboard>(TYPE_OBJECT);
-	_billboard->Set(position, _scale, TextureManager::GetInstance()->GetTexture(ORIBOMD));
+	XMFLOAT3 pos = position;
+	pos.y = 20.0f;
+	if (_isFirst) {
+		
+		Scene* scene = CManager::GetScene();
+		_billboard = scene->AddGameObject<Billboard>(TYPE_OBJECT);
+		_billboard->Set(pos, _scale, TextureManager::GetInstance()->GetTexture(ORIBOMD));
+		_isFirst = false;
+	}
+
+	auto enemys = SortTurn::GetGameActorList<Enemy>();
+	if (SortTurn::GetGameActorList<Enemy>().front() == nullptr) return;
+	for (auto* enemy : enemys) {
+		if (enemy->GetGameActor()->_stats._isHit) {
+			if (_animFrame == 0) {	//‰Šú‰»
+				CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->Set(XMFLOAT3(pos.x, pos.y+ 10.0f, pos.z + 40.0f) ,pos);
+			}
+		}
+	}
+
 }

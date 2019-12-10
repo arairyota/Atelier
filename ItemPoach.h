@@ -44,7 +44,7 @@ public:
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
-	void Set(XMFLOAT2 position, XMFLOAT2 rotation, XMFLOAT2 scale, XMMATRIX mtx, CTexture* texture)override;
+	void SetDrawFlag(bool flag) {};
 	XMFLOAT2 GetPos()override { return _position; };
 	void Translation(XMMATRIX mtx, XMFLOAT2 position) {
 		_world = mtx;

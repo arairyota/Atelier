@@ -34,11 +34,16 @@ void Gauge::Uninit()
 
 }
 
-void Gauge::Set(XMMATRIX world, float* value)
+void Gauge::Set(XMMATRIX world, float* value, bool isDraw)
 {
 	_valuePtr = value;
 	_maxValue = *_valuePtr;
 	_base->SetLeftToRight(XMFLOAT2(0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f), XMFLOAT2(_len, 10.0f), world, TextureManager::GetInstance()->GetTexture(BLACKBAR));
 	_gauge->SetLeftToRight(XMFLOAT2(0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f), XMFLOAT2(_len, 10.0f), world, TextureManager::GetInstance()->GetTexture(REDBAR));
+	_isDraw = isDraw;
+	if (_isDraw) {
+		_base->SetDrawFlag(_isDraw);
+		_gauge->SetDrawFlag(_isDraw);
+	}
 	
 }

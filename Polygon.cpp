@@ -27,6 +27,7 @@ void CPolygon::Init()
 	_vertex[3].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
 	_Texture = nullptr;
+	_isDraw = false;
 }
 
 void CPolygon::Uninit()
@@ -43,7 +44,7 @@ void CPolygon::Update()
 
 void CPolygon::Draw()
 {
-	
+	if (!_isDraw) return;
 		UINT stride = sizeof(VERTEX3D);
 		UINT offset = 0;
 

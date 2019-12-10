@@ -50,6 +50,24 @@ void CCamera::Update()
 		_position.x += 1.0f;
 	}
 
+	if (CInput::GetKeyPress('O')) {
+
+	}
+
+	if (CInput::GetKeyPress('L')) {
+
+	}
+
+	if (CInput::GetKeyPress('+')) {
+
+	}
+
+	if (CInput::GetKeyPress('K')) {
+
+	}
+
+
+
 	/*if (CInput::GetKeyPress('Q')) {
 		_rotation.y += 0.01f;
 	}*/
@@ -109,13 +127,13 @@ void CCamera::Draw()
 void CCamera::Set(XMFLOAT3 thisPos, XMFLOAT3 thatPos)
 {
 	float radY = atan2f(thatPos.x - thisPos.x, thatPos.z - thisPos.z);	//YŽ²‰ñ“]
-	float radX = atan2f(thatPos.y - thisPos.y, thatPos.z - thisPos.z);	//XŽ²‰ñ“]
+	float radX = -atan2f(thatPos.y - thisPos.y, thatPos.z - thisPos.z);	//XŽ²‰ñ“]
 
 	//radY = XMConvertToRadians(radY);
 	//radX = XMConvertToRadians(radX);
 	_atAngle = 0.0f;
 	_position = thisPos;
 	_rotation.y = radY;
-	_rotation.x = 0.1;
+	_rotation.x = 0.2;
 }
 

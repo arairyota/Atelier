@@ -13,6 +13,7 @@
 CharacterUI::CharacterUI()
 {
 	
+	
 
 }
 
@@ -56,7 +57,10 @@ void CharacterUI::Set(GameActor* player)
 	//_mpIcon->Set(XMFLOAT2(0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f), XMFLOAT2(1.0f, 1.0f), _world, nullptr);
 
 	_hpGauge = scene->AddGameObject<Gauge>(TYPE_WIDGET);
-	_hpGauge->Set(_world, &_hp);
+	_hpGauge->Set(_world, &_hp, true);
+
+	_base->SetDrawFlag(true);
+
 
 	//_mpGauge = scene->AddGameObject<CPolygon>(TYPE_WIDGET);
 	//_mpGauge->Set(XMFLOAT2(0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f), XMFLOAT2(1.0f, 1.0f), _world, nullptr);

@@ -53,6 +53,7 @@ void ItemPoach::Init()
 		_ItemPoachList.push_back(item);
 		item->SetPolygon(scene->AddGameObject<CPolygon>(TYPE_WIDGET));
 		item->GetPolygon()->Set(XMFLOAT2(PoachPosition[cnt]), INIT_XMFLOAT2, XMFLOAT2(1.0f, 1.0f), world, item->GetTexture());
+		item->GetPolygon()->SetDrawFlag(false);
 		cnt++;
 	}
 	cnt = 0;
@@ -60,6 +61,9 @@ void ItemPoach::Init()
 	_cursor = scene->AddGameObject<CPolygon>(TYPE_WIDGET);
 
 	_cursor->Set(XMFLOAT2(0.0f, 0.0f), INIT_ROTATION2D, XMFLOAT2(1.0f, 1.0f), world, TextureManager::GetInstance()->GetTexture(CURSOR));
+	_cursor->SetDrawFlag(false);
+	_isFirst = true;
+	_waitFrame = 0;
 }
 
 void ItemPoach::Uninit()
@@ -121,14 +125,19 @@ void ItemPoach::Update()
 			TargetSelect* targetSelect = CManager::GetScene()->AddGameObject<TargetSelect>(TYPE_OBJECT);
 			targetSelect->Set(FLAG_ITEM_SELECT);
 			_isFirst = true;
-			Uninit();
+			_isDraw = false;
+			Flag::SetGamePhase(FLAG_TARGET_SELECT);
+			_waitFrame = 0;
+			//Uninit();
 		}
 
 		if (CInput::GetKeyTrigger('Q')) {
 			Flag::SetGamePhase(FLAG_ACTION_SELECT);
 			_select = 0;
-			Uninit();
+			//Uninit();
+			_isDraw = false;
 			_isFirst = true;
+			_waitFrame = 0;
 			
 		}
 		_cursor->SetPositon(XMFLOAT2(PoachPosition[_select].x + 50.0f, PoachPosition[_select].y - 50.0f));
@@ -138,9 +147,9 @@ void ItemPoach::Update()
 			CPolygon::SetDrawFlag(false);
 			for (auto item : _ItemPoachList) {
 				item->GetPolygon()->SetDrawFlag(false);
-				_cursor->SetDrawFlag(false);
 			}
-			_isFirst = false;
+			_cursor->SetDrawFlag(false);
+			_isFirst = true;
 		}
 		//_ItemPoachList[_select]->GetPolygon()->SetDrawFlag(false);
 	}
@@ -149,30 +158,31 @@ void ItemPoach::Update()
 
 void ItemPoach::Draw()
 {
-	CPolygon::Draw();
+	if(CPolygon::_isDraw) CPolygon::Draw();
+	
 	for (auto& item : ItemManager::GetInstance()->GetItemList()) {
 		//item->GetPolygon()->
 	}
 }
 
-void ItemPoach::Set(XMFLOAT2 position, XMFLOAT2 rotation, XMFLOAT2 scale, XMMATRIX mtx, CTexture * texture)
-{
-	
-	//Scene* scene = CManager::GetScene();
-	
-	//_polygon = scene->AddGameObject<CPolygon>(TYPE_WIDGET);
-
-	
-	////world *= XMMatrixRotationRollPitchYaw(_rotation.x, _rotation.y, _rotation.z);
-	//_world *= XMMatrixRotationY(_rotation.y);
-
-	////_polygon->Set(XMFLOAT2(0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f), _scale, _world, TextureManager::GetInstance()->GetTexture(ITEMPOACH));
-
-	//CRenderer::SetWorldViewProjection2D(_position, _rotation, _scale, _world);
-	//_polygon->Set(_position, XMFLOAT2(2.0f, 2.0f), XMFLOAT2(2.0f, 2.0f), _world, TextureManager::GetInstance()->GetTexture(ITEMPOACH));
-
-	
-}
+//void ItemPoach::Set(XMFLOAT2 position, XMFLOAT2 rotation, XMFLOAT2 scale, XMMATRIX mtx, CTexture * texture)
+//{
+//	
+//	//Scene* scene = CManager::GetScene();
+//	
+//	//_polygon = scene->AddGameObject<CPolygon>(TYPE_WIDGET);
+//
+//	
+//	////world *= XMMatrixRotationRollPitchYaw(_rotation.x, _rotation.y, _rotation.z);
+//	//_world *= XMMatrixRotationY(_rotation.y);
+//
+//	////_polygon->Set(XMFLOAT2(0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f), _scale, _world, TextureManager::GetInstance()->GetTexture(ITEMPOACH));
+//
+//	//CRenderer::SetWorldViewProjection2D(_position, _rotation, _scale, _world);
+//	//_polygon->Set(_position, XMFLOAT2(2.0f, 2.0f), XMFLOAT2(2.0f, 2.0f), _world, TextureManager::GetInstance()->GetTexture(ITEMPOACH));
+//
+//	
+//}
 
 ItemBase * ItemPoach::GetSelectItem()
 {

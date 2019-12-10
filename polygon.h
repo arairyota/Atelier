@@ -4,10 +4,11 @@
 #include "Object2d.h"
 
 class CPolygon : public Object2D {
-private:
-	bool _isDraw = false;
+
+	
 
 public:
+	bool _isDraw = false;
 	CPolygon() { _isDraw = false; }
 	virtual void Init();
 	virtual void Uninit();

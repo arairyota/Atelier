@@ -36,13 +36,15 @@ private:
 	float _maxValue;
 	float _nowValue;
 	GameActor* _player;
+	bool _isDraw;
 
 public:
 	void Init();
 	void Update();
 	void Draw();
 	void Uninit();
-	void Set(XMMATRIX world, float* value);
+	void Set(XMMATRIX world, float* value, bool isDraw);
+	void SetDrawFlag(bool flag) { _isDraw = flag; }
 };
 
 #endif // !Gauge_H

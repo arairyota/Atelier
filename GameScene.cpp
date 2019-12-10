@@ -65,7 +65,7 @@ void GameScene::Init()
 	Enemy* enemy = AddGameObject<Enemy>(TYPE_ENEMY);
 	Enemy* enemy1 = AddGameObject<Enemy>(TYPE_ENEMY);
 	playerInterface* _playerInterface = AddGameObject<playerInterface>(TYPE_WIDGET);
-	
+	ItemPoach* itemPoach = AddGameObject<ItemPoach>(TYPE_WIDGET);
 
 	Field->Set(INIT_SIZE_X, INIT_SIZE_Z, INIT_GRID_NUM_X, INIT_GRID_NUM_Z);
 	player->Set(XMFLOAT3(0.0f, 20.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(5.0f, 5.0f, 5.0f), araisan);

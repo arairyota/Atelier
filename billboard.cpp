@@ -72,7 +72,7 @@ void Billboard::Draw()
 	//debugStr = world.r[0].m128_f32[0];
 
 	
-
+	CRenderer::SetDepthEnable(false);
 	XMMATRIX world;
 	Scene* scene = CManager::GetScene();
 	UINT stride = sizeof(VERTEX3D);
@@ -101,8 +101,10 @@ void Billboard::Draw()
 	//sprintf("%f", world.r[0].m128_f32[0]);
 	//OutputDebugString();
 
+	
 	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); //トポロジ設定　頂点を結ぶルール
 	CRenderer::GetDeviceContext()->Draw(4, 0); //ポリゴン描画　（頂点数, どこから頂点やるか）
+	CRenderer::SetDepthEnable(true);
 }
 
 void Billboard::Set(XMFLOAT3 position, XMFLOAT3 scale, CTexture* texture)
