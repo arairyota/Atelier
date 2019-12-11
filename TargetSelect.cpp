@@ -46,7 +46,7 @@ void TargetSelect::Update()
 			Scene* scene = CManager::GetScene();
 			GameActor* player = SortTurn::GetGameActorFront();
 			CCamera* camera = scene->GetGameObject<CCamera>(TYPE_CAMERA);
-			camera->Set(player->GetCameraPosition(), XMFLOAT3(-20.0f, 5.0f, 100.0f));
+			camera->SetHoming(player->GetCameraPosition(), XMFLOAT3(-20.0f, 5.0f, 100.0f));
 			_isFirst = false;
 			//camera->Set(XMFLOAT3(10, 20, -20), _ENEMYPOSITION);
 		}

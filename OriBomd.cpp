@@ -67,7 +67,7 @@ void OriBomd::Use(XMFLOAT3 position)
 	for (auto* enemy : enemys) {
 		if (enemy->GetGameActor()->_stats._isHit) {
 			if (_animFrame == 0) {	//‰Šú‰»
-				CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->Set(XMFLOAT3(pos.x, pos.y+ 10.0f, pos.z + 40.0f) ,pos);
+				CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->SetHoming(XMFLOAT3(pos.x, pos.y+ 10.0f, pos.z + 40.0f) ,pos);
 			}
 		}
 	}
