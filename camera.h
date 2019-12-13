@@ -15,6 +15,8 @@ class CCamera : public GameObject
 {
 private:
 	RECT m_Viewport;
+
+	XMMATRIX	_invViewMatrix;
 	
 	float RotZ = 0.0f;
 	//float TransX = 0.0f;
@@ -79,7 +81,12 @@ public:
 	void Accele(float speed);
 
 	void Homing();
-	XMMATRIX* CalcLookAtMatrix(XMMATRIX* out, XMVECTOR* pos, XMVECTOR* look, XMVECTOR* up);
+	XMVECTOR* SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* pos, XMFLOAT3* look);
+	XMVECTOR* GetViewQuaternion() { return &_viewQuaternion; }
+
+	XMFLOAT3 GetPosition() { return _position; }
+	//XMMATRIX* Get
+
 	XMMATRIX GetView() { return m_ViewMatrix; };
 	XMFLOAT3 _position;
 	XMFLOAT3 _rotation;

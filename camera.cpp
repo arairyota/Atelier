@@ -26,6 +26,8 @@ void CCamera::Init()
 	m_Viewport.right = SCREEN_WIDTH;
 	m_Viewport.bottom = SCREEN_HEIGHT;
 	is_Enable = true;
+	XMFLOAT3 lookPos = XMFLOAT3(0.0f, 0.0f, 10.0f);
+	SetLookQuaternion(&_viewQuaternion, &_position, &lookPos);
 }
 
 
@@ -209,7 +211,6 @@ void CCamera::Update()
 
 void CCamera::Draw()
 {
-	XMMATRIX	m_InvViewMatrix;
 	XMMATRIX	m_ProjectionMatrix;
 
 	// ビューポート設定
@@ -225,12 +226,14 @@ void CCamera::Draw()
 
 	// ビューマトリクス設定
 	//m_InvViewMatrix = XMMatrixRotationRollPitchYaw(_rotation.x, _rotation.y, _rotation.z);
-	m_InvViewMatrix = XMMatrixRotationQuaternion(_transQuaternion);
-	m_InvViewMatrix *= XMMatrixTranslation(_position.x, _position.y, _position.z);
-	m_InvViewMatrix *= XMMatrixRotationY(_atAngle);
+	//m_InvViewMatrix = XMMatrixRotationQuaternion(_transQuaternion);	//エスコン風操作
+	_invViewMatrix = XMMatrixRotationQuaternion(_viewQuaternion);
+	
+	_invViewMatrix *= XMMatrixTranslation(_position.x, _position.y, _position.z);
+	_invViewMatrix *= XMMatrixRotationY(_atAngle);
 
 	XMVECTOR det;
-	m_ViewMatrix = XMMatrixInverse(&det, m_InvViewMatrix);
+	m_ViewMatrix = XMMatrixInverse(&det, _invViewMatrix);
 
 	CRenderer::SetViewMatrix(&m_ViewMatrix);
 
@@ -262,16 +265,21 @@ void CCamera::Accele(float speed)
 	_position.z += XMVectorGetZ(_transFront) * speed;
 }
 
-XMMATRIX* CCamera::CalcLookAtMatrix(XMMATRIX* out, XMVECTOR* pos, XMVECTOR* look, XMVECTOR* up)
+XMVECTOR* CCamera::SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* pos, XMFLOAT3* look)
 {
 	XMVECTOR x, y, z;
-	z = *look - *pos;
-	XMVector3Normalize(z);
-	//XMVector3Cross(x, z);
-	//XMVector3Normalize(x);
-	//XMVector3Normalize(y);
+	XMMATRIX out = XMMatrixIdentity();
+	XMFLOAT3 up = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	z = XMLoadFloat3(look) - XMLoadFloat3(&_position);
+	z = XMVector3Normalize(z);
+	y = XMVector3Normalize(XMLoadFloat3(&up));
+	x = XMVector3Cross(y, z);
+	x = XMVector3Normalize(x);
+	//y = XMVector3Normalize(XMVector2Cross(x, y));
 
-	//out->r->m128_f32[]
-
-	return nullptr;
+	out.r[0].m128_f32[0] = x.m128_f32[0]; out.r[0].m128_f32[1] = x.m128_f32[1]; out.r[0].m128_f32[2] = x.m128_f32[2]; out.r[0].m128_f32[3] = x.m128_f32[3];
+	out.r[1].m128_f32[0] = y.m128_f32[0]; out.r[1].m128_f32[1] = y.m128_f32[1]; out.r[1].m128_f32[2] = y.m128_f32[2]; out.r[1].m128_f32[3] = y.m128_f32[3];
+	out.r[2].m128_f32[0] = z.m128_f32[0]; out.r[2].m128_f32[1] = z.m128_f32[1]; out.r[2].m128_f32[2] = z.m128_f32[2]; out.r[2].m128_f32[3] = z.m128_f32[3];
+	*outQuaternion = XMQuaternionRotationMatrix(out);	//マトリクス→Quaternion
+	return outQuaternion;
 }

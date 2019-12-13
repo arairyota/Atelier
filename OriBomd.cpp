@@ -52,11 +52,10 @@ void OriBomd::Draw()
 
 void OriBomd::Use(XMFLOAT3 position)
 {
+	Scene* scene = CManager::GetScene();
 	XMFLOAT3 pos = position;
 	pos.y = 20.0f;
 	if (_isFirst) {
-		
-		Scene* scene = CManager::GetScene();
 		_billboard = scene->AddGameObject<Billboard>(TYPE_OBJECT);
 		_billboard->Set(pos, _scale, TextureManager::GetInstance()->GetTexture(ORIBOMD));
 		_isFirst = false;
@@ -67,7 +66,10 @@ void OriBomd::Use(XMFLOAT3 position)
 	for (auto* enemy : enemys) {
 		if (enemy->GetGameActor()->_stats._isHit) {
 			if (_animFrame == 0) {	//‰Šú‰»
-				CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->SetHoming(XMFLOAT3(pos.x, pos.y+ 10.0f, pos.z + 40.0f) ,pos);
+				//CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->SetHoming(XMFLOAT3(pos.x, pos.y+ 10.0f, pos.z + 40.0f) ,pos);
+				CCamera* camera = scene->GetGameObject<CCamera>(TYPE_CAMERA);
+				camera->SetLookQuaternion(camera->GetViewQuaternion(), &camera->GetPosition(), &_position);
+
 			}
 		}
 	}
