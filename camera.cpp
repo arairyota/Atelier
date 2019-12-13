@@ -198,14 +198,14 @@ void CCamera::Update()
 	
 	//選択したモードやスキルなどのカメラワークによって何か変える
 	if (Flag::GetGamePhase() == FLAG_ACTION_SELECT) {
-		//XMVECTOR rotation = XMQuaternionRotationAxis(_transUp, 0.001f);
-		//_viewQuaternion = XMQuaternionMultiply(_viewQuaternion, rotation);
-		//_viewQuaternion = XMQuaternionNormalize(_viewQuaternion);
-		//
-		//_mtxRotation = XMMatrixRotationQuaternion(_viewQuaternion);
-		//
-		//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
-		//_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
+		XMVECTOR rotation = XMQuaternionRotationAxis(_transUp, 0.001f);
+		_viewQuaternion = XMQuaternionMultiply(_viewQuaternion, rotation);
+		_viewQuaternion = XMQuaternionNormalize(_viewQuaternion);
+		
+		_mtxRotation = XMMatrixRotationQuaternion(_viewQuaternion);
+		
+		_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
+		_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
 	}
 
 	/*if (Flag::GetGamePhase() == FLAG_TARGET_SELECT) {
