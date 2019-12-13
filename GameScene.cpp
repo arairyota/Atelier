@@ -55,9 +55,9 @@ void GameScene::Init()
 	Flag::Init();
 	ItemManager::Create();
 	ItemManager::GetInstance()->AllLoad();
-	_bgm = new CAudioClip;
-	_bgm->Load("asset/BGM/HibariKochi.wav"); //wav‚Ì‚Ý
-	_bgm->Play(true);
+	//_bgm = new CAudioClip;
+	//_bgm->Load("asset/BGM/HibariKochi.wav"); //wav‚Ì‚Ý
+	//_bgm->Play(true);
 	CCamera* camera = AddGameObject<CCamera>(TYPE_CAMERA);
 	MeshField* Field = AddGameObject<MeshField>(TYPE_FIELD);
 	Town* town = AddGameObject<Town>(TYPE_OBJECT);
