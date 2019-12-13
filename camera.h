@@ -81,6 +81,7 @@ public:
 	void Accele(float speed);
 
 	void Homing();
+	void SetCameraPosition(XMFLOAT3 pos) { _position = pos; }
 	XMVECTOR* SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* pos, XMFLOAT3* look);
 	XMVECTOR* GetViewQuaternion() { return &_viewQuaternion; }
 

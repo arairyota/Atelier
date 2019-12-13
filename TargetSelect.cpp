@@ -46,7 +46,10 @@ void TargetSelect::Update()
 			Scene* scene = CManager::GetScene();
 			GameActor* player = SortTurn::GetGameActorFront();
 			CCamera* camera = scene->GetGameObject<CCamera>(TYPE_CAMERA);
-			camera->SetHoming(player->GetCameraPosition(), XMFLOAT3(-20.0f, 5.0f, 100.0f));
+			//camera->SetHoming(player->GetCameraPosition(), XMFLOAT3(-20.0f, 5.0f, 100.0f));
+			XMFLOAT3 lookPos = XMFLOAT3(-20.0f, 5.0f, 100.0f);
+			camera->SetCameraPosition(player->GetCameraPosition());
+			camera->SetLookQuaternion(camera->GetViewQuaternion(), &player->GetCameraPosition(), &lookPos);
 			_isFirst = false;
 			//camera->Set(XMFLOAT3(10, 20, -20), _ENEMYPOSITION);
 		}
