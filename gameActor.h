@@ -55,6 +55,7 @@ public:
 	virtual XMFLOAT3 GetCameraPosition()=0;
 	virtual float GetLife()=0;
 	virtual GameActor* GetGameActor() { return this; }
+	virtual void SetWaitTime(int waitTime) { _stats._waitTime += waitTime; }
 
 protected:
 	XMFLOAT3 _cameraPosition;

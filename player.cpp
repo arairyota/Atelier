@@ -213,7 +213,7 @@ void Player::Action()
 
 	if (Flag::GetSelectAction() == FLAG_ITEM_SELECT) {
 		ItemBase* item = scene->GetGameObject<ItemPoach>(TYPE_WIDGET)->GetSelectItem();
-		item->Use(_position);
+		item->Use(_position, this);
 	}
 
 	if (Flag::GetSelectAction() == FLAG_SKILL_SELECT) {

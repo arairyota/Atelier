@@ -82,7 +82,7 @@ public:
 
 	void Homing();
 	void SetCameraPosition(XMFLOAT3 pos) { _position = pos; }
-	XMVECTOR* SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* pos, XMFLOAT3* look);
+	XMVECTOR* SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* look);
 	XMVECTOR* GetViewQuaternion() { return &_viewQuaternion; }
 
 	XMFLOAT3 GetPosition() { return _position; }

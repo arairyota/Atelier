@@ -27,7 +27,7 @@ void CCamera::Init()
 	m_Viewport.bottom = SCREEN_HEIGHT;
 	is_Enable = true;
 	XMFLOAT3 lookPos = XMFLOAT3(0.0f, 0.0f, 10.0f);
-	SetLookQuaternion(&_viewQuaternion, &_position, &lookPos);
+	SetLookQuaternion(&_viewQuaternion, &lookPos);
 }
 
 
@@ -270,7 +270,7 @@ void CCamera::Accele(float speed)
 	_position.z += XMVectorGetZ(_transFront) * speed;
 }
 
-XMVECTOR* CCamera::SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* pos, XMFLOAT3* look)
+XMVECTOR* CCamera::SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* look)
 {
 	XMVECTOR x, y, z;
 	XMMATRIX out = XMMatrixIdentity();

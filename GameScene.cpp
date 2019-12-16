@@ -8,6 +8,7 @@
 #include "audio_clip.h"
 #include "input.h"
 #include "GameObject.h"
+#include "gameActor.h"
 #include "object2D.h"
 #include "ItemManager.h"
 #include "DamegeNumEffectFactory.h"
@@ -35,7 +36,7 @@
  std::list<GameActor*>SortTurn::_GameActor;
 
  static const CHARACTER_STATS puni = CHARACTER_STATS(100.0f, 1.0f, 100.0f, 35.0f, 0.0f, 10.0f);
- static const CHARACTER_STATS araisan = CHARACTER_STATS(10.0f, 300.0f, 300.0f, 123.0f, 0.0f, 20.0f);
+ static const CHARACTER_STATS araisan = CHARACTER_STATS(300.0f, 300.0f, 300.0f, 123.0f, 0.0f, 20.0f);
 
 
 GameScene::GameScene()
@@ -83,9 +84,9 @@ void GameScene::Init()
 
 void GameScene::Uninit()
 {
-	_bgm->Stop();
-	_bgm->Unload();
-	delete _bgm;
+	//_bgm->Stop();
+	//_bgm->Unload();
+	//delete _bgm;
 
 	SortTurn::AllDestory();
 

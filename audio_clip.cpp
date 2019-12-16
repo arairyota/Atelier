@@ -183,7 +183,7 @@ void CAudioClip::Stop()
 {
 	for (int j = 0; j < SOUND_SOURCE_MAX; j++)
 	{
-		m_SourceVoice[j]->Stop();
+ 		m_SourceVoice[j]->Stop();
 	}
 }
 

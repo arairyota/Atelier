@@ -27,12 +27,12 @@ class OriBomd : public AttackItem{
 private:
 
 public:
-	OriBomd() { _atk = 50.0f; _attribute = Fire; _num = 5; };
+	OriBomd() { _atk = 50.0f; _attribute = Fire; _num = 5;  _waitTime = 100; };
 	void Init()override;
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
-	void Use(XMFLOAT3 position)override;
+	void Use(XMFLOAT3 position, GameActor* user)override;
 
 protected:
 

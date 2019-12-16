@@ -12,6 +12,7 @@ data	:2019/08/12 12:21:33
 //////////////////////////////////////////////////////////////////////////////
 #include "object3D.h"
 #include "polygon.h"
+#include "gameActor.h"
 
 //////////////////////////////////////////////////////////////////////////////
 //define定義
@@ -57,12 +58,13 @@ public:
 		
 	}
 
-	virtual void Use(XMFLOAT3 position)=0;	//アイテム使用
+	virtual void Use(XMFLOAT3 position, GameActor* user)=0;	//アイテム使用
 protected:
 	
 	int _num;	//今何個か
 	CPolygon* _polygon; //2Dポリゴン
 	Billboard* _billboard;
+	int _waitTime;
 
 	int _animFrame = 0;
 };
