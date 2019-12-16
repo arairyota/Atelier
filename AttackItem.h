@@ -51,6 +51,7 @@ protected:
 	AttributeIndex _attribute;
 	XMFLOAT3 _len; //“G‚Æ‚Ì‹——£
 	CCamera* _camera;
+	XMVECTOR _vector; //“G‚Ö‚Ì•ûŒüƒxƒNƒgƒ‹
 };
 
 #endif // !AttackItem_H

@@ -27,7 +27,7 @@ void CManager::Init()
 
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 	
-	CManager::SetScene<GameScene>();
+	CManager::SetScene<TitleScene>();
 
 	
 

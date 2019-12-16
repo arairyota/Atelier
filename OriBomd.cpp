@@ -19,13 +19,14 @@
 void OriBomd::Init()
 {
 	
-	_atk = 50.0f; 
-	_attribute = Fire;
-	_num = 5;
+	//_atk = 80.0f; 
+	//_attribute = Fire;
+	//_num = 5;
+	_position = XMFLOAT3(0.0f, 20.0f, 0.0f);
 
 	_Texture = TextureManager::GetInstance()->GetTexture(ORIBOMD);
 	
-
+	_vector = XMVector3Normalize(_vector);
 	
 	//_polygon = scene->AddGameObject<CPolygon>(TYPE_WIDGET);
 	
@@ -70,12 +71,21 @@ void OriBomd::Use(XMFLOAT3 position, GameActor* user)
 	for (auto* enemy : enemys) {
 		if (enemy->GetGameActor()->_stats._isHit) {
 			if (_animFrame == 0) {	//‰Šú‰»
+				_position = XMFLOAT3(0.0f, 20.0f, 0.0f);
 				//CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->SetHoming(XMFLOAT3(pos.x, pos.y+ 10.0f, pos.z + 40.0f) ,pos);
+				_camera->SetCameraPosition(XMFLOAT3(0.0f, 50.0f, 70.0f));
 				_camera->SetLookQuaternion(_camera->GetViewQuaternion(), &_position);
 				_len.x = enemy->GetPosition().x - _position.x;
 				_len.z = enemy->GetPosition().z - _position.z;
-				_len.x /= ITEM_SPEED_FRAME;
-				_len.z /= ITEM_SPEED_FRAME;
+
+				//_vector = XMLoadFloat3(&_len);
+				//_vector = XMVector3Normalize(_vector);
+				//XMStoreFloat3(&_len, _vector);
+
+				_len.x /= (float)ITEM_SPEED_FRAME;
+				_len.z /= (float)ITEM_SPEED_FRAME;
+
+				
 			}
 
 			if (_animFrame == 60) {
@@ -83,14 +93,28 @@ void OriBomd::Use(XMFLOAT3 position, GameActor* user)
 				_camera->SetLookQuaternion(_camera->GetViewQuaternion(), &_position);
 			}
 
-			if (_animFrame < 90 && _animFrame > 180) {
-				_position.x -= _len.x;
-				_position.y -= _len.y;
+			if (_animFrame == 120) {
+				XMFLOAT3 pos = enemy->GetPosition();
+				pos.x -= 20.0f;
+				pos.y += 10.0f;
+				pos.z -= 80.0f;
+				_camera->SetCameraPosition(pos);
+				_camera->SetLookQuaternion(_camera->GetViewQuaternion(), &enemy->GetPosition());
+			}
+
+			if (_animFrame > 90 && _animFrame < 180) {
+				//_position.x += _len.x * 2.0f;
+				//_position.z += _len.z * 2.0f;
+
+				_position.x += _len.x;
+				_position.z += _len.z;
+
 			}
 
 			if (_animFrame == 180) {
 				_billboard->SetDestroy();
 				enemy->_stats._life -= BattleJudg::DamageJudg(_atk, enemy->_stats._def, _position);
+				this->SetDestroy();
 			}
 
 			if (_animFrame == 240) {
@@ -108,7 +132,7 @@ void OriBomd::Use(XMFLOAT3 position, GameActor* user)
 			}
 
 
-
+			_billboard->SetPosition(_position);
 			_animFrame++;
 		}
 	}

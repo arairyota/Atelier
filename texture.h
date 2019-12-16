@@ -29,6 +29,7 @@ enum TEXTURE
 	CHAR_UI_BASE,
 	BLACKBAR,
 	GROUND,
+	TITLELOGO,
 
 	TEXTURE_MAX,
 };
@@ -46,7 +47,7 @@ const TextureFile TextureData[TEXTURE_MAX] = {
 	{"asset/CharacterUIBase.tga", 400, 128},
 	{"asset/BlackBar.tga", 32, 32},
 	{"asset/ground.tga", 32, 32},
-
+	{"asset/TitleLogo.tga", 5931, 1926}
 };
 
 class CTexture

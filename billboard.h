@@ -19,6 +19,7 @@ public:
 	void Draw();
 	void Set(XMFLOAT3 position, XMFLOAT3 scale, CTexture* texture);
 	void DamegeNumEffect(XMFLOAT3 position, XMFLOAT3 scale, int texcoord, float transX);
+	void SetPosition(XMFLOAT3 pos) { _position = pos; }
 };
 
 #endif // !BILLBOARD_H
