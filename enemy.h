@@ -16,7 +16,7 @@ private:
 	XMFLOAT3  _len;
 	unsigned char _actFlag;		//‚Ç‚Ìs“®‚ğ‚µ‚Ä‚¢‚é‚©
 
-
+	ModelAnimation* _testModel;
 
 public:
 	Enemy() { _actFlag = ENEMY_INIT_FLAG; };

@@ -6,6 +6,7 @@
 #include "Flag.h"
 #include "gameActor.h"
 #include "SortTurn.h"
+#include "ModelAnimation.h"
 #include "camera.h"
 #include "enemy.h"
 #include "player.h"
@@ -25,6 +26,8 @@ void Enemy::Init()
 	//Load("asset/miku_01.obj");
 
 	_model = nullptr;
+	_testModel = new ModelAnimation;
+	_testModel->Load("asset/puni1.fbx");
 
 	//_model->Load("asset/miku_01.obj");
 
@@ -35,12 +38,13 @@ void Enemy::Init()
 
 void Enemy::Uninit()
 {
-	_model->Unload();
+	//_model->Unload();
+	_testModel->Unload();
 }
 
 void Enemy::Update()
 {
-	_rotation.y += 0.2f;
+	//_rotation.y += 0.2f;
 
 }
 
@@ -52,8 +56,8 @@ void Enemy::Draw()
 	world *= XMMatrixRotationRollPitchYaw(_rotation.x, _rotation.y, _rotation.z);
 	world *= XMMatrixTranslation(_position.x, _position.y, _position.z);
 	CRenderer::SetWorldMatrix(&world);
-
-	_model->Draw();
+	_testModel->Draw(world);
+	//_model->Draw();
 }
 
 void Enemy::Set(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 scale, CHARACTER_STATS stats)
@@ -76,9 +80,8 @@ void Enemy::Set(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 scale, CHARACTER_STATS stat
 
 	//Load("asset/miku_01.obj");
 
-	_model = new CModel;
-
-	_model->Load("asset/miku_01.obj");
+	//_model = new CModel;
+	//_model->Load("asset/miku_01.obj");
 }
 
 void Enemy::Attack()

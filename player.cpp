@@ -109,7 +109,7 @@ void Player::Set(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 scale, CHARACTER_STATS sta
 	//_model->Load("asset/miku_01.obj");
 
 	_testModel = new ModelAnimation;
-	_testModel->Load("asset/TestPlayerNeutral.fbx");
+	_testModel->Load();
 
 	_cameraPosition.x = _position.x + 10.0f;
 	_cameraPosition.y = _position.y + 20.0f;

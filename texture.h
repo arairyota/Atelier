@@ -47,7 +47,7 @@ const TextureFile TextureData[TEXTURE_MAX] = {
 	{"asset/CharacterUIBase.tga", 400, 128},
 	{"asset/BlackBar.tga", 32, 32},
 	{"asset/ground.tga", 32, 32},
-	{"asset/TitleLogo.tga", 5931, 1926}
+	{"asset/TitleLogo.tga", 5000, 3000}
 };
 
 class CTexture

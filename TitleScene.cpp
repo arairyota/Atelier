@@ -48,8 +48,8 @@ void TitleScene::Init()
 
 	Field->Set(INIT_SIZE_X, INIT_SIZE_Z, INIT_GRID_NUM_X, INIT_GRID_NUM_Z);
 	player->Set(XMFLOAT3(0.0f, 20.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(5.0f, 5.0f, 5.0f), araisan);
-	enemy->Set(XMFLOAT3(-20.0f, 5.0f, 100.0f), XMFLOAT3(0.0f, 3.14 / 2, 0.0f), XMFLOAT3(10.0f, 10.0f, 10.0f), puni);
-	enemy1->Set(XMFLOAT3(20.0f, 5.0f, 100.0f), XMFLOAT3(0.0f, 3.14 / 2, 0.0f), XMFLOAT3(10.0f, 10.0f, 10.0f), puni);
+	enemy->Set(XMFLOAT3(-20.0f, 5.0f, 100.0f), XMFLOAT3(0.0f, 3.14 / 2, 0.0f), XMFLOAT3(3.0f, 3.0f, 3.0f), puni);
+	enemy1->Set(XMFLOAT3(20.0f, 5.0f, 100.0f), XMFLOAT3(0.0f, 3.14 / 2, 0.0f), XMFLOAT3(3.0f, 3.0f, 3.0f), puni);
 
 	town->Set(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(7.0f, 7.0f, 7.0f));
 	

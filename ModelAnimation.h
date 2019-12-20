@@ -53,6 +53,7 @@ public:
 	void Update(int frame, int AnimType);
 	void Update(int frame, int animType, int anim1, int anim2, int blend);
 	void Draw(XMMATRIX Matrix);
+	void Load();
 	void Load(const char* FileName);
 	void Unload();
 	void DrawMesh(aiNode* Node, XMMATRIX Matrix);

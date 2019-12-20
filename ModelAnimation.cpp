@@ -49,7 +49,7 @@ void ModelAnimation::Draw(XMMATRIX Matrix)
 	_frame++;
 }
 
-void ModelAnimation::Load(const char * FileName)
+void ModelAnimation::Load()
 {
 	_scene[0] = aiImportFile("asset/HumanNeutral.fbx", aiProcessPreset_TargetRealtime_MaxQuality);
 	_scene[1] = aiImportFile("asset/HumanSkill.fbx", aiProcessPreset_TargetRealtime_MaxQuality);
@@ -115,6 +115,70 @@ void ModelAnimation::Load(const char * FileName)
 		delete[] index;
 	}
 
+}
+
+void ModelAnimation::Load(const char* FileName)
+{
+	_scene[0] = aiImportFile(FileName, aiProcessPreset_TargetRealtime_MaxQuality);
+
+	_meshNum = _scene[0]->mNumMeshes;
+
+	_mesh = new MESH[_meshNum];
+
+	for (int m = 0; m < _meshNum; m++) {
+		aiMesh* mesh = _scene[0]->mMeshes[m];
+
+		VERTEX3D* vertex = new VERTEX3D[mesh->mNumVertices];
+
+		for (int i = 0; i < mesh->mNumVertices; i++) {
+			vertex[i].Position = XMFLOAT3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
+			vertex[i].Normal = XMFLOAT3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
+			vertex[i].Diffuse = XMFLOAT4(1, 1, 1, 1);
+			vertex[i].TexCoord = XMFLOAT2((float)mesh->mTextureCoords[0][i].x, (float)mesh->mTextureCoords[0][i].y);
+		}
+
+		//頂点バッファ生成
+		{
+			D3D11_BUFFER_DESC bd;
+			ZeroMemory(&bd, sizeof(bd));
+			bd.Usage = D3D11_USAGE_DEFAULT;
+			bd.ByteWidth = sizeof(VERTEX3D) * mesh->mNumVertices;
+			bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+			bd.CPUAccessFlags = 0;
+			D3D11_SUBRESOURCE_DATA sd;
+			ZeroMemory(&sd, sizeof(sd));
+			sd.pSysMem = vertex;
+			CRenderer::GetDevice()->CreateBuffer(&bd, &sd, &_mesh[m]._vertexBuffer);
+		}
+		delete[] vertex;
+
+		USHORT* index;
+		index = new USHORT[mesh->mNumFaces * 3];
+
+		for (int i = 0; i < mesh->mNumFaces; i++) {
+			index[i * 3 + 0] = mesh->mFaces[i].mIndices[0];
+			index[i * 3 + 1] = mesh->mFaces[i].mIndices[1];
+			index[i * 3 + 2] = mesh->mFaces[i].mIndices[2];
+
+
+		}
+		_mesh[m]._indexNum = mesh->mNumFaces * 3;
+
+		{
+			D3D11_BUFFER_DESC bd;
+			ZeroMemory(&bd, sizeof(bd));
+			bd.Usage = D3D11_USAGE_DEFAULT;
+			bd.ByteWidth = sizeof(USHORT) * _mesh[m]._indexNum;
+			bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+			bd.CPUAccessFlags = 0;
+
+			D3D11_SUBRESOURCE_DATA sd;
+			ZeroMemory(&sd, sizeof(sd));
+			sd.pSysMem = index;
+			CRenderer::GetDevice()->CreateBuffer(&bd, &sd, &_mesh[m]._indexBuffer);
+		}
+		delete[] index;
+	}
 }
 
 void ModelAnimation::Unload()

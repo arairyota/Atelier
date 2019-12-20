@@ -3,6 +3,7 @@
 #include "renderer.h"
 #include "input.h"
 #include "GameObject.h"
+#include "enemy.h"
 #include "camera.h"
 #include "Flag.h"
 #include "scene.h"
@@ -140,10 +141,10 @@ void CCamera::Update()
 			_transQuaternion = XMQuaternionMultiply(_transQuaternion, rotation);
 			_transQuaternion = XMQuaternionNormalize(_transQuaternion);
 
-			_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
+			//_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
 
-			_transUp = XMVector3TransformNormal(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), _mtxRotation);
-			_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
+			//_transUp = XMVector3TransformNormal(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), _mtxRotation);
+			//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
 		}
 
 		if (CInput::GetKeyPress('K')) {
@@ -151,10 +152,10 @@ void CCamera::Update()
 			_transQuaternion = XMQuaternionMultiply(_transQuaternion, rotation);
 			_transQuaternion = XMQuaternionNormalize(_transQuaternion);
 
-			_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
+			//_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
 
-			_transUp = XMVector3TransformNormal(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), _mtxRotation);
-			_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
+			//_transUp = XMVector3TransformNormal(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), _mtxRotation);
+			//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
 		}
 
 		if (CInput::GetKeyPress('L')) {
@@ -162,10 +163,10 @@ void CCamera::Update()
 			_transQuaternion = XMQuaternionMultiply(_transQuaternion, rotation);
 			_transQuaternion = XMQuaternionNormalize(_transQuaternion);
 
-			_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
+			//_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
 
-			_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
-			_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
+			//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
+			//_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
 
 			//313233 くぉ→マトリクス
 			//_mtxRotationY = XMMatrixRotationY(XMConvertToRadians(ROTASION_SPEED));
@@ -179,10 +180,10 @@ void CCamera::Update()
 			_transQuaternion = XMQuaternionMultiply(_transQuaternion, rotation);
 			_transQuaternion = XMQuaternionNormalize(_transQuaternion);
 
-			_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
+			//_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
 
-			_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
-			_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
+			//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
+			//_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
 		}
 		
 	}
@@ -196,8 +197,25 @@ void CCamera::Update()
 	}*/
 
 	
+	
+
+	_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
+	_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
+	_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
+
+	/*if (Flag::GetGamePhase() == FLAG_TARGET_SELECT) {
+ 		this->Set(XMFLOAT3(50.0f, 50.0f, -50.0f), false, );
+	}*/
 	//選択したモードやスキルなどのカメラワークによって何か変える
 	if (Flag::GetGamePhase() == FLAG_ACTION_SELECT) {
+		Accele(&_transRight, 0.1f);
+		SetLookQuaternion(&_transQuaternion, &CManager::GetScene()->GetGameObject<Player>(TYPE_PLAYER)->GetPosition());
+
+		SetLookQuaternion(&_viewQuaternion, &CManager::GetScene()->GetGameObject<Player>(TYPE_PLAYER)->GetPosition());
+		
+
+
+
 		//XMVECTOR rotation = XMQuaternionRotationAxis(_transUp, 0.001f);
 		//_viewQuaternion = XMQuaternionMultiply(_viewQuaternion, rotation);
 		//_viewQuaternion = XMQuaternionNormalize(_viewQuaternion);
@@ -207,11 +225,6 @@ void CCamera::Update()
 		//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
 		//_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
 	}
-
-	/*if (Flag::GetGamePhase() == FLAG_TARGET_SELECT) {
- 		this->Set(XMFLOAT3(50.0f, 50.0f, -50.0f), false, );
-	}*/
-
 }
 
 
@@ -263,11 +276,11 @@ void CCamera::SetHoming(XMFLOAT3 thisPos, XMFLOAT3 thatPos)
 	_rotation.x = 0.2;
 }
 
-void CCamera::Accele(float speed)
+void CCamera::Accele(XMVECTOR* vector, float speed)
 {
-	_position.x += XMVectorGetX(_transFront) * speed;
-	_position.y += XMVectorGetY(_transFront) * speed;
-	_position.z += XMVectorGetZ(_transFront) * speed;
+	_position.x += XMVectorGetX(*vector) * speed;
+	_position.y += XMVectorGetY(*vector) * speed;
+	_position.z += XMVectorGetZ(*vector) * speed;
 }
 
 XMVECTOR* CCamera::SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* look)

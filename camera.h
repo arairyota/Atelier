@@ -78,7 +78,7 @@ public:
 	void Update();
 	void Draw();
 	void SetHoming(XMFLOAT3 thisPos, XMFLOAT3 ThatPos);
-	void Accele(float speed);
+	void Accele(XMVECTOR* vector, float speed);
 
 	void Homing();
 	void SetCameraPosition(XMFLOAT3 pos) { _position = pos; }
