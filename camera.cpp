@@ -185,6 +185,46 @@ void CCamera::Update()
 			//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
 			//_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
 		}
+
+		//ツール用処理仮
+		{
+			//正面
+			XMFLOAT3 initPos = XMFLOAT3(0.0f, 0.0f, 0.0f);
+			if (CInput::GetKeyTrigger('1') || CInput::GetKeyTrigger(VK_NUMPAD1)) {
+				SetCameraPosition(XMFLOAT3(0.0f, 0.0f, -100.0f));
+				SetLookQuaternion(&_viewQuaternion, &initPos);
+			}
+
+			//右面
+			if (CInput::GetKeyTrigger('3') || CInput::GetKeyTrigger(VK_NUMPAD3)) {
+				SetCameraPosition(XMFLOAT3(100.0f, 0.0f, 0.0f));
+				SetLookQuaternion(&_viewQuaternion, &initPos);
+			}
+
+			//真上
+			if (CInput::GetKeyTrigger('7') || CInput::GetKeyTrigger(VK_NUMPAD7)) {
+				SetCameraPosition(XMFLOAT3(0.0f, 100.0f, 0.0f));
+				SetLookQuaternion(&_viewQuaternion, &initPos);
+			}
+
+			//後ろ
+			if ((CInput::GetKeyTrigger('1') || CInput::GetKeyTrigger(VK_NUMPAD1)) && CInput::GetKeyPress(VK_CONTROL)) {
+				SetCameraPosition(XMFLOAT3(0.0f, 0.0f, 100.0f));
+				SetLookQuaternion(&_viewQuaternion, &initPos);
+			}
+
+			//左面
+			if ((CInput::GetKeyTrigger('3') || CInput::GetKeyTrigger(VK_NUMPAD3)) && CInput::GetKeyPress(VK_CONTROL)) {
+				SetCameraPosition(XMFLOAT3(-100.0f, 0.0f, 0.0f));
+				SetLookQuaternion(&_viewQuaternion, &initPos);
+			}
+
+			//真下
+			if ((CInput::GetKeyTrigger('7') || CInput::GetKeyTrigger(VK_NUMPAD7)) && CInput::GetKeyPress(VK_CONTROL)) {
+				SetCameraPosition(XMFLOAT3(0.0f, -100.0f, 0.0f));
+				SetLookQuaternion(&_viewQuaternion, &initPos);
+			}
+		}
 		
 	}
 	
@@ -208,14 +248,10 @@ void CCamera::Update()
 	}*/
 	//選択したモードやスキルなどのカメラワークによって何か変える
 	if (Flag::GetGamePhase() == FLAG_ACTION_SELECT) {
-		Accele(&_transRight, 0.1f);
-		SetLookQuaternion(&_transQuaternion, &CManager::GetScene()->GetGameObject<Player>(TYPE_PLAYER)->GetPosition());
-
-		SetLookQuaternion(&_viewQuaternion, &CManager::GetScene()->GetGameObject<Player>(TYPE_PLAYER)->GetPosition());
+		//Accele(&_transRight, 0.1f);
+		//SetLookQuaternion(&_transQuaternion, &CManager::GetScene()->GetGameObject<Player>(TYPE_PLAYER)->GetPosition());
+		//SetLookQuaternion(&_viewQuaternion, &CManager::GetScene()->GetGameObject<Player>(TYPE_PLAYER)->GetPosition());
 		
-
-
-
 		//XMVECTOR rotation = XMQuaternionRotationAxis(_transUp, 0.001f);
 		//_viewQuaternion = XMQuaternionMultiply(_viewQuaternion, rotation);
 		//_viewQuaternion = XMQuaternionNormalize(_viewQuaternion);

@@ -54,7 +54,7 @@ void MeshField::Draw(void)
 	world *= XMMatrixTranslation(_position.x, _position.y, _position.z);
 	CRenderer::SetWorldMatrix(&world);
 	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); //トポロジ設定　頂点を結ぶルール
-	CRenderer::GetDeviceContext()->DrawIndexed(_indexNum, 0, 0); //ポリゴン描画　（頂点数, どこから頂点やるか）
+	//CRenderer::GetDeviceContext()->DrawIndexed(_indexNum, 0, 0); //ポリゴン描画　（頂点数, どこから頂点やるか）
 }
 
 void MeshField::Set(float SizeX, float SizeZ, int GridNumX, int GridNumZ)
