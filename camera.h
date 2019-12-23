@@ -17,18 +17,10 @@ private:
 	RECT m_Viewport;
 
 	XMMATRIX	_invViewMatrix;
-	
-	float RotZ = 0.0f;
-	//float TransX = 0.0f;
-	//float TransY = 50.0f;
-	//float TransZ = -100.0f;
 
 	float _atAngle = 0.0f; //注視点回転用アングル
 
 	float _len = 0.0f;
-
-	//XMFLOAT3 _position;
-	//XMFLOAT3 _rotation;
 
 	XMMATRIX	m_ViewMatrix;
 	XMMATRIX	_mtxRotationY;
@@ -46,8 +38,6 @@ private:
 
 	XMVECTOR _transQuaternion;
 	XMVECTOR _viewQuaternion;
-
-	
 
 public:
 	CCamera() {
@@ -80,7 +70,6 @@ public:
 	void SetHoming(XMFLOAT3 thisPos, XMFLOAT3 ThatPos);
 	void Accele(XMVECTOR* vector, float speed);
 
-	void Homing();
 	void SetCameraPosition(XMFLOAT3 pos) { _position = pos; }
 	XMVECTOR* SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* look);
 	XMVECTOR* GetViewQuaternion() { return &_viewQuaternion; }

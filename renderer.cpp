@@ -21,6 +21,7 @@ ID3D11Buffer*			CRenderer::m_ViewBuffer = NULL;
 ID3D11Buffer*			CRenderer::m_ProjectionBuffer = NULL;
 ID3D11Buffer*			CRenderer::m_MaterialBuffer = NULL;
 ID3D11Buffer*			CRenderer::m_LightBuffer = NULL;
+ID3D11Buffer*			CRenderer::_boneBuffer = nullptr;
 
 
 ID3D11DepthStencilState* CRenderer::m_DepthStateEnable;
@@ -319,6 +320,7 @@ void CRenderer::Uninit()
 	if( m_SwapChain )			m_SwapChain->Release();
 	if( m_ImmediateContext )	m_ImmediateContext->Release();
 	if( m_D3DDevice )			m_D3DDevice->Release();
+	if (_boneBuffer) _boneBuffer->Release();
 
 }
 
@@ -451,5 +453,10 @@ void CRenderer::DrawIndexed( unsigned int IndexCount, unsigned int StartIndexLoc
 	m_ImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 	m_ImmediateContext->DrawIndexed( IndexCount, StartIndexLocation, BaseVertexLocation );
 
+}
+
+void CRenderer::SetBoneBuffer(ID3D11Buffer* boneBuffer)
+{
+	m_ImmediateContext->VSSetConstantBuffers(5, 1, &boneBuffer);	//レジスタ５を使う
 }
 

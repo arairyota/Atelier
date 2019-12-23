@@ -71,6 +71,7 @@
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="skillUi.cpp" />
+    <ClCompile Include="SkinMeshModel.cpp" />
     <ClCompile Include="TargetSelect.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -170,6 +171,10 @@
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="skillUi.h" />
+    <ClInclude Include="SkinMeshModel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="SortTurn.h" />
     <ClInclude Include="TargetSelect.h" />
     <ClInclude Include="template.h" />
@@ -263,6 +268,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -293,6 +299,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

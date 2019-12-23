@@ -54,6 +54,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		hInstance,
 		NULL);
 
+	CoInitializeEx(0, COINITBASE_MULTITHREADED);
 
 	// 初期化処理(ウィンドウを作成してから行う)
 	CManager::Init();
@@ -110,6 +111,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	// ウィンドウクラスの登録を解除
 	UnregisterClass(CLASS_NAME, wcex.hInstance);
+
+	CoUninitialize();
 
 	// 終了処理
 	CManager::Uninit();

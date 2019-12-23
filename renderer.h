@@ -1,6 +1,10 @@
 #ifndef RENDER_H
 #define RENDER_H
 
+#include <string>
+
+#pragma comment(lib, "assimp.lib")
+
 // 頂点構造体
 struct VERTEX3D
 {
@@ -41,7 +45,11 @@ struct MATERIAL
 };
 
 
-
+struct BONE {
+	XMMATRIX Matrix;				//空間の場所
+	
+	XMMATRIX OffsetMatrix;		//ボーンが原点からどれだけ離れているか
+};
 
 // マテリアル構造体
 struct DX11_MODEL_MATERIAL
@@ -94,6 +102,7 @@ private:
 	static ID3D11Buffer*			m_ProjectionBuffer;
 	static ID3D11Buffer*			m_MaterialBuffer;
 	static ID3D11Buffer*			m_LightBuffer;
+	static ID3D11Buffer* _boneBuffer;
 
 /*
 	static XMMATRIX				m_WorldMatrix;
@@ -121,6 +130,7 @@ public:
 	static void SetIndexBuffer( ID3D11Buffer* IndexBuffer );
 	static void SetTexture( CTexture* Texture );
 	static void DrawIndexed( unsigned int IndexCount, unsigned int StartIndexLocation, int BaseVertexLocation );
+	static void SetBoneBuffer(ID3D11Buffer* boneBuffer);
 
 	static ID3D11Device* GetDevice( void ){ return m_D3DDevice; }
 	static ID3D11DeviceContext* GetDeviceContext( void ){ return m_ImmediateContext; }
