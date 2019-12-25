@@ -164,9 +164,6 @@
     <ClCompile Include="texture.cpp">
       <Filter>GameSubsutance\renderer\texture</Filter>
     </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ItemManager.cpp">
       <Filter>GameSubsutance\Item</Filter>
     </ClCompile>
@@ -194,11 +191,11 @@
     <ClCompile Include="scene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SkinMeshModel.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="WICTextureLoader.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>GameSubsutance\renderer\texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -378,9 +375,6 @@
     </ClInclude>
     <ClInclude Include="DamegeNumEffectFactory.h">
       <Filter>GameSubsutance\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="SkinMeshModel.h">
-      <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="WICTextureLoader.h">
       <Filter>ヘッダー ファイル</Filter>
