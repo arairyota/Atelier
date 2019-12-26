@@ -46,6 +46,9 @@
     <Filter Include="GameSubsutance\Effect">
       <UniqueIdentifier>{118b54fe-4854-473d-baf4-42d0b8bcce8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ImGUI">
+      <UniqueIdentifier>{de9c0d85-3128-490d-a35f-52dc2b0f2759}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="pixelShader.hlsl">
@@ -378,6 +381,9 @@
     </ClInclude>
     <ClInclude Include="WICTextureLoader.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiApp.h">
+      <Filter>ImGUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
