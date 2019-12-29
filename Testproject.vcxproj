@@ -40,6 +40,7 @@
     <ClCompile Include="BattleJudg.cpp" />
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="CamearEditor.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="CharacterUI.cpp" />
     <ClCompile Include="CObject.cpp" />
@@ -51,6 +52,11 @@
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Gauge.cpp" />
+    <ClCompile Include="Imgui.cpp" />
+    <ClCompile Include="imgui_demo.cpp" />
+    <ClCompile Include="imgui_draw.cpp" />
+    <ClCompile Include="imgui_impl_dx11.cpp" />
+    <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="ItemPoach.cpp" />
@@ -102,6 +108,7 @@
     </ClInclude>
     <ClInclude Include="billboard.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="CamearEditor.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="CharacterUI.h">
       <SubType>
@@ -130,10 +137,17 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="imconfig.h" />
+    <ClInclude Include="imgui.h" />
     <ClInclude Include="ImGuiApp.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="imgui_impl_dx11.h" />
+    <ClInclude Include="imgui_internal.h" />
+    <ClInclude Include="imstb_rectpack.h" />
+    <ClInclude Include="imstb_textedit.h" />
+    <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="ItemBase.h">
       <SubType>
