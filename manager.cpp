@@ -1,6 +1,11 @@
 #include <list>
 #include <typeinfo>
 
+#include "imgui.h"
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
+
+
 #include "main.h"
 #include "renderer.h"
 #include "manager.h"
@@ -14,9 +19,6 @@
 #include "audio_clip.h"
 
 Scene* CManager::_Scene = nullptr;
-//Wall* g_Wall;
-//Wall* g_WallLeft;
-//Wall* g_WallFront;
 
 void CManager::Init()
 {
@@ -29,9 +31,14 @@ void CManager::Init()
 	
 	CManager::SetScene<TitleScene>();
 
-	
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	
+	ImGui::StyleColorsDark();
+
+	ImGui_ImplWin32_Init(GetWindow());
+	ImGui_ImplDX11_Init(CRenderer::GetDevice(), CRenderer::GetDeviceContext());
 }
 
 void CManager::Uninit()
@@ -41,23 +48,8 @@ void CManager::Uninit()
 	_Scene->Uninit();
 	delete _Scene;
 
-	/*g_Wall->Uninit();
-	g_WallLeft->Uninit();
-	g_WallFront->Uninit();
-*/
-
-	
-
-
-
 	CRenderer::Uninit();
-	
-	/*g_Polygon1->Uninit();
-	
-	for (int cnt = 0; cnt < 2; cnt++) {
-		g_Polygon[cnt]->Uninit();
-		delete g_Polygon[cnt];
-	}*/
+
 	CInput::Uninit();
 	CAudioClip::Uninit();
 }
@@ -83,7 +75,3 @@ Scene* CManager::GetScene()
 {
 	return _Scene;
 }
-
-//template <typename T>
-//void CManager::SetScene()
-

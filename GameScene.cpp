@@ -117,5 +117,7 @@ void GameScene::Update()
 	if (CInput::GetKeyTrigger(VK_SPACE)) {
 		CManager::SetScene<ResultScene>();
 	}
+
+	
 	
 }

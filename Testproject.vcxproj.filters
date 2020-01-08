@@ -218,6 +218,9 @@
     <ClCompile Include="imgui_widgets.cpp">
       <Filter>ImGUI</Filter>
     </ClCompile>
+    <ClCompile Include="imgui_impl_win32.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -425,6 +428,12 @@
       <Filter>ImGUI</Filter>
     </ClInclude>
     <ClInclude Include="imconfig.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_sdl.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_win32.h">
       <Filter>ImGUI</Filter>
     </ClInclude>
   </ItemGroup>
