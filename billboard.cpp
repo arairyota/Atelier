@@ -20,7 +20,7 @@ void Billboard::Init()
 	_vertex[0].Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	_vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	_vertex[0].Diffuse = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
-	_vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);	//テクスチャ座標
+	_vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);	//テクスチャ座
 
 	_vertex[1].Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	_vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);

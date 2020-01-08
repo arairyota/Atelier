@@ -7,6 +7,8 @@
 #include "imgui_impl_dx11.h"
 #include <d3d11.h>
 
+#include "CamearEditor.h"
+
 const char* CLASS_NAME = "DX11AppClass";
 const char* WINDOW_NAME = "DX11";
 
@@ -26,6 +28,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 
 HWND g_Window;
+
+CamearEditor* editor;
 //extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 HWND GetWindow()
@@ -70,14 +74,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		hInstance,
 		NULL);
 
-	// ウインドウの表示(初期化処理の後に行う)
-	ShowWindow(g_Window, SW_SHOWDEFAULT);
-	UpdateWindow(g_Window);
+	
 
 	CoInitializeEx(0, COINITBASE_MULTITHREADED);
 
 	// 初期化処理(ウィンドウを作成してから行う)
 	CManager::Init();
+
+	//Imgui初期化
+	editor = new CamearEditor;
+	editor->Init();
 
 	//if (!CreateDeviceD3D(g_Window))
 	//{
@@ -89,9 +95,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//ImGui_ImplWin32_Init(g_Window);
 	//ImGui_ImplDX11_Init(CRenderer::GetDevice() , CRenderer::GetDeviceContext());
 
-	bool show_demo_window = true;
-	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+	//bool show_demo_window = true;
+	//bool show_another_window = false;
+	//ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	// Main loop
 	bool done = false;
@@ -137,43 +143,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				// 更新処理
 				CManager::Update();
 
-				
-
-				ImGui_ImplDX11_NewFrame();
-				ImGui_ImplWin32_NewFrame();
-				ImGui::NewFrame();
-
-				/*if (show_demo_window) {
-					ImGui::ShowDemoWindow(&show_demo_window);
-				}*/
-
-				{
-					//static float f = 0.0f;
-					//static int counter = 0;
-
-					ImGui::Begin("Hello, world!",nullptr, true);                          // Create a window called "Hello, world!" and append into it.
-
-					ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-					//ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-					//ImGui::Checkbox("Another Window", &show_another_window);
-					//
-					//ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-					//ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-					//
-					//if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-					//	counter++;
-					//ImGui::SameLine();
-					//ImGui::Text("counter = %d", counter);
-					//
-					//ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-					ImGui::End();
-				}
-
-				// Rendering
-				ImGui::Render();
-				//CRenderer::GetDeviceContext()->OMSetRenderTargets(1, &g_mainRenderTargetView, NULL);
-				//CRenderer::GetDeviceContext()->ClearRenderTargetView(g_mainRenderTargetView, (float*)&clear_color);
-				//ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+				//imgui描画
+				editor->Draw();
 
 				// 描画処理
 				CManager::Draw();
@@ -187,6 +158,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	UnregisterClass(CLASS_NAME, wcex.hInstance);
 
 	CoUninitialize();
+
+	editor->Uninit();
 
 	// 終了処理
 	CManager::Uninit();
