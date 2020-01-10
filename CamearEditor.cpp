@@ -1,3 +1,4 @@
+#include <string>
 #include "main.h"
 #include "renderer.h"
 #include "manager.h"
@@ -34,29 +35,56 @@ void CamearEditor::Uninit()
 
 void CamearEditor::Update()
 {
-	
+	//ImGuiIO::MousePos()
 }
 
 void CamearEditor::Draw()
 {
+	//手抜き宣言
+	std::string textName = "AddButton";
+	ImVec2 buttonSize = ImVec2(10.0f, 10.0f);
+	float f = 0.5f;
+	
+
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	if (_show_demo_window) {
-		ImGui::ShowDemoWindow(&_show_demo_window);
+	//if (_show_demo_window) {
+	//	ImGui::ShowDemoWindow(&_show_demo_window);
+	//}
+
+	//imguiメニューバー定義
+	{
+		ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(320, 500), ImGuiCond_Once);
+		ImGui::Begin("CameraEditor", nullptr, ImGuiWindowFlags_MenuBar);
 	}
 
-	{
-		ImGui::SetNextWindowSize(ImVec2(320, 100), 0);
-		ImGui::Begin("hoge", &_show_another_window);
-		ImGui::Text("fugafuga");
-		ImGui::End();
+	ImGui::SliderFloat("cameraPositionX", &f, 0.0f, 1.0f);
+	ImGui::SliderFloat("cameraPositionY", &f, 0.0f, 1.0f);
+	ImGui::SliderFloat("cameraPositionZ", &f, 0.0f, 1.0f);
+
+	if (ImGui::Button(textName.c_str())) {
+		
 	}
+
+	ImGui::End();
+
+	//imguiメニューバー定義
+	{
+		ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(320, 100), ImGuiCond_Once);
+		ImGui::Begin("CameraEditor", nullptr, ImGuiWindowFlags_MenuBar);
+	}
+
+	for (UINT cnt = 0; cnt < 10; cnt++) {
+		ImGui::Text("%d", cnt);
+	}
+
+	ImGui::End();
 
 	// Renderin
 	ImGui::Render();
-	//CRenderer::GetDeviceContext()->OMSetRenderTargets(1, &g_mainRenderTargetView, NULL);
-	//CRenderer::GetDeviceContext()->ClearRenderTargetView(g_mainRenderTargetView, (float*)&clear_color);
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }

@@ -49,6 +49,12 @@
     <Filter Include="ImGUI">
       <UniqueIdentifier>{de9c0d85-3128-490d-a35f-52dc2b0f2759}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{7de76766-c357-468f-850a-3f797ea86f6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\CameraEditor">
+      <UniqueIdentifier>{c3f8bc6d-99ff-4dae-ae28-1f6219f9475a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="pixelShader.hlsl">
@@ -200,9 +206,6 @@
     <ClCompile Include="TextureManager.cpp">
       <Filter>GameSubsutance\renderer\texture</Filter>
     </ClCompile>
-    <ClCompile Include="CamearEditor.cpp">
-      <Filter>ImGUI</Filter>
-    </ClCompile>
     <ClCompile Include="Imgui.cpp">
       <Filter>ImGUI</Filter>
     </ClCompile>
@@ -220,6 +223,12 @@
     </ClCompile>
     <ClCompile Include="imgui_impl_win32.cpp">
       <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CamearEditor.cpp">
+      <Filter>Editor\CameraEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraData.cpp">
+      <Filter>Editor\CameraEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,9 +415,6 @@
     <ClInclude Include="ImGuiApp.h">
       <Filter>ImGUI</Filter>
     </ClInclude>
-    <ClInclude Include="CamearEditor.h">
-      <Filter>ImGUI</Filter>
-    </ClInclude>
     <ClInclude Include="imgui.h">
       <Filter>ImGUI</Filter>
     </ClInclude>
@@ -435,6 +441,12 @@
     </ClInclude>
     <ClInclude Include="imgui_impl_win32.h">
       <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CamearEditor.h">
+      <Filter>Editor\CameraEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraData.h">
+      <Filter>Editor\CameraEditor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

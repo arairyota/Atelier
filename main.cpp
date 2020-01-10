@@ -7,7 +7,7 @@
 #include "imgui_impl_dx11.h"
 #include <d3d11.h>
 
-#include "CamearEditor.h"
+//#include "CamearEditor.h"
 
 const char* CLASS_NAME = "DX11AppClass";
 const char* WINDOW_NAME = "DX11";
@@ -29,8 +29,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 HWND g_Window;
 
-CamearEditor* editor;
-//extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+//CamearEditor* editor;
+
 
 HWND GetWindow()
 {
@@ -80,10 +80,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	// 初期化処理(ウィンドウを作成してから行う)
 	CManager::Init();
-
-	//Imgui初期化
-	editor = new CamearEditor;
-	editor->Init();
 
 	//if (!CreateDeviceD3D(g_Window))
 	//{
@@ -143,9 +139,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				// 更新処理
 				CManager::Update();
 
-				//imgui描画
-				editor->Draw();
-
 				// 描画処理
 				CManager::Draw();
 			}
@@ -158,8 +151,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	UnregisterClass(CLASS_NAME, wcex.hInstance);
 
 	CoUninitialize();
-
-	editor->Uninit();
 
 	// 終了処理
 	CManager::Uninit();
@@ -219,11 +210,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 //	if (g_mainRenderTargetView) { g_mainRenderTargetView->Release(); g_mainRenderTargetView = NULL; }
 //}
 
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 //=============================================================================
 // ウインドウプロシージャ
 //=============================================================================
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	if (ImGui_ImplWin32_WndProcHandler(hWnd,uMsg,wParam,lParam))
+	{
+		return true;
+	}
 
 	switch(uMsg)
 	{

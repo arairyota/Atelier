@@ -1,15 +1,16 @@
 /*****************************************************************************
-CamearEditor.h
-CamearEditor.h
+template.h
+CameraData.h
 name	:新井 崚太
-data	:2019/12/27 15:48:37
+data	:2020/01/10 12:56:17
 *****************************************************************************/
-#ifndef CamearEditor_H
-#define CamearEditor_H
+#ifndef CameraData_H
+#define CameraData_H
 
 //////////////////////////////////////////////////////////////////////////////
 //ヘッダーファイルインクルード
 //////////////////////////////////////////////////////////////////////////////
+#include "GameObject.h"
 
 //////////////////////////////////////////////////////////////////////////////
 //define定義
@@ -18,27 +19,25 @@ data	:2019/12/27 15:48:37
 //////////////////////////////////////////////////////////////////////////////
 //前方宣言
 //////////////////////////////////////////////////////////////////////////////
-class CCamera;
 
 //////////////////////////////////////////////////////////////////////////////
-//CamearEditorクラス
+//CameraDataクラス
 //////////////////////////////////////////////////////////////////////////////
-class CamearEditor{
-private:
-	CCamera* _camera;
-
+class CameraData : public GameObject{
 public:
 	void Init();
 	void Uninit();
 	void Update();
 	void Draw();
-protected:
+	//void Set();
 
+private:
+	XMFLOAT3 _position;
+
+	XMVECTOR _viewFront;
+	XMVECTOR _viewRight;
+	XMVECTOR _viewUp;
 };
 
-#endif // !CamearEditor_H
+#endif // !CameraData_H
 
-//void Init();
-//void Uninit();
-//void Update();
-//void Draw();

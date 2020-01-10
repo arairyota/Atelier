@@ -42,6 +42,7 @@
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="CamearEditor.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="CameraData.cpp" />
     <ClCompile Include="CharacterUI.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="DamegeNumEffect.cpp" />
@@ -111,6 +112,10 @@
     <ClInclude Include="bullet.h" />
     <ClInclude Include="CamearEditor.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="CameraData.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="CharacterUI.h">
       <SubType>
       </SubType>

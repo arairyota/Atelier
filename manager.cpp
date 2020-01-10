@@ -18,6 +18,10 @@
 #include "input.h"
 #include "audio_clip.h"
 
+#include "CamearEditor.h"
+
+CamearEditor* editor;
+
 Scene* CManager::_Scene = nullptr;
 
 void CManager::Init()
@@ -31,14 +35,9 @@ void CManager::Init()
 	
 	CManager::SetScene<TitleScene>();
 
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-	ImGui::StyleColorsDark();
-
-	ImGui_ImplWin32_Init(GetWindow());
-	ImGui_ImplDX11_Init(CRenderer::GetDevice(), CRenderer::GetDeviceContext());
+	//Imgui‰Šú‰»
+	editor = new CamearEditor;
+	editor->Init();
 }
 
 void CManager::Uninit()
@@ -52,6 +51,8 @@ void CManager::Uninit()
 
 	CInput::Uninit();
 	CAudioClip::Uninit();
+
+	editor->Uninit();
 }
 
 void CManager::Update()
@@ -59,6 +60,8 @@ void CManager::Update()
 	CInput::Update();
 
 	_Scene->Update();
+
+	editor->Update();
 }
 
 void CManager::Draw()
@@ -66,6 +69,8 @@ void CManager::Draw()
 	CRenderer::Begin();
 
 	_Scene->Draw();
+
+	editor->Draw();
 
 	CRenderer::End();
 
