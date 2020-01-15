@@ -7,6 +7,7 @@
 
 void CModel::Draw()
 {
+	if (!_isEnable) return;
 
 	// 頂点バッファ設定
 	CRenderer::SetVertexBuffers( m_VertexBuffer );
@@ -36,7 +37,7 @@ void CModel::Load( const char *FileName )
 
 	MODEL model;
 	LoadObj( FileName, &model );
-
+	_isEnable = true;
 
 
 	// 頂点バッファ生成

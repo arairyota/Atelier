@@ -28,9 +28,10 @@ class CameraData;
 //////////////////////////////////////////////////////////////////////////////
 class CamearEditor{
 private:
-	CCamera* _camera;
+	CameraData* _defaultCamera;
 	std::list<CameraData*> _cameraDataList;
-	
+	CameraData* _data = nullptr;
+	int _radio = 0;
 
 public:
 	void Init();

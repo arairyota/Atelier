@@ -10,7 +10,8 @@ data	:2020/01/10 12:56:17
 //////////////////////////////////////////////////////////////////////////////
 //ヘッダーファイルインクルード
 //////////////////////////////////////////////////////////////////////////////
-#include "GameObject.h"
+#include "object3D.h"
+
 //////////////////////////////////////////////////////////////////////////////
 //define定義
 //////////////////////////////////////////////////////////////////////////////
@@ -23,7 +24,7 @@ class CModel;
 //////////////////////////////////////////////////////////////////////////////
 //CameraDataクラス
 //////////////////////////////////////////////////////////////////////////////
-class CameraData : public GameObject{
+class CameraData : public object3D{
 public:
 	CameraData();
 	void Init();
@@ -34,14 +35,26 @@ public:
 
 	XMFLOAT3 GetPosition();
 
+	float* GetPositionX() { return &_position.x; };
+	float* GetPositionY() { return &_position.y; };
+	float* GetPositionZ() { return &_position.z; };
+
+	void SetPosition(float x, float y, float z) {
+		_position = XMFLOAT3(x, y, z);
+	};
+
+	void SetPosition(XMFLOAT3 pos) {
+		_position = pos;
+	}
+
+	CModel* GetModel() { return _model; }
+
 private:
-	XMFLOAT3 _position;
+	//XMFLOAT3 _position;
 
 	XMVECTOR _viewFront;
 	XMVECTOR _viewRight;
 	XMVECTOR _viewUp;
-
-	CModel* _model;
 };
 
 #endif // !CameraData_H

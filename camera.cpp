@@ -41,29 +41,36 @@ void CCamera::Uninit()
 
 void CCamera::Update()
 {
-	if (CInput::GetKeyPress(VK_UP))  {
-		_position.z += 1.0f;
-	}
-
-	if (CInput::GetKeyPress(VK_DOWN)) {
-		_position.z += -1.0f;
-	}
-
-	if (CInput::GetKeyPress(VK_LEFT)) {
-		_position.x += -1.0f;
-	}
-
-	if(CInput::GetKeyPress(VK_RIGHT)) {
-		_position.x += 1.0f;
-	}
-
+	//if (CInput::GetKeyPress(VK_UP))  {
+	//	_position.z += 1.0f;
+	//}
+	//
+	//if (CInput::GetKeyPress(VK_DOWN)) {
+	//	_position.z += -1.0f;
+	//}
+	//
+	//if (CInput::GetKeyPress(VK_LEFT)) {
+	//	_position.x += -1.0f;
+	//}
+	//
+	//if(CInput::GetKeyPress(VK_RIGHT)) {
+	//	_position.x += 1.0f;
+	//}
+	//
 	if (CInput::GetKeyPress(VK_SHIFT)) {
 		_position.x += XMVectorGetX(_transFront) * CAMERA_SPEED;
 		_position.y += XMVectorGetY(_transFront) * CAMERA_SPEED;
 		_position.z += XMVectorGetZ(_transFront) * CAMERA_SPEED;
 	}
+
+	if (CInput::GetKeyPress(VK_CONTROL)) {
+		_position.x += XMVectorGetX(_transFront) * -CAMERA_SPEED;
+		_position.y += XMVectorGetY(_transFront) * -CAMERA_SPEED;
+		_position.z += XMVectorGetZ(_transFront) * -CAMERA_SPEED;
+	}
+
 	//操縦かん的なお遊び処理
-	/*
+	
 	{
 		if (CInput::GetKeyPress('I')) {
 			XMVECTOR rotation = XMQuaternionRotationAxis(_transRight, 0.05f);
@@ -131,102 +138,101 @@ void CCamera::Update()
 			_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
 		}
 	}
-	*/
-	//デバック処理
 	
-	{
-		
-		if (CInput::GetKeyPress('I')) {
-			XMVECTOR rotation = XMQuaternionRotationAxis(_transRight, -0.1f);
-			_transQuaternion = XMQuaternionMultiply(_transQuaternion, rotation);
-			_transQuaternion = XMQuaternionNormalize(_transQuaternion);
-
-			//_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
-
-			//_transUp = XMVector3TransformNormal(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), _mtxRotation);
-			//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
-		}
-
-		if (CInput::GetKeyPress('K')) {
-			XMVECTOR rotation = XMQuaternionRotationAxis(_transRight, 0.1f);
-			_transQuaternion = XMQuaternionMultiply(_transQuaternion, rotation);
-			_transQuaternion = XMQuaternionNormalize(_transQuaternion);
-
-			//_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
-
-			//_transUp = XMVector3TransformNormal(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), _mtxRotation);
-			//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
-		}
-
-		if (CInput::GetKeyPress('L')) {
-			XMVECTOR rotation = XMQuaternionRotationAxis(_transUp, 0.1f);
-			_transQuaternion = XMQuaternionMultiply(_transQuaternion, rotation);
-			_transQuaternion = XMQuaternionNormalize(_transQuaternion);
-
-			//_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
-
-			//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
-			//_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
-
-			//313233 くぉ→マトリクス
-			//_mtxRotationY = XMMatrixRotationY(XMConvertToRadians(ROTASION_SPEED));
-			//_transFront = XMVector3TransformNormal(_transFront, _mtxRotationY);
-			//_transRight = XMVector3TransformNormal(_transRight, _mtxRotationY);
-			//_rotation.y += XMConvertToRadians(ROTASION_SPEED);
-		}
-
-		if (CInput::GetKeyPress('J')) {
-			XMVECTOR rotation = XMQuaternionRotationAxis(_transUp, -0.1f);
-			_transQuaternion = XMQuaternionMultiply(_transQuaternion, rotation);
-			_transQuaternion = XMQuaternionNormalize(_transQuaternion);
-
-			//_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
-
-			//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
-			//_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
-		}
-
-		//ツール用処理仮
-		{
-			//正面
-			XMFLOAT3 initPos = XMFLOAT3(0.0f, 0.0f, 0.0f);
-			if (CInput::GetKeyTrigger('1') || CInput::GetKeyTrigger(VK_NUMPAD1)) {
-				SetCameraPosition(XMFLOAT3(0.0f, 0.0f, -100.0f));
-				SetLookQuaternion(&_viewQuaternion, &initPos);
-			}
-
-			//右面
-			if (CInput::GetKeyTrigger('3') || CInput::GetKeyTrigger(VK_NUMPAD3)) {
-				SetCameraPosition(XMFLOAT3(100.0f, 0.0f, 0.0f));
-				SetLookQuaternion(&_viewQuaternion, &initPos);
-			}
-
-			//真上
-			if (CInput::GetKeyTrigger('7') || CInput::GetKeyTrigger(VK_NUMPAD7)) {
-				SetCameraPosition(XMFLOAT3(0.0f, 100.0f, 0.0f));
-				SetLookQuaternion(&_viewQuaternion, &initPos);
-			}
-
-			//後ろ
-			if ((CInput::GetKeyTrigger('1') || CInput::GetKeyTrigger(VK_NUMPAD1)) && CInput::GetKeyPress(VK_CONTROL)) {
-				SetCameraPosition(XMFLOAT3(0.0f, 0.0f, 100.0f));
-				SetLookQuaternion(&_viewQuaternion, &initPos);
-			}
-
-			//左面
-			if ((CInput::GetKeyTrigger('3') || CInput::GetKeyTrigger(VK_NUMPAD3)) && CInput::GetKeyPress(VK_CONTROL)) {
-				SetCameraPosition(XMFLOAT3(-100.0f, 0.0f, 0.0f));
-				SetLookQuaternion(&_viewQuaternion, &initPos);
-			}
-
-			//真下
-			if ((CInput::GetKeyTrigger('7') || CInput::GetKeyTrigger(VK_NUMPAD7)) && CInput::GetKeyPress(VK_CONTROL)) {
-				SetCameraPosition(XMFLOAT3(0.0f, -100.0f, 0.0f));
-				SetLookQuaternion(&_viewQuaternion, &initPos);
-			}
-		}
-		
-	}
+	//デバック処理
+	//{
+	//	
+	//	if (CInput::GetKeyPress('I')) {
+	//		XMVECTOR rotation = XMQuaternionRotationAxis(_transRight, -0.1f);
+	//		_transQuaternion = XMQuaternionMultiply(_transQuaternion, rotation);
+	//		_transQuaternion = XMQuaternionNormalize(_transQuaternion);
+	//
+	//		//_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
+	//
+	//		//_transUp = XMVector3TransformNormal(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), _mtxRotation);
+	//		//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
+	//	}
+	//
+	//	if (CInput::GetKeyPress('K')) {
+	//		XMVECTOR rotation = XMQuaternionRotationAxis(_transRight, 0.1f);
+	//		_transQuaternion = XMQuaternionMultiply(_transQuaternion, rotation);
+	//		_transQuaternion = XMQuaternionNormalize(_transQuaternion);
+	//
+	//		//_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
+	//
+	//		//_transUp = XMVector3TransformNormal(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), _mtxRotation);
+	//		//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
+	//	}
+	//
+	//	if (CInput::GetKeyPress('L')) {
+	//		XMVECTOR rotation = XMQuaternionRotationAxis(_transUp, 0.1f);
+	//		_transQuaternion = XMQuaternionMultiply(_transQuaternion, rotation);
+	//		_transQuaternion = XMQuaternionNormalize(_transQuaternion);
+	//
+	//		//_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
+	//
+	//		//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
+	//		//_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
+	//
+	//		//313233 くぉ→マトリクス
+	//		//_mtxRotationY = XMMatrixRotationY(XMConvertToRadians(ROTASION_SPEED));
+	//		//_transFront = XMVector3TransformNormal(_transFront, _mtxRotationY);
+	//		//_transRight = XMVector3TransformNormal(_transRight, _mtxRotationY);
+	//		//_rotation.y += XMConvertToRadians(ROTASION_SPEED);
+	//	}
+	//
+	//	if (CInput::GetKeyPress('J')) {
+	//		XMVECTOR rotation = XMQuaternionRotationAxis(_transUp, -0.1f);
+	//		_transQuaternion = XMQuaternionMultiply(_transQuaternion, rotation);
+	//		_transQuaternion = XMQuaternionNormalize(_transQuaternion);
+	//
+	//		//_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
+	//
+	//		//_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
+	//		//_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
+	//	}
+	//
+	//	//ツール用処理仮
+	//	{
+	//		//正面
+	//		XMFLOAT3 initPos = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	//		if (CInput::GetKeyTrigger('1') || CInput::GetKeyTrigger(VK_NUMPAD1)) {
+	//			SetCameraPosition(XMFLOAT3(0.0f, 0.0f, -100.0f));
+	//			SetLookQuaternion(&_viewQuaternion, &initPos);
+	//		}
+	//
+	//		//右面
+	//		if (CInput::GetKeyTrigger('3') || CInput::GetKeyTrigger(VK_NUMPAD3)) {
+	//			SetCameraPosition(XMFLOAT3(100.0f, 0.0f, 0.0f));
+	//			SetLookQuaternion(&_viewQuaternion, &initPos);
+	//		}
+	//
+	//		//真上
+	//		if (CInput::GetKeyTrigger('7') || CInput::GetKeyTrigger(VK_NUMPAD7)) {
+	//			SetCameraPosition(XMFLOAT3(0.0f, 100.0f, 0.0f));
+	//			SetLookQuaternion(&_viewQuaternion, &initPos);
+	//		}
+	//
+	//		//後ろ
+	//		if ((CInput::GetKeyTrigger('1') || CInput::GetKeyTrigger(VK_NUMPAD1)) && CInput::GetKeyPress(VK_CONTROL)) {
+	//			SetCameraPosition(XMFLOAT3(0.0f, 0.0f, 100.0f));
+	//			SetLookQuaternion(&_viewQuaternion, &initPos);
+	//		}
+	//
+	//		//左面
+	//		if ((CInput::GetKeyTrigger('3') || CInput::GetKeyTrigger(VK_NUMPAD3)) && CInput::GetKeyPress(VK_CONTROL)) {
+	//			SetCameraPosition(XMFLOAT3(-100.0f, 0.0f, 0.0f));
+	//			SetLookQuaternion(&_viewQuaternion, &initPos);
+	//		}
+	//
+	//		//真下
+	//		if ((CInput::GetKeyTrigger('7') || CInput::GetKeyTrigger(VK_NUMPAD7)) && CInput::GetKeyPress(VK_CONTROL)) {
+	//			SetCameraPosition(XMFLOAT3(0.0f, -100.0f, 0.0f));
+	//			SetLookQuaternion(&_viewQuaternion, &initPos);
+	//		}
+	//	}
+	//	
+	//}
 	
 	/*if (CInput::GetKeyPress('Q')) {
 		_rotation.y += 0.01f;
@@ -235,7 +241,7 @@ void CCamera::Update()
 	/*if (CInput::GetKeyPress('E')) {
 		_rotation.y -= 0.01f;
 	}*/
-
+	
 	
 	
 
@@ -283,7 +289,7 @@ void CCamera::Draw()
 	// ビューマトリクス設定
 	//m_InvViewMatrix = XMMatrixRotationRollPitchYaw(_rotation.x, _rotation.y, _rotation.z);
 	_invViewMatrix = XMMatrixRotationQuaternion(_transQuaternion);	//エスコン風操作
-	_invViewMatrix = XMMatrixRotationQuaternion(_viewQuaternion);
+	//_invViewMatrix = XMMatrixRotationQuaternion(_viewQuaternion);
 	
 	_invViewMatrix *= XMMatrixTranslation(_position.x, _position.y, _position.z);
 	//_invViewMatrix *= XMMatrixRotationY(_atAngle);

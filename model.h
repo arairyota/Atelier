@@ -53,11 +53,15 @@ private:
 	void LoadObj( const char *FileName, MODEL *Model );
 	void LoadMaterial( const char *FileName, MODEL_MATERIAL **MaterialArray, unsigned short *MaterialNum );
 
+	bool _isEnable = true;
+
 public:
 	void Draw();
 
 	void Load( const char *FileName );
 	void Unload();
+
+	void SetEnable(bool b) { _isEnable = b; };
 
 };
 
