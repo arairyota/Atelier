@@ -29,6 +29,7 @@ void CCamera::Init()
 	is_Enable = true;
 	XMFLOAT3 lookPos = XMFLOAT3(0.0f, 0.0f, 10.0f);
 	SetLookQuaternion(&_viewQuaternion, &lookPos);
+	SetLookQuaternion(&_transQuaternion, &lookPos);
 }
 
 
@@ -285,7 +286,7 @@ void CCamera::Draw()
 	dxViewport.TopLeftY = (float)m_Viewport.top;
 
 	CRenderer::GetDeviceContext()->RSSetViewports(1, &dxViewport);
-
+	
 	// ビューマトリクス設定
 	//m_InvViewMatrix = XMMatrixRotationRollPitchYaw(_rotation.x, _rotation.y, _rotation.z);
 	_invViewMatrix = XMMatrixRotationQuaternion(_transQuaternion);	//エスコン風操作
