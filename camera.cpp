@@ -138,6 +138,31 @@ void CCamera::Update()
 			_transUp = XMVector3TransformNormal(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), _mtxRotation);
 			_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
 		}
+
+		if (CInput::GetKeyPress(VK_UP)) {
+			_position.x += XMVectorGetX(_transUp) * CAMERA_SPEED;
+			_position.y += XMVectorGetY(_transUp) * CAMERA_SPEED;
+			_position.z += XMVectorGetZ(_transUp) * CAMERA_SPEED;
+		}
+
+		if (CInput::GetKeyPress(VK_DOWN)) {
+			_position.x -= XMVectorGetX(_transUp) * CAMERA_SPEED;
+			_position.y -= XMVectorGetY(_transUp) * CAMERA_SPEED;
+			_position.z -= XMVectorGetZ(_transUp) * CAMERA_SPEED;
+		}
+
+		if (CInput::GetKeyPress(VK_LEFT)) {
+			_position.x -= XMVectorGetX(_transRight) * CAMERA_SPEED;
+			_position.y -= XMVectorGetY(_transRight) * CAMERA_SPEED;
+			_position.z -= XMVectorGetZ(_transRight) * CAMERA_SPEED;
+		}
+
+		if (CInput::GetKeyPress(VK_RIGHT)) {
+			_position.x += XMVectorGetX(_transRight) * CAMERA_SPEED;
+			_position.y += XMVectorGetY(_transRight) * CAMERA_SPEED;
+			_position.z += XMVectorGetZ(_transRight) * CAMERA_SPEED;
+		}
+
 	}
 	
 	//デバック処理
@@ -242,9 +267,6 @@ void CCamera::Update()
 	/*if (CInput::GetKeyPress('E')) {
 		_rotation.y -= 0.01f;
 	}*/
-	
-	
-	
 
 	_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
 	_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
@@ -344,4 +366,9 @@ XMVECTOR* CCamera::SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* look)
 
 	*outQuaternion = XMQuaternionRotationMatrix(out);	//マトリクス→Quaternion
 	return outQuaternion;
+}
+
+void CCamera::SetQuaternion(XMVECTOR* outQuaternion, XMVECTOR* inQuaternion)
+{
+	*outQuaternion = *inQuaternion;
 }

@@ -27,17 +27,20 @@ class CameraData;
 //CamearEditorクラス
 //////////////////////////////////////////////////////////////////////////////
 class CamearEditor{
-private:
-	CameraData* _defaultCamera;
-	std::list<CameraData*> _cameraDataList;
-	CameraData* _data = nullptr;
-	int _radio = 0;
-
 public:
 	void Init();
 	void Uninit();
 	void Update();
 	void Draw();
+
+private:
+	CCamera* _camera;
+	CameraData* _defaultCamera;
+	std::list<CameraData*> _cameraDataList;
+	CameraData* _data = nullptr;
+	int _radio = 0;
+
+	void DefaultCameraDataInit();	//デフォルトカメラデータ初期化
 
 protected:
 

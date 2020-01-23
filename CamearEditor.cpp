@@ -15,6 +15,8 @@
 
 #include	<string>
 
+static int selectMode = 0;
+
 void CamearEditor::Init()
 {
 	IMGUI_CHECKVERSION();
@@ -29,8 +31,9 @@ void CamearEditor::Init()
 	// ウインドウの表示(初期化処理の後に行う)
 	ShowWindow(GetWindow(), SW_SHOWDEFAULT);
 	UpdateWindow(GetWindow());
-	_defaultCamera = new CameraData;
-	_defaultCamera->SetPosition(CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->GetPosition());
+	//_camera = new CCamera;
+	_camera = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA);
+	DefaultCameraDataInit();
 }
 
 void CamearEditor::Uninit()
@@ -70,7 +73,9 @@ void CamearEditor::Draw()
 
 	if (ImGui::Button("DefaultCamera")) {
 		_data = nullptr;
-		CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->SetCameraPosition(_defaultCamera->GetPosition());
+		
+		_camera->SetCameraPosition(_defaultCamera->GetPosition());
+		_camera->SetQuaternion(_camera->GetTransQuaternion(), _defaultCamera->GetQuaternion());
 	}
 
 	//addButton押したら
@@ -86,9 +91,10 @@ void CamearEditor::Draw()
 			s += std::to_string(cnt);
 
 			if (ImGui::Button(s.c_str())) {
-				
+				if(_data != nullptr) _data->SetQuaternion(*_camera->GetTransQuaternion());
 				_data = i;
-				//CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->SetCameraPosition(i->GetPosition());
+				_camera->SetCameraPosition(i->GetPosition());
+				//_camera->SetQuaternion(_camera->GetTransQuaternion(), _data->GetQuaternion());
 				
 			}
 			cnt++;
@@ -104,10 +110,32 @@ void CamearEditor::Draw()
 		ImGui::Begin("CameraPosition", nullptr, ImGuiWindowFlags_MenuBar);
 	}
 
+	//操作ツールのmode切り替え
+	{
+		ImGui::RadioButton("FreeMode", &selectMode, 0);
+		ImGui::RadioButton("SliderMode", &selectMode, 1); 
+	}
+
 	//操作ツール系描画
 	{
 		if (_data != nullptr) {
-			float p[3] = { *_data->GetPositionX(), *_data->GetPositionY(), *_data->GetPositionZ() };
+			//切り替え処理
+			float p[3];
+			if (selectMode == 0) {
+				p[0] = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->GetPosition().x;
+				p[1] = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->GetPosition().y;
+				p[2] = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->GetPosition().z;
+
+
+			}
+
+			if (selectMode == 1) {
+				p[0] = *_data->GetPositionX();
+				p[1] = *_data->GetPositionY();
+				p[2] = *_data->GetPositionZ();
+			}
+
+			
 			ImGui::InputFloat("PositionX", &p[0], 0.01f, 10.0f, "%.3f");
 			ImGui::InputFloat("PositionY", &p[1], 0.01f, 10.0f, "%.3f");
 			ImGui::InputFloat("PositionZ", &p[2], 0.01f, 10.0f, "%.3f");
@@ -121,9 +149,14 @@ void CamearEditor::Draw()
 	}
 	ImGui::End();
 
-
-
 	// Renderin
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+}
+
+void CamearEditor::DefaultCameraDataInit()
+{
+	_defaultCamera = new CameraData;
+	_defaultCamera->SetPosition(_camera->GetPosition());
+	_defaultCamera->SetQuaternion(*_camera->GetTransQuaternion());
 }

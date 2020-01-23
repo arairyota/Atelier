@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#define CAMERA_SPEED (5)
+#define CAMERA_SPEED (3)
 
 #define FRONT_INIT	(0.0f, 0.0f, 1.0f, 0.0f)
 #define RIGHT_INIT	(1.0f, 0.0f, 0.0f, 0.0f)
@@ -72,10 +72,19 @@ public:
 
 	void SetCameraPosition(XMFLOAT3 pos) { _position = pos; }
 	XMVECTOR* SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* look);
+	void SetQuaternion(XMVECTOR* outQuaternion, XMVECTOR* inQuaternion);
 	XMVECTOR* GetViewQuaternion() { return &_viewQuaternion; }
+	XMVECTOR* GetTransQuaternion() { return &_transQuaternion; }
+
+	XMVECTOR GetFront() { return _viewFront; }
+	XMVECTOR GetRight() { return _viewRight; }
+	XMVECTOR GetUp() { return _viewUp; }
+
+	void SetFront(XMVECTOR front) { _transFront = front; }
+	void SetRight(XMVECTOR right) { _transRight = right; }
+	void SetUp(XMVECTOR up) { _transUp = up; }
 
 	XMFLOAT3 GetPosition() { return _position; }
-	//XMMATRIX* Get
 
 	XMMATRIX GetView() { return m_ViewMatrix; };
 	XMFLOAT3 _position;
