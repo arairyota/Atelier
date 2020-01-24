@@ -368,7 +368,14 @@ XMVECTOR* CCamera::SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* look)
 	return outQuaternion;
 }
 
-void CCamera::SetQuaternion(XMVECTOR* outQuaternion, XMVECTOR* inQuaternion)
+void CCamera::SetQuaternion(XMVECTOR* outQuaternion, XMVECTOR inQuaternion)
 {
-	*outQuaternion = *inQuaternion;
+	*outQuaternion = inQuaternion;
+}
+
+void CCamera::SetLookVector(XMVECTOR f, XMVECTOR r, XMVECTOR u)
+{
+	_transFront = f;
+	_transRight = r;
+	_transUp = u;
 }

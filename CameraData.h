@@ -58,7 +58,7 @@ public:
 	XMVECTOR GetFrontVector() { return _viewFront; }
 	XMVECTOR GetRightVector() { return _viewRight; }
 	XMVECTOR GetUpVector() { return _viewUp; }
-	XMVECTOR* GetQuaternion() { return &_quaternion; }
+	XMVECTOR GetQuaternion() { return _quaternion; }
 
 	CModel* GetModel() { return _model; }
 

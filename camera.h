@@ -72,7 +72,10 @@ public:
 
 	void SetCameraPosition(XMFLOAT3 pos) { _position = pos; }
 	XMVECTOR* SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* look);
-	void SetQuaternion(XMVECTOR* outQuaternion, XMVECTOR* inQuaternion);
+	void SetQuaternion(XMVECTOR* outQuaternion, XMVECTOR inQuaternion);
+
+	void SetTQuaternion(XMVECTOR inQ) { _transQuaternion = inQ; };
+
 	XMVECTOR* GetViewQuaternion() { return &_viewQuaternion; }
 	XMVECTOR* GetTransQuaternion() { return &_transQuaternion; }
 
@@ -83,6 +86,8 @@ public:
 	void SetFront(XMVECTOR front) { _transFront = front; }
 	void SetRight(XMVECTOR right) { _transRight = right; }
 	void SetUp(XMVECTOR up) { _transUp = up; }
+
+	void SetLookVector(XMVECTOR f, XMVECTOR r, XMVECTOR u);
 
 	XMFLOAT3 GetPosition() { return _position; }
 

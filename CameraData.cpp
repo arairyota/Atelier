@@ -15,6 +15,8 @@ CameraData::CameraData()
 
 	_model = new CModel;
 	_model->Load("asset/TargetSelect.obj");
+
+	_quaternion = XMQuaternionIdentity();
 }
 
 void CameraData::Init()
