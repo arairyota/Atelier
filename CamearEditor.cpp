@@ -76,7 +76,6 @@ void CamearEditor::Draw()
 		
 		_camera->SetCameraPosition(_defaultCamera->GetPosition());
 		_camera->SetQuaternion(_camera->GetTransQuaternion(), _defaultCamera->GetQuaternion());
-		//_camera->SetLookVector(_defaultCamera->GetFrontVector(), _defaultCamera->GetRightVector(), _defaultCamera->GetUpVector());
 	}
 
 	//addButton‰Ÿ‚µ‚½‚ç
@@ -94,15 +93,12 @@ void CamearEditor::Draw()
 			if (ImGui::Button(s.c_str())) {
 				if (_data != nullptr) {
 					_data->SetQuaternion(*_camera->GetTransQuaternion());
-					_data->SetViewVector(_camera->GetFront(), _camera->GetRight(), _camera->GetUp());
 				}
 
 				_data = i;
 				
 				_camera->SetCameraPosition(_data->GetPosition());
 				_camera->SetQuaternion(_camera->GetTransQuaternion(), _data->GetQuaternion());
-				//_camera->SetTQuaternion(i->GetQuaternion());
-				_camera->SetLookVector(_data->GetFrontVector(), _data->GetRightVector(), _data->GetUpVector());
 				
 			}
 			cnt++;
@@ -133,8 +129,6 @@ void CamearEditor::Draw()
 				p[0] = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->GetPosition().x;
 				p[1] = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->GetPosition().y;
 				p[2] = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->GetPosition().z;
-
-
 			}
 
 			if (selectMode == 1) {
@@ -167,5 +161,4 @@ void CamearEditor::DefaultCameraDataInit()
 	_defaultCamera = new CameraData;
 	_defaultCamera->SetPosition(_camera->GetPosition());
 	_defaultCamera->SetQuaternion(*_camera->GetTransQuaternion());
-	//_defaultCamera->SetViewVector(_camera->GetFront(), _camera->GetRight(), _camera->GetUp());
 }

@@ -9,6 +9,9 @@
 
 
 #include "GameObject.h"
+#include <list>
+
+class CameraData;
 
 
 class CCamera : public GameObject
@@ -38,6 +41,8 @@ private:
 
 	XMVECTOR _transQuaternion;
 	XMVECTOR _viewQuaternion;
+
+	std::list<CameraData*> _dataList;
 
 public:
 	CCamera() {
@@ -88,6 +93,8 @@ public:
 	void SetUp(XMVECTOR up) { _transUp = up; }
 
 	void SetLookVector(XMVECTOR f, XMVECTOR r, XMVECTOR u);
+
+	bool WayPointMove();
 
 	XMFLOAT3 GetPosition() { return _position; }
 
