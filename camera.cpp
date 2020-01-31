@@ -10,7 +10,6 @@
 #include "scene.h"
 
 
-
 void CCamera::Init()
 {
 	Scene* scene = CManager::GetScene();
@@ -31,6 +30,8 @@ void CCamera::Init()
 	XMFLOAT3 lookPos = XMFLOAT3(0.0f, 0.0f, 10.0f);
 	SetLookQuaternion(&_viewQuaternion, &lookPos);
 	SetLookQuaternion(&_transQuaternion, &lookPos);
+
+	_first = true;
 }
 
 
@@ -270,6 +271,7 @@ void CCamera::Update()
 			//_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
 		}
 	}
+
 	_mtxRotation = XMMatrixRotationQuaternion(_transQuaternion);
 	_transFront = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), _mtxRotation);
 	_transRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), _mtxRotation);
@@ -366,13 +368,54 @@ void CCamera::SetLookVector(XMVECTOR f, XMVECTOR r, XMVECTOR u)
 bool CCamera::WayPointMove()
 {
 	//_dataList‚ª‰½‚à‚È‚©‚Á‚½‚çI‚í‚é
-	//if (_dataList.front() == nullptr) return false;
+	if (_dataList.size() == 0) return false;
+	if (_dataList.size() == 1) {
+		_dataList.clear();
+		Init();
+		return false;
+	}
+	auto it = _dataList.begin();
+	auto first = *it;
+	++it;
+	auto next = *it;
 
-	/*for (auto i : _dataList) {
-		XMQuaternionSlerp(i->GetQuaternion(), i->GetQuaternion(), 1.0f);
-	}*/
+	
+
+	//‰Šú‰»
+	if (_first) {
+		_frameCnt = 0;
+		_first = false;
+		_position = first->GetPosition();
+		_linerValue = LinearInterpol(first->GetPosition(), next->GetPosition(), next->GetFrame() - first->GetFrame());
+		_spherValue = 1.0f / (next->GetFrame() - first->GetFrame());
+		_spherFrame = 0;
+	}
+
+	if (_frameCnt++ > next->GetFrame() - first->GetFrame()) {
+		_first = true;
+		_dataList.pop_front();
+	}
+
+	_transQuaternion = XMQuaternionSlerp(first->GetQuaternion(), next->GetQuaternion(), _spherFrame += _spherValue);
+	_position.x += _linerValue.x;
+	_position.y += _linerValue.y;
+	_position.z += _linerValue.z;
+
+	//for (auto i : _dataList) {
+	//	XMQuaternionSlerp(i->GetQuaternion(), (i + 1)->GetQuaternion(), 1.0f);
+	//}
 
 	
 	
 	return true;
+}
+
+//ˆÚ“®—Ê‚ÌŒvŽZ
+XMFLOAT3 CCamera::LinearInterpol(XMFLOAT3 start, XMFLOAT3 end, int frameCnt)
+{
+	float x = (end.x - start.x) / frameCnt;
+	float y = (end.y - start.y) / frameCnt;
+	float z = (end.z - start.z) / frameCnt;
+
+	return XMFLOAT3(x,y,z);
 }

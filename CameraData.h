@@ -62,6 +62,10 @@ public:
 
 	CModel* GetModel() { return _model; }
 
+	void SetFrame(int frame) { _frame = frame; }
+
+	int GetFrame() { return _frame; }
+
 private:
 	//XMFLOAT3 _position;
 
@@ -70,6 +74,8 @@ private:
 	XMVECTOR _viewUp;
 
 	XMVECTOR _quaternion;
+
+	int _frame;
 };
 
 #endif // !CameraData_H

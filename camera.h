@@ -43,6 +43,12 @@ private:
 	XMVECTOR _viewQuaternion;
 
 	std::list<CameraData*> _dataList;
+	bool _first = true;
+	int _frameCnt = 0;
+	float _spherValue; //球面線形補間用値
+	float _spherFrame; //球面線形補間用格納変数
+	
+	XMFLOAT3 _linerValue;
 
 public:
 	CCamera() {
@@ -77,6 +83,7 @@ public:
 
 	void SetCameraPosition(XMFLOAT3 pos) { _position = pos; }
 	XMVECTOR* SetLookQuaternion(XMVECTOR* outQuaternion, XMFLOAT3* look);
+	XMVECTOR* RotationQuaternion();
 	void SetQuaternion(XMVECTOR* outQuaternion, XMVECTOR inQuaternion);
 
 	void SetTQuaternion(XMVECTOR inQ) { _transQuaternion = inQ; };
@@ -95,6 +102,8 @@ public:
 	void SetLookVector(XMVECTOR f, XMVECTOR r, XMVECTOR u);
 
 	bool WayPointMove();
+	XMFLOAT3 LinearInterpol(XMFLOAT3 start, XMFLOAT3 end, int frameCnt); //線形補間計算
+	void SetCameraData(std::list<CameraData*> list) { _dataList = list; }
 
 	XMFLOAT3 GetPosition() { return _position; }
 

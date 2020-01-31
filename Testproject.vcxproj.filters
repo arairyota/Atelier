@@ -55,6 +55,9 @@
     <Filter Include="Editor\CameraEditor">
       <UniqueIdentifier>{c3f8bc6d-99ff-4dae-ae28-1f6219f9475a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{848a7ee8-e780-4ef6-81f6-3976d5c8a146}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="pixelShader.hlsl">
@@ -65,9 +68,6 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="camera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -230,11 +230,11 @@
     <ClCompile Include="CameraData.cpp">
       <Filter>Editor\CameraEditor</Filter>
     </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -447,6 +447,9 @@
     </ClInclude>
     <ClInclude Include="CameraData.h">
       <Filter>Editor\CameraEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

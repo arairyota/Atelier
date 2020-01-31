@@ -55,7 +55,7 @@ void CamearEditor::Draw()
 	ImVec2 buttonSize = ImVec2(10.0f, 10.0f);
 	float f = 0.5f;
 	static int listbox_item_current = 1;
-	
+
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
@@ -72,8 +72,9 @@ void CamearEditor::Draw()
 	}
 
 	if (ImGui::Button("DefaultCamera")) {
+		_data->GetModel()->SetEnable(true);
 		_data = nullptr;
-		
+
 		_camera->SetCameraPosition(_defaultCamera->GetPosition());
 		_camera->SetQuaternion(_camera->GetTransQuaternion(), _defaultCamera->GetQuaternion());
 	}
@@ -84,22 +85,23 @@ void CamearEditor::Draw()
 	}
 
 	int cnt = 0;
-	if (ImGui::CollapsingHeader("CameraPosList")){
+	if (ImGui::CollapsingHeader("CameraPosList")) {
 		for (auto i : _cameraDataList) {
-			i->GetModel()->SetEnable(true);
+			//i->GetModel()->SetEnable(true);
 			std::string s = "WayPoint";
 			s += std::to_string(cnt);
 
 			if (ImGui::Button(s.c_str())) {
 				if (_data != nullptr) {
 					_data->SetQuaternion(*_camera->GetTransQuaternion());
+					_data->GetModel()->SetEnable(true);
 				}
 
 				_data = i;
-				
+				_data->GetModel()->SetEnable(false);
 				_camera->SetCameraPosition(_data->GetPosition());
 				_camera->SetQuaternion(_camera->GetTransQuaternion(), _data->GetQuaternion());
-				
+
 			}
 			cnt++;
 		}
@@ -117,7 +119,29 @@ void CamearEditor::Draw()
 	//‘€ìƒc[ƒ‹‚ÌmodeØ‚è‘Ö‚¦
 	{
 		ImGui::RadioButton("FreeMode", &selectMode, 0);
-		ImGui::RadioButton("SliderMode", &selectMode, 1); 
+		ImGui::RadioButton("SliderMode", &selectMode, 1);
+	}
+
+	{
+		if (ImGui::Button("AllFalse")) {
+			for (auto b : _cameraDataList) {
+				b->GetModel()->SetEnable(false);
+			}
+		}
+
+		if (ImGui::Button("AllTrue")) {
+			for (auto b : _cameraDataList) {
+				b->GetModel()->SetEnable(true);
+			}
+		}
+	}
+
+	{
+		if (ImGui::Button("Save")) {
+			
+			_camera->SetCameraData(_cameraDataList);
+			_data = nullptr;
+		}
 	}
 
 	//‘€ìƒc[ƒ‹Œn•`‰æ
@@ -125,10 +149,13 @@ void CamearEditor::Draw()
 		if (_data != nullptr) {
 			//Ø‚è‘Ö‚¦ˆ—
 			float p[3];
+			int f;
 			if (selectMode == 0) {
 				p[0] = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->GetPosition().x;
 				p[1] = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->GetPosition().y;
 				p[2] = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->GetPosition().z;
+
+				f = _data->GetFrame();
 			}
 
 			if (selectMode == 1) {
@@ -141,9 +168,12 @@ void CamearEditor::Draw()
 			ImGui::InputFloat("PositionX", &p[0], 0.01f, 10.0f, "%.3f");
 			ImGui::InputFloat("PositionY", &p[1], 0.01f, 10.0f, "%.3f");
 			ImGui::InputFloat("PositionZ", &p[2], 0.01f, 10.0f, "%.3f");
+			
+			ImGui::InputInt("SetFrame", &f);
 			//_data‚É•Ô‚·
 			{
 				_data->SetPosition(p[0], p[1], p[2]);
+				_data->SetFrame(f);
 				_camera->SetCameraPosition(_data->GetPosition());
 			}
 			_data->GetModel()->SetEnable(false);
