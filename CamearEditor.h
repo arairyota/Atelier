@@ -32,6 +32,7 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
+	void Save();
 
 private:
 	CCamera* _camera;
@@ -41,6 +42,10 @@ private:
 	int _radio = 0;
 
 	void DefaultCameraDataInit();	//デフォルトカメラデータ初期化
+
+	bool _isEnable = true;
+
+	char _fileName[64] = "";
 
 protected:
 

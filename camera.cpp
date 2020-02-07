@@ -1,3 +1,5 @@
+#include <iostream>
+#include <fstream>
 #include "main.h"
 #include "manager.h"
 #include "renderer.h"
@@ -8,6 +10,8 @@
 #include "camera.h"
 #include "Flag.h"
 #include "scene.h"
+
+using namespace std;
 
 
 void CCamera::Init()
@@ -418,4 +422,19 @@ XMFLOAT3 CCamera::LinearInterpol(XMFLOAT3 start, XMFLOAT3 end, int frameCnt)
 	float z = (end.z - start.z) / frameCnt;
 
 	return XMFLOAT3(x,y,z);
+}
+
+void CCamera::read()
+{
+	FILE* fp;
+
+	//std::cin>>
+
+	if ((fp = fopen("vectordata.dat", "rb")) == NULL) {
+		printf("Can't open a file.");
+		return ;
+	}
+	
+	//fread(, sizeof(), 1, fp);
+	fclose(fp);
 }

@@ -24,6 +24,9 @@ using namespace DirectX;
 #pragma comment (lib, "winmm.lib")
 #pragma comment (lib, "xaudio2.lib")
 
+#define _CRT_SECURE_NO_WARNINGS
+#pragma warning(disable:4996)
+
 
 #define SCREEN_WIDTH		(1920)			// ウインドウの幅
 #define SCREEN_HEIGHT		(1080)			// ウインドウの高さ

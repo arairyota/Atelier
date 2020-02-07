@@ -39,6 +39,7 @@ void playerInterface::Init()
 	_attackUi->Set(XMFLOAT2(0.0f, 0.0f + _uiPos), XMFLOAT2(0.0f, 0.0f) , XMFLOAT2(1.0f, 1.0f), _world, TextureManager::GetInstance()->GetTexture(ATTACK));
 	_itemUi->Set(XMFLOAT2(0.0f, -200.0f + _uiPos), XMFLOAT2(0.0f, 0.0f), XMFLOAT2(1.0f, 1.0f), _world, TextureManager::GetInstance()->GetTexture(ITEM));
 	_skillUi->Set(XMFLOAT2(0.0f, 200.0f + _uiPos), XMFLOAT2(0.0f, 0.0f), XMFLOAT2(1.0f, 1.0f), _world, TextureManager::GetInstance()->GetTexture(SKILL));
+	Flag::SetGamePhase(FLAG_INIT);
 }
 
 void playerInterface::Uninit()

@@ -107,6 +107,8 @@ public:
 
 	XMFLOAT3 GetPosition() { return _position; }
 
+	void read();
+
 	XMMATRIX GetView() { return m_ViewMatrix; };
 	XMFLOAT3 _position;
 	XMFLOAT3 _rotation;
