@@ -239,22 +239,27 @@ void CamearEditor::Draw()
 			ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_Once);
 			ImGui::Begin("Preset", nullptr, ImGuiWindowFlags_MenuBar);
 			if (ImGui::Button("Sample")) {
-				ifstream ifs("SampleCameraWork.bin", ios::binary | ios::in);
+				FILE* fp = fopen("SampleCameraWork.bin", "rb");
+
+				//ifstream ifs("SampleCameraWork.bin", ios::binary | ios::in);
 
 				int size;
-				ifs.read(reinterpret_cast<char*>(&size), sizeof(int));
-
-				vector<CameraData> listv;
-				listv.resize(size);
-				ifs.read(reinterpret_cast<char*>(&listv[0]), sizeof(CameraData)* size);
-
-
+				//ifs.read(reinterpret_cast<char*>(&size), sizeof(int));
+				fread(&size, sizeof(int), 1, fp);
 				DataClear();
-				int b = _cameraDataList.size();
+
+				_listv.resize(size);
+
+				fread(&_listv[0], sizeof(CameraData), size, fp);
+
+				//ifs.read(reinterpret_cast<char*>(&_listv[0]), sizeof(CameraData)* size);
+
+				//int b = _cameraDataList.size(); //デバッグ用
+
 				for (int cnt = 0; cnt < size; cnt++) {
 					CameraData* data = CManager::GetScene()->AddGameObject<CameraData>(TYPE_OBJECT);
 					 _cameraDataList.push_back(data);
-					 data = &listv[cnt];
+					 data->SetCameraData(_listv[cnt]); //読み込んだデータを入れる
 				}
 				int a = _cameraDataList.size();
 			}
@@ -270,9 +275,26 @@ void CamearEditor::Draw()
 void CamearEditor::Save()
 {
 	if (_cameraDataList.size() == 0) return;
-	//FILE* fp;
-	ofstream fout("SampleCameraWork.bin", ios::binary | ios::out);
+	FILE* fp = fopen("SampleCameraWork.bin", "wb");
+
+	if (fp == nullptr) {
+		assert(!fp);
+	}
+
+	int size = _cameraDataList.size();
+	int c = 1;
+	fwrite(&size, sizeof(int), 1, fp);
+	for (auto i : _cameraDataList) {
+		
+		fwrite(i, sizeof(CameraData), 1, fp);
+		c++;
+	}
 	
+	fclose(fp);
+
+	/*
+	ofstream fout("SampleCameraWork.bin", ios::binary | ios::out);
+
 	//fout.open("SampleCameraWork.bin", ios::binary);
 
 	if (!fout) {
@@ -280,17 +302,18 @@ void CamearEditor::Save()
 		return ;
 	}
 	//ofs.write(reinterpret_cast<char*>(&vec_out[0]), sizeof(int)* size);
-	int size = _cameraDataList.size();
+
 	fout.write(reinterpret_cast<char*>(&size), sizeof(int));
 	fout.write(reinterpret_cast<char*>(_cameraDataList.front()), sizeof(CameraData) * size);
-	
-	fout.close();
 
-	
+	fout.close();
+	*/
 }
 
 void CamearEditor::DataClear()
 {
+	_listv.clear();
+
 	for (auto i : _cameraDataList)
 	{
 		i->SetDestroy();

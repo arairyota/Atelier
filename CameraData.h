@@ -48,17 +48,17 @@ public:
 		_position = pos;
 	}
 
-	void SetViewVector(XMVECTOR front, XMVECTOR right, XMVECTOR up) {
-		_viewFront = front;
-		_viewRight = right;
-		_viewUp = up;
-	}
+	//void SetViewVector(XMVECTOR front, XMVECTOR right, XMVECTOR up) {
+	//	_viewFront = front;
+	//	_viewRight = right;
+	//	_viewUp = up;
+	//}
 
 	void SetQuaternion(XMVECTOR quaternion) { _quaternion = quaternion; }
 
-	XMVECTOR GetFrontVector() { return _viewFront; }
-	XMVECTOR GetRightVector() { return _viewRight; }
-	XMVECTOR GetUpVector() { return _viewUp; }
+	//XMVECTOR GetFrontVector() { return _viewFront; }
+	//XMVECTOR GetRightVector() { return _viewRight; }
+	//XMVECTOR GetUpVector() { return _viewUp; }
 	XMVECTOR GetQuaternion() { return _quaternion; }
 
 	CModel* GetModel() { return _model; }
@@ -67,12 +67,14 @@ public:
 
 	int GetFrame() { return _frame; }
 
+	void SetCameraData(CameraData data);
+
 private:
 	//XMFLOAT3 _position;
 
-	XMVECTOR _viewFront;
-	XMVECTOR _viewRight;
-	XMVECTOR _viewUp;
+	//XMVECTOR _viewFront;
+	//XMVECTOR _viewRight;
+	//XMVECTOR _viewUp;
 
 	XMVECTOR _quaternion;
 

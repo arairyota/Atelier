@@ -48,6 +48,8 @@ private:
 
 	char _fileName[64] = "";
 
+	std::vector<CameraData> _listv;
+
 protected:
 
 };
