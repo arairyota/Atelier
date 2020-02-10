@@ -27,6 +27,7 @@ class CModel;
 class CameraData : public object3D{
 public:
 	CameraData();
+	~CameraData() {};
 	void Init();
 	void Uninit();
 	void Update();

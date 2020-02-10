@@ -217,7 +217,6 @@ void CamearEditor::Draw()
 					p[2] = *_data->GetPositionZ();
 				}
 
-
 				ImGui::InputFloat("PositionX", &p[0], 0.01f, 10.0f, "%.3f");
 				ImGui::InputFloat("PositionY", &p[1], 0.01f, 10.0f, "%.3f");
 				ImGui::InputFloat("PositionZ", &p[2], 0.01f, 10.0f, "%.3f");
@@ -240,19 +239,29 @@ void CamearEditor::Draw()
 			ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_Once);
 			ImGui::Begin("Preset", nullptr, ImGuiWindowFlags_MenuBar);
 			if (ImGui::Button("Sample")) {
-				ifstream ifs("SampleCameraWork.bin", ios::binary);
+				ifstream ifs("SampleCameraWork.bin", ios::binary | ios::in);
 
 				int size;
 				ifs.read(reinterpret_cast<char*>(&size), sizeof(int));
 
 				vector<CameraData> listv;
+				listv.resize(size);
 				ifs.read(reinterpret_cast<char*>(&listv[0]), sizeof(CameraData)* size);
 
-				//_cameraDataList.push_back(listv[0]);
+
+				DataClear();
+				int b = _cameraDataList.size();
+				for (int cnt = 0; cnt < size; cnt++) {
+					CameraData* data = CManager::GetScene()->AddGameObject<CameraData>(TYPE_OBJECT);
+					 _cameraDataList.push_back(data);
+					 data = &listv[cnt];
+				}
+				int a = _cameraDataList.size();
 			}
 			ImGui::End();
 		}
 	}
+
 	// Renderin
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
@@ -262,9 +271,9 @@ void CamearEditor::Save()
 {
 	if (_cameraDataList.size() == 0) return;
 	//FILE* fp;
-	ofstream fout;
+	ofstream fout("SampleCameraWork.bin", ios::binary | ios::out);
 	
-	fout.open("SampleCameraWork.bin", ios::binary);
+	//fout.open("SampleCameraWork.bin", ios::binary);
 
 	if (!fout) {
 		cout << "ファイル file.txt が開けません";
@@ -274,19 +283,20 @@ void CamearEditor::Save()
 	int size = _cameraDataList.size();
 	fout.write(reinterpret_cast<char*>(&size), sizeof(int));
 	fout.write(reinterpret_cast<char*>(_cameraDataList.front()), sizeof(CameraData) * size);
-	//if ((fp = fopen("CameraData/Sample1.dat", "wb+")) == NULL) {
-	//	printf("Can't open a file.");
-	//	return;
-	//}
-
-	//fwrite(_cameraDataList.front(), sizeof(CameraData), _cameraDataList.size(), fp);
 	
-	/*for (auto d : _cameraDataList) {
-		fout.write((char*) _cameraDataList.front(), );
-	}*/
-
-	//fclose(fp);
 	fout.close();
+
+	
+}
+
+void CamearEditor::DataClear()
+{
+	for (auto i : _cameraDataList)
+	{
+		i->SetDestroy();
+	}
+
+	_cameraDataList.clear();
 }
 
 void CamearEditor::DefaultCameraDataInit()

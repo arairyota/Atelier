@@ -33,6 +33,7 @@ public:
 	void Update();
 	void Draw();
 	void Save();
+	void DataClear();
 
 private:
 	CCamera* _camera;
