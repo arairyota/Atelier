@@ -50,6 +50,14 @@ private:
 
 	std::vector<CameraData> _listv;
 
+
+	//プライベート関数
+	void EditorModeMenu();
+	void EditorMenu();
+	void FileMenu();
+	void OperationMenu();
+	void PresetMenu();
+
 protected:
 
 };

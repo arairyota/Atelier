@@ -35,7 +35,6 @@ void CamearEditor::Init()
 	// ウインドウの表示(初期化処理の後に行う)
 	ShowWindow(GetWindow(), SW_SHOWDEFAULT);
 	UpdateWindow(GetWindow());
-	//_camera = new CCamera;
 	_camera = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA);
 	DefaultCameraDataInit();
 	Flag::SetGamePhase(FLAG_INIT);
@@ -56,33 +55,99 @@ void CamearEditor::Update()
 
 void CamearEditor::Draw()
 {
-	
-	//手抜き宣言
-	std::string textName = "AddButton";
-	ImVec2 buttonSize = ImVec2(10.0f, 10.0f);
-	float f = 0.5f;
-	static int listbox_item_current = 1;
-
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	//if (_show_demo_window) {
-	//	ImGui::ShowDemoWindow(&_show_demo_window);
-	//}
+	EditorModeMenu();
+	
+	if (_isEnable) {
+		EditorMenu();
+		FileMenu();
+		OperationMenu();
+		PresetMenu();
+	}
 
+	// Renderin
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+}
+
+void CamearEditor::Save()
+{
+	if (_cameraDataList.size() == 0) return;
+
+	FILE* fp = fopen(_fileName, "wb");
+
+	if (fp == nullptr) {
+		assert(!fp);
+	}
+
+	int size = _cameraDataList.size();
+	
+	fwrite(&size, sizeof(int), 1, fp);
+	for (auto i : _cameraDataList) {
+		
+		fwrite(i, sizeof(CameraData), 1, fp);
+	}
+	
+	fclose(fp);
+
+	/*
+	ofstream fout("SampleCameraWork.bin", ios::binary | ios::out);
+
+	//fout.open("SampleCameraWork.bin", ios::binary);
+
+	if (!fout) {
+		cout << "ファイル file.txt が開けません";
+		return ;
+	}
+	//ofs.write(reinterpret_cast<char*>(&vec_out[0]), sizeof(int)* size);
+
+	fout.write(reinterpret_cast<char*>(&size), sizeof(int));
+	fout.write(reinterpret_cast<char*>(_cameraDataList.front()), sizeof(CameraData) * size);
+
+	fout.close();
+	*/
+}
+
+void CamearEditor::DataClear()
+{
+	if(_data != nullptr)
+		_data->GetModel()->SetEnable(true);
+	_data = nullptr;
+
+	_camera->SetCameraPosition(_defaultCamera->GetPosition());
+	_camera->SetQuaternion(_camera->GetTransQuaternion(), _defaultCamera->GetQuaternion());
+
+	for (auto i : _cameraDataList)
+	{
+		i->SetDestroy();
+	}
+	_cameraDataList.clear();
+}
+
+void CamearEditor::DefaultCameraDataInit()
+{
+	_defaultCamera = new CameraData;
+	_defaultCamera->SetPosition(_camera->GetPosition());
+	_defaultCamera->SetQuaternion(*_camera->GetTransQuaternion());
+}
+
+void CamearEditor::EditorModeMenu()
+{
 	//imguiメニューバー定義
 	{
 		ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(400, 100), ImGuiCond_Once);
 		ImGui::Begin("EditorMode", nullptr, ImGuiWindowFlags_MenuBar);
-		
+
 		//操作ツールのmode切り替え
 		{
 			if (ImGui::RadioButton("EditorMode", &selectGameMode, 0)) {
 				_isEnable = true;
 				Flag::SetGamePhase(FLAG_INIT);
-				
+
 			}
 
 			if (ImGui::RadioButton("GameMode", &selectGameMode, 1)) {
@@ -93,15 +158,18 @@ void CamearEditor::Draw()
 
 		ImGui::End();
 	}
+}
 
-	if (_isEnable) {
+void CamearEditor::EditorMenu()
+{
+	std::string textName = "AddButton";
 
-		//imguiメニューバー定義
-		{
-			ImGui::SetNextWindowPos(ImVec2(10, 100), ImGuiCond_Once);
-			ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_Once);
-			ImGui::Begin("CameraEditor", nullptr, ImGuiWindowFlags_MenuBar);
-		}
+	//imguiメニューバー定義
+	{
+		ImGui::SetNextWindowPos(ImVec2(10, 100), ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_Once);
+		ImGui::Begin("CameraEditor", nullptr, ImGuiWindowFlags_MenuBar);
+
 
 		if (ImGui::Button("DefaultCamera")) {
 			_data->GetModel()->SetEnable(true);
@@ -131,7 +199,6 @@ void CamearEditor::Draw()
 
 					_data = i;
 
-
 					_data->GetModel()->SetEnable(false);
 					_camera->SetCameraPosition(_data->GetPosition());
 					_camera->SetQuaternion(_camera->GetTransQuaternion(), _data->GetQuaternion());
@@ -142,40 +209,42 @@ void CamearEditor::Draw()
 		}
 
 		ImGui::End();
+	}
+}
 
-		//imguiメニューバー定義
+void CamearEditor::FileMenu()
+{
+	//imguiメニューバー定義
+	{
+		ImGui::SetNextWindowPos(ImVec2(10, 500), ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_Once);
+		ImGui::Begin("File", nullptr, ImGuiWindowFlags_MenuBar);
+
+		//セーブ
 		{
-			ImGui::SetNextWindowPos(ImVec2(10, 500), ImGuiCond_Once);
-			ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_Once);
-			ImGui::Begin("File", nullptr, ImGuiWindowFlags_MenuBar);
+			ImGui::InputTextWithHint("FileName", "Please enter a file name", _fileName, 64, ImGuiInputTextFlags_CharsNoBlank);
 
-
-
-			//セーブ
-			{
-				ImGui::InputTextWithHint("FileName", "Please enter a file name", _fileName, 64, ImGuiInputTextFlags_CharsNoBlank);
-
-				if (ImGui::Button("Save")) {
-					std::string s = _fileName;
-					if (s.size() != 0) {
-						Save();
-						_camera->SetCameraData(_cameraDataList);
-						_data = nullptr;
-					}
+			if (ImGui::Button("Save")) {
+				std::string s = _fileName;
+				if (s.size() != 0) {
+					Save();
+					_camera->SetCameraData(_cameraDataList);
+					_data = nullptr;
 				}
-
-				
 			}
-
-			ImGui::End();
 		}
+		ImGui::End();
+	}
+}
 
-		//imguiメニューバー定義
-		{
-			ImGui::SetNextWindowPos(ImVec2(1500, 10), ImGuiCond_Once);
-			ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_Once);
-			ImGui::Begin("CameraPosition", nullptr, ImGuiWindowFlags_MenuBar);
-		}
+void CamearEditor::OperationMenu()
+{
+	//imguiメニューバー定義
+	{
+		ImGui::SetNextWindowPos(ImVec2(1500, 10), ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_Once);
+		ImGui::Begin("CameraPosition", nullptr, ImGuiWindowFlags_MenuBar);
+
 
 		//操作ツールのmode切り替え
 		{
@@ -232,99 +301,39 @@ void CamearEditor::Draw()
 			}
 		}
 		ImGui::End();
-
-		//imguiメニューバー定義
-		{
-			ImGui::SetNextWindowPos(ImVec2(1500, 500), ImGuiCond_Once);
-			ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_Once);
-			ImGui::Begin("Preset", nullptr, ImGuiWindowFlags_MenuBar);
-			if (ImGui::Button("Sample")) {
-				FILE* fp = fopen("SampleCameraWork.bin", "rb");
-
-				//ifstream ifs("SampleCameraWork.bin", ios::binary | ios::in);
-
-				int size;
-				//ifs.read(reinterpret_cast<char*>(&size), sizeof(int));
-				fread(&size, sizeof(int), 1, fp);
-				DataClear();
-
-				_listv.resize(size);
-
-				fread(&_listv[0], sizeof(CameraData), size, fp);
-
-				//ifs.read(reinterpret_cast<char*>(&_listv[0]), sizeof(CameraData)* size);
-
-				//int b = _cameraDataList.size(); //デバッグ用
-
-				for (int cnt = 0; cnt < size; cnt++) {
-					CameraData* data = CManager::GetScene()->AddGameObject<CameraData>(TYPE_OBJECT);
-					 _cameraDataList.push_back(data);
-					 data->SetCameraData(_listv[cnt]); //読み込んだデータを入れる
-				}
-				int a = _cameraDataList.size();
-			}
-			ImGui::End();
-		}
 	}
-
-	// Renderin
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
 
-void CamearEditor::Save()
+void CamearEditor::PresetMenu()
 {
-	if (_cameraDataList.size() == 0) return;
-	FILE* fp = fopen("SampleCameraWork.bin", "wb");
-
-	if (fp == nullptr) {
-		assert(!fp);
-	}
-
-	int size = _cameraDataList.size();
-	int c = 1;
-	fwrite(&size, sizeof(int), 1, fp);
-	for (auto i : _cameraDataList) {
-		
-		fwrite(i, sizeof(CameraData), 1, fp);
-		c++;
-	}
-	
-	fclose(fp);
-
-	/*
-	ofstream fout("SampleCameraWork.bin", ios::binary | ios::out);
-
-	//fout.open("SampleCameraWork.bin", ios::binary);
-
-	if (!fout) {
-		cout << "ファイル file.txt が開けません";
-		return ;
-	}
-	//ofs.write(reinterpret_cast<char*>(&vec_out[0]), sizeof(int)* size);
-
-	fout.write(reinterpret_cast<char*>(&size), sizeof(int));
-	fout.write(reinterpret_cast<char*>(_cameraDataList.front()), sizeof(CameraData) * size);
-
-	fout.close();
-	*/
-}
-
-void CamearEditor::DataClear()
-{
-	_listv.clear();
-
-	for (auto i : _cameraDataList)
+	//imguiメニューバー定義
 	{
-		i->SetDestroy();
+		ImGui::SetNextWindowPos(ImVec2(1500, 500), ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_Once);
+		ImGui::Begin("Preset", nullptr, ImGuiWindowFlags_MenuBar);
+		if (ImGui::Button("Sample")) {
+			FILE* fp = fopen("SampleCameraWork.bin", "rb");
+
+			//ifstream ifs("SampleCameraWork.bin", ios::binary | ios::in);
+
+			int size;
+			fread(&size, sizeof(int), 1, fp);
+
+			DataClear();
+
+			_listv.resize(size);
+
+			fread(&_listv[0], sizeof(CameraData), size, fp);
+
+			//int b = _cameraDataList.size(); //デバッグ用
+
+			for (int cnt = 0; cnt < size; cnt++) {
+				CameraData* data = CManager::GetScene()->AddGameObject<CameraData>(TYPE_OBJECT);
+				_cameraDataList.push_back(data);
+				data->SetCameraData(_listv[cnt]); //読み込んだデータを入れる
+			}
+			int a = _cameraDataList.size();
+		}
+		ImGui::End();
 	}
-
-	_cameraDataList.clear();
-}
-
-void CamearEditor::DefaultCameraDataInit()
-{
-	_defaultCamera = new CameraData;
-	_defaultCamera->SetPosition(_camera->GetPosition());
-	_defaultCamera->SetQuaternion(*_camera->GetTransQuaternion());
 }
