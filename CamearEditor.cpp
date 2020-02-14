@@ -12,6 +12,7 @@
 #include "camera.h"
 #include "CameraData.h"
 #include "Flag.h"
+#include "MeshField.h"
 #include "CamearEditor.h"
 
 #include "scene.h"
@@ -38,6 +39,7 @@ void CamearEditor::Init()
 	_camera = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA);
 	DefaultCameraDataInit();
 	Flag::SetGamePhase(FLAG_INIT);
+	_selectData = new SelectData;
 	_isEnable = true;
 }
 
@@ -66,6 +68,8 @@ void CamearEditor::Draw()
 		FileMenu();
 		OperationMenu();
 		PresetMenu();
+		ReservationErase();
+		
 	}
 
 	// Renderin
@@ -77,7 +81,13 @@ void CamearEditor::Save()
 {
 	if (_cameraDataList.size() == 0) return;
 
-	FILE* fp = fopen(_fileName, "wb");
+	std::string name = "CameraData/";
+
+	std::string name2 = _fileName;
+
+	std::string a = name + name2;
+
+	FILE* fp = fopen(a.c_str(), "wb");
 
 	if (fp == nullptr) {
 		assert(!fp);
@@ -113,9 +123,11 @@ void CamearEditor::Save()
 
 void CamearEditor::DataClear()
 {
-	if(_data != nullptr)
-		_data->GetModel()->SetEnable(true);
-	_data = nullptr;
+	if(_selectData->_data != nullptr)
+		_selectData->_data->GetModel()->SetEnable(true);
+
+	_selectData->_data = nullptr;
+	_selectData->_it = _cameraDataList.begin();
 
 	_camera->SetCameraPosition(_defaultCamera->GetPosition());
 	_camera->SetQuaternion(_camera->GetTransQuaternion(), _defaultCamera->GetQuaternion());
@@ -147,12 +159,13 @@ void CamearEditor::EditorModeMenu()
 			if (ImGui::RadioButton("EditorMode", &selectGameMode, 0)) {
 				_isEnable = true;
 				Flag::SetGamePhase(FLAG_INIT);
-
+				CManager::GetScene()->GetGameObject<MeshField>(TYPE_FIELD)->SetDrawing(false);
 			}
 
 			if (ImGui::RadioButton("GameMode", &selectGameMode, 1)) {
 				_isEnable = false;
 				Flag::SetGamePhase(FLAG_ACTION_SELECT);
+				CManager::GetScene()->GetGameObject<MeshField>(TYPE_FIELD)->SetDrawing(true);
 			}
 		}
 
@@ -162,8 +175,6 @@ void CamearEditor::EditorModeMenu()
 
 void CamearEditor::EditorMenu()
 {
-	std::string textName = "AddButton";
-
 	//imguiメニューバー定義
 	{
 		ImGui::SetNextWindowPos(ImVec2(10, 100), ImGuiCond_Once);
@@ -172,19 +183,44 @@ void CamearEditor::EditorMenu()
 
 
 		if (ImGui::Button("DefaultCamera")) {
-			_data->GetModel()->SetEnable(true);
-			_data = nullptr;
+			if (_selectData->_data != nullptr) {
+				_selectData->_data->GetModel()->SetEnable(true);
+				_selectData->_data = nullptr;
+				_selectData->_it = _cameraDataList.begin();
+			}
 
 			_camera->SetCameraPosition(_defaultCamera->GetPosition());
 			_camera->SetQuaternion(_camera->GetTransQuaternion(), _defaultCamera->GetQuaternion());
 		}
 
 		//addButton押したら
-		if (ImGui::Button(textName.c_str())) {
+		if (ImGui::Button("AddButton")) {
 			_cameraDataList.push_back(CManager::GetScene()->AddGameObject<CameraData>(TYPE_OBJECT));
 		}
 
+		if (ImGui::Button("DeleteButton")) {
+			if (_selectData->_data != nullptr) {
+				_selectData->_data->SetDestroy();
+				_selectData->_isDelete = true;
+				_camera->SetCameraPosition(_defaultCamera->GetPosition());
+				_camera->SetQuaternion(_camera->GetTransQuaternion(), _defaultCamera->GetQuaternion());
+			}
+		}
+
+		if (ImGui::Button("play")) {
+			_camera->SetCameraData(_cameraDataList);
+			if (_selectData->_data != nullptr) {
+				_selectData->_data->SetQuaternion(*_camera->GetTransQuaternion());
+				_selectData->_data->GetModel()->SetEnable(true);
+			}
+			_selectData->_data = nullptr;
+			_selectData->_it = _cameraDataList.begin();
+		}
+
 		int cnt = 0;
+
+		auto _it = _cameraDataList.begin();
+
 		if (ImGui::CollapsingHeader("CameraPosList")) {
 			for (auto i : _cameraDataList) {
 				//i->GetModel()->SetEnable(true);
@@ -192,19 +228,22 @@ void CamearEditor::EditorMenu()
 				s += std::to_string(cnt);
 
 				if (ImGui::Button(s.c_str())) {
-					if (_data != nullptr) {
-						_data->SetQuaternion(*_camera->GetTransQuaternion());
-						_data->GetModel()->SetEnable(true);
+					if (_selectData->_data != nullptr) {
+						_selectData->_data->SetQuaternion(*_camera->GetTransQuaternion());
+						_selectData->_data->GetModel()->SetEnable(true);
+						
 					}
 
-					_data = i;
+					_selectData->_data = i;
+					_selectData->_it = _it;
+					_selectData->_data->GetModel()->SetEnable(false);
 
-					_data->GetModel()->SetEnable(false);
-					_camera->SetCameraPosition(_data->GetPosition());
-					_camera->SetQuaternion(_camera->GetTransQuaternion(), _data->GetQuaternion());
+					_camera->SetCameraPosition(_selectData->_data->GetPosition());
+					_camera->SetQuaternion(_camera->GetTransQuaternion(), _selectData->_data->GetQuaternion());
 
 				}
 				cnt++;
+				++_it;
 			}
 		}
 
@@ -225,11 +264,16 @@ void CamearEditor::FileMenu()
 			ImGui::InputTextWithHint("FileName", "Please enter a file name", _fileName, 64, ImGuiInputTextFlags_CharsNoBlank);
 
 			if (ImGui::Button("Save")) {
+				if (_selectData->_data != nullptr) {
+					_selectData->_data->SetQuaternion(*_camera->GetTransQuaternion());
+					_selectData->_data->GetModel()->SetEnable(true);
+				}
+
 				std::string s = _fileName;
 				if (s.size() != 0) {
 					Save();
 					_camera->SetCameraData(_cameraDataList);
-					_data = nullptr;
+					_selectData->_data = nullptr;
 				}
 			}
 		}
@@ -268,7 +312,7 @@ void CamearEditor::OperationMenu()
 
 		//操作ツール系描画
 		{
-			if (_data != nullptr) {
+			if (_selectData->_data != nullptr) {
 				//切り替え処理
 				float p[3];
 				int f;
@@ -277,13 +321,13 @@ void CamearEditor::OperationMenu()
 					p[1] = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->GetPosition().y;
 					p[2] = CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->GetPosition().z;
 
-					f = _data->GetFrame();
+					f = _selectData->_data->GetFrame();
 				}
 
 				if (selectMode == 1) {
-					p[0] = *_data->GetPositionX();
-					p[1] = *_data->GetPositionY();
-					p[2] = *_data->GetPositionZ();
+					p[0] = *_selectData->_data->GetPositionX();
+					p[1] = *_selectData->_data->GetPositionY();
+					p[2] = *_selectData->_data->GetPositionZ();
 				}
 
 				ImGui::InputFloat("PositionX", &p[0], 0.01f, 10.0f, "%.3f");
@@ -293,11 +337,11 @@ void CamearEditor::OperationMenu()
 				ImGui::InputInt("SetFrame", &f);
 				//_dataに返す
 				{
-					_data->SetPosition(p[0], p[1], p[2]);
-					_data->SetFrame(f);
-					_camera->SetCameraPosition(_data->GetPosition());
+					_selectData->_data->SetPosition(p[0], p[1], p[2]);
+					_selectData->_data->SetFrame(f);
+					_camera->SetCameraPosition(_selectData->_data->GetPosition());
 				}
-				_data->GetModel()->SetEnable(false);
+				_selectData->_data->GetModel()->SetEnable(false);
 			}
 		}
 		ImGui::End();
@@ -311,19 +355,26 @@ void CamearEditor::PresetMenu()
 		ImGui::SetNextWindowPos(ImVec2(1500, 500), ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_Once);
 		ImGui::Begin("Preset", nullptr, ImGuiWindowFlags_MenuBar);
-		if (ImGui::Button("Sample")) {
-			FILE* fp = fopen("SampleCameraWork.bin", "rb");
-
-			//ifstream ifs("SampleCameraWork.bin", ios::binary | ios::in);
+		if (ImGui::Button("Sample1")) {
+			FILE* fp = fopen("CameraData/SampleCameraWork.bin", "rb");
 
 			int size;
 			fread(&size, sizeof(int), 1, fp);
 
 			DataClear();
 
-			_listv.resize(size);
+			//_listv.clear();
+			//_listv.resize(size);
 
-			fread(&_listv[0], sizeof(CameraData), size, fp);
+			//for (int i = 0; i < size; i++) {
+			//	_listv.push_back(new CameraData);
+			//}
+
+			//_listv.reserve(size);
+
+			fread(&_listv[0], sizeof(CameraData), 1, fp);
+			fread(&_listv[1], sizeof(CameraData), 1, fp);
+			fread(&_listv[2], sizeof(CameraData), 1, fp);
 
 			//int b = _cameraDataList.size(); //デバッグ用
 
@@ -332,8 +383,60 @@ void CamearEditor::PresetMenu()
 				_cameraDataList.push_back(data);
 				data->SetCameraData(_listv[cnt]); //読み込んだデータを入れる
 			}
-			int a = _cameraDataList.size();
+			int a = _cameraDataList.size(); //デバッグ
 		}
+
+		if (ImGui::Button("Sample2")) {
+			FILE* fp = fopen("CameraData/test.bin", "rb");
+
+			int size;
+			fread(&size, sizeof(int), 1, fp);
+
+			DataClear();
+
+			//_listv.resize(size);
+			//_listv.reserve(size);
+
+			fread(&_listv[0], sizeof(CameraData), 1, fp);
+			fread(&_listv[1], sizeof(CameraData), 1, fp);
+			fread(&_listv[2], sizeof(CameraData), 1, fp);
+			fread(&_listv[3], sizeof(CameraData), 1, fp);
+			fread(&_listv[4], sizeof(CameraData), 1, fp);
+
+			//int b = _cameraDataList.size(); //デバッグ用
+
+			for (int cnt = 0; cnt < size; cnt++) {
+				CameraData* data = CManager::GetScene()->AddGameObject<CameraData>(TYPE_OBJECT);
+				_cameraDataList.push_back(data);
+				data->SetCameraData(_listv[cnt]); //読み込んだデータを入れる
+			}
+			int a = _cameraDataList.size(); //デバッグ
+		}
+
 		ImGui::End();
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//関数名	: ReservationErase
+//戻り値	: 
+//説明		: 消去予約したデータをいっぺんに消去
+//引数		:
+//////////////////////////////////////////////////////////////////////////////
+void CamearEditor::ReservationErase()
+{
+	if (_selectData->_isDelete) {
+		auto it = _cameraDataList.begin();
+		for (it; it != _cameraDataList.end();) {
+			if (_selectData->_it == it) {
+				it = _cameraDataList.erase(it);
+				_selectData->_isDelete = false;
+				_selectData->_data = nullptr;
+				//_selectData->_it = _cameraDataList.begin();
+				return;
+			}
+			++it;
+		}
+		
 	}
 }

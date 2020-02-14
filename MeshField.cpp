@@ -28,7 +28,7 @@ void MeshField::Init()
 	
 	_Texture = nullptr;
 	//_Texture->Load("asset/field004.tga");
-
+	_isDraw = false;
 }
 
 void MeshField::Uninit()
@@ -40,6 +40,7 @@ void MeshField::Uninit()
 
 void MeshField::Draw(void)
 {
+	if (!_isDraw) return;
 	UINT strides = sizeof(VERTEX3D);
 	UINT offsets = 0;
 
@@ -54,7 +55,7 @@ void MeshField::Draw(void)
 	world *= XMMatrixTranslation(_position.x, _position.y, _position.z);
 	CRenderer::SetWorldMatrix(&world);
 	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); //トポロジ設定　頂点を結ぶルール
-	//CRenderer::GetDeviceContext()->DrawIndexed(_indexNum, 0, 0); //ポリゴン描画　（頂点数, どこから頂点やるか）
+	CRenderer::GetDeviceContext()->DrawIndexed(_indexNum, 0, 0); //ポリゴン描画　（頂点数, どこから頂点やるか）
 }
 
 void MeshField::Set(float SizeX, float SizeZ, int GridNumX, int GridNumZ)

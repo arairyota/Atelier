@@ -1,11 +1,16 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <list>
+#include <vector>
+#include "CameraData.h"
 #include "gameActor.h"
+
 class CPolygon;
 class Enemy;
 class ModelAnimation;
 class CharacterUI;
+class CameraData;
 
 #define PLAYER_SPEED (1)
 
@@ -16,6 +21,9 @@ private:
 	CharacterUI* _charaUI;
 
 	int _animFrame = 0;
+
+	std::vector<CameraData> _cameraListv;
+	std::list<CameraData*> _cameraList;
 
 public:
 	Player() {};
@@ -33,7 +41,7 @@ public:
 	XMFLOAT3 GetCameraPosition()override;
 	float GetLife() { return _stats._life; }
 	GameActor* GetGameActor() { return this; }
-
+	void SetActionCamera();
 	
 };
 

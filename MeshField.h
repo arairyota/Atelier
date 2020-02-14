@@ -14,6 +14,8 @@ public:
 
 	float GetHeight(XMFLOAT3 position);
 
+	void SetDrawing(bool flag) { _isDraw = flag; }
+
 public:
 	ID3D11Buffer* _VertexBuffer = NULL; //頂点バッファ 
 	ID3D11Buffer* _IndexBuffer = NULL;
@@ -36,6 +38,8 @@ public:
 	XMFLOAT3 vb;
 
 	XMFLOAT3 n;
+
+	bool _isDraw;
 };
 
 #endif // !MESHFIELD_H

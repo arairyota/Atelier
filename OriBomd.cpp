@@ -74,7 +74,7 @@ void OriBomd::Use(XMFLOAT3 position, GameActor* user)
 				_position = XMFLOAT3(0.0f, 20.0f, 0.0f);
 				//CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->SetHoming(XMFLOAT3(pos.x, pos.y+ 10.0f, pos.z + 40.0f) ,pos);
 				_camera->SetCameraPosition(XMFLOAT3(0.0f, 50.0f, 70.0f));
-				_camera->SetLookQuaternion(_camera->GetViewQuaternion(), &_position);
+				_camera->SetLookQuaternion(_camera->GetTransQuaternion(), &_position);
 				_len.x = enemy->GetPosition().x - _position.x;
 				_len.z = enemy->GetPosition().z - _position.z;
 
@@ -90,7 +90,7 @@ void OriBomd::Use(XMFLOAT3 position, GameActor* user)
 
 			if (_animFrame == 60) {
 				_camera->SetCameraPosition(user->GetCameraPosition());
-				_camera->SetLookQuaternion(_camera->GetViewQuaternion(), &_position);
+				_camera->SetLookQuaternion(_camera->GetTransQuaternion(), &_position);
 			}
 
 			if (_animFrame == 120) {
@@ -99,7 +99,7 @@ void OriBomd::Use(XMFLOAT3 position, GameActor* user)
 				pos.y += 10.0f;
 				pos.z -= 80.0f;
 				_camera->SetCameraPosition(pos);
-				_camera->SetLookQuaternion(_camera->GetViewQuaternion(), &enemy->GetPosition());
+				_camera->SetLookQuaternion(_camera->GetTransQuaternion(), &enemy->GetPosition());
 			}
 
 			if (_animFrame > 90 && _animFrame < 180) {

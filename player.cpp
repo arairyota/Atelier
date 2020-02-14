@@ -1,4 +1,6 @@
 #include "main.h"
+
+
 #include "renderer.h"
 #include "manager.h"
 #include "input.h"
@@ -11,6 +13,7 @@
 #include "ItemBase.h"
 #include "ItemPoach.h"
 #include "camera.h"
+#include "CameraData.h"
 #include "ModelAnimation.h"
 #include "MeshField.h"
 #include "player.h"
@@ -32,6 +35,9 @@ void Player::Init()
 	_stats._waitTime = _stats._spd;
 
 	//_model->Load("asset/miku_01.obj");
+
+	_cameraList.clear();
+	_cameraListv.clear();
 }
 
 void Player::Uninit()
@@ -222,6 +228,8 @@ void Player::Action()
 			_testModel->ChangeAnimation(1); 
 			_animFrame = 0;
 			_isFirst = false;
+
+			SetActionCamera();
 		}
 		if (_animFrame > 170) {
 			Flag::SetGamePhase(FLAG_ACTION_SELECT);
@@ -237,4 +245,29 @@ void Player::Action()
 XMFLOAT3 Player::GetCameraPosition()
 {
 	return _cameraPosition;
+}
+
+void Player::SetActionCamera()
+{
+	_cameraList.clear();
+	_cameraListv.clear();
+	
+	FILE* fp = fopen("CameraData/skill.bin", "rb");
+
+	//ifstream ifs("SampleCameraWork.bin", ios::binary | ios::in);
+
+	int size;
+	fread(&size, sizeof(int), 1, fp);
+
+	_cameraListv.resize(size);
+
+	fread(&_cameraListv[0], sizeof(CameraData), size, fp);
+
+	//int b = _cameraDataList.size(); //デバッグ用
+
+	for (int cnt = 0; cnt < size; cnt++) {
+		_cameraList.push_back(&_cameraListv[cnt]);
+	}
+
+	CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->SetCameraData(_cameraList);
 }

@@ -35,6 +35,7 @@ public:
 	Enemy* GetEnemy() { return this; };
 	float GetLife() { return _stats._life; }
 	GameActor* GetGameActor() { return this; }
+	void SetActionCamera() {};
 };
 
 #endif // !ENEMY_H
