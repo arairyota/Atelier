@@ -83,7 +83,7 @@ void CamearEditor::Save()
 
 	std::string name = "CameraData/";
 
-	std::string name2 = _fileName;
+	std::string name2 = "skill.bin";
 
 	std::string a = name + name2;
 
@@ -272,7 +272,7 @@ void CamearEditor::FileMenu()
 				std::string s = _fileName;
 				if (s.size() != 0) {
 					Save();
-					_camera->SetCameraData(_cameraDataList);
+					//_camera->SetCameraData(_cameraDataList);
 					_selectData->_data = nullptr;
 				}
 			}

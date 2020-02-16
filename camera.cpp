@@ -48,6 +48,8 @@ void CCamera::Uninit()
 
 void CCamera::Update()
 {
+	_transUp = XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f);
+
 	//if (CInput::GetKeyPress(VK_UP))  {
 	//	_position.z += 1.0f;
 	//}

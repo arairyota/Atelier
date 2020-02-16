@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#define CAMERA_SPEED (3)
+#define CAMERA_SPEED (1.5)
 
 #define FRONT_INIT	(0.0f, 0.0f, 1.0f, 0.0f)
 #define RIGHT_INIT	(1.0f, 0.0f, 0.0f, 0.0f)
