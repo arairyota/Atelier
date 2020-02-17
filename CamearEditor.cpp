@@ -294,7 +294,7 @@ void CamearEditor::OperationMenu()
 	{
 		ImGui::SetNextWindowPos(ImVec2(1500, 10), ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_Once);
-		ImGui::Begin("CameraPosition", nullptr, ImGuiWindowFlags_MenuBar);
+		ImGui::Begin("CameraDataMenu", nullptr, ImGuiWindowFlags_MenuBar);
 
 
 		//‘€ìƒc[ƒ‹‚ÌmodeØ‚è‘Ö‚¦
