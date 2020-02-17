@@ -87,7 +87,7 @@ void CamearEditor::Save()
 
 	std::string a = name + name2;
 
-	FILE* fp = fopen(a.c_str(), "wb");
+	FILE* fp = fopen("CameraData/skill.bin", "wb");
 
 	if (fp == nullptr) {
 		assert(!fp);
@@ -96,12 +96,19 @@ void CamearEditor::Save()
 	int size = _cameraDataList.size();
 	
 	fwrite(&size, sizeof(int), 1, fp);
+
 	for (auto i : _cameraDataList) {
 		
 		fwrite(i, sizeof(CameraData), 1, fp);
 	}
 	
-	fclose(fp);
+	//fclose(fp);
+	int ret;
+	ret = fclose(fp);
+	if (ret == EOF) {
+		printf("ファイルクローズに失敗しました。\n");
+		return ;
+	}
 
 	/*
 	ofstream fout("SampleCameraWork.bin", ios::binary | ios::out);
@@ -179,7 +186,7 @@ void CamearEditor::EditorMenu()
 	{
 		ImGui::SetNextWindowPos(ImVec2(10, 100), ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_Once);
-		ImGui::Begin("CameraEditor", nullptr, ImGuiWindowFlags_MenuBar);
+		ImGui::Begin("CameraMenu", nullptr, ImGuiWindowFlags_MenuBar);
 
 
 		if (ImGui::Button("DefaultCamera")) {
@@ -384,6 +391,7 @@ void CamearEditor::PresetMenu()
 				data->SetCameraData(_listv[cnt]); //読み込んだデータを入れる
 			}
 			int a = _cameraDataList.size(); //デバッグ
+			fclose(fp);
 		}
 
 		if (ImGui::Button("Sample2")) {
@@ -411,6 +419,7 @@ void CamearEditor::PresetMenu()
 				data->SetCameraData(_listv[cnt]); //読み込んだデータを入れる
 			}
 			int a = _cameraDataList.size(); //デバッグ
+			fclose(fp);
 		}
 
 		ImGui::End();

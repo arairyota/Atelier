@@ -270,4 +270,6 @@ void Player::SetActionCamera()
 	}
 
 	CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->SetCameraData(_cameraList);
+
+	fclose(fp);
 }
