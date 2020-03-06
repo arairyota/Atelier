@@ -22,7 +22,7 @@ private:
 
 	int _animFrame = 0;
 
-	std::vector<CameraData> _cameraListv;
+	CameraData _cameraListv[100];
 	std::list<CameraData*> _cameraList;
 
 public:

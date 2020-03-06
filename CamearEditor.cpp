@@ -113,7 +113,7 @@ void CamearEditor::Save()
 	/*
 	ofstream fout("SampleCameraWork.bin", ios::binary | ios::out);
 
-	//fout.open("SampleCameraWork.bin", ios::binary);
+	//fout.open("SampleCameraWork.bin", ios::binary);反省
 
 	if (!fout) {
 		cout << "ファイル file.txt が開けません";
@@ -166,13 +166,13 @@ void CamearEditor::EditorModeMenu()
 			if (ImGui::RadioButton("EditorMode", &selectGameMode, 0)) {
 				_isEnable = true;
 				Flag::SetGamePhase(FLAG_INIT);
-				CManager::GetScene()->GetGameObject<MeshField>(TYPE_FIELD)->SetDrawing(false);
+				//CManager::GetScene()->GetGameObject<MeshField>(TYPE_FIELD)->SetDrawing(false);
 			}
 
 			if (ImGui::RadioButton("GameMode", &selectGameMode, 1)) {
 				_isEnable = false;
 				Flag::SetGamePhase(FLAG_ACTION_SELECT);
-				CManager::GetScene()->GetGameObject<MeshField>(TYPE_FIELD)->SetDrawing(true);
+				//CManager::GetScene()->GetGameObject<MeshField>(TYPE_FIELD)->SetDrawing(true);
 			}
 		}
 
@@ -277,11 +277,11 @@ void CamearEditor::FileMenu()
 				}
 
 				std::string s = _fileName;
-				if (s.size() != 0) {
+				//if (s.size() != 0) {
 					Save();
 					//_camera->SetCameraData(_cameraDataList);
 					_selectData->_data = nullptr;
-				}
+				//}
 			}
 		}
 		ImGui::End();
@@ -382,7 +382,7 @@ void CamearEditor::PresetMenu()
 			fread(&_listv[0], sizeof(CameraData), 1, fp);
 			fread(&_listv[1], sizeof(CameraData), 1, fp);
 			fread(&_listv[2], sizeof(CameraData), 1, fp);
-
+			fclose(fp);
 			//int b = _cameraDataList.size(); //デバッグ用
 
 			for (int cnt = 0; cnt < size; cnt++) {
@@ -391,7 +391,7 @@ void CamearEditor::PresetMenu()
 				data->SetCameraData(_listv[cnt]); //読み込んだデータを入れる
 			}
 			int a = _cameraDataList.size(); //デバッグ
-			fclose(fp);
+			//fclose(fp);
 		}
 
 		if (ImGui::Button("Sample2")) {
@@ -410,7 +410,7 @@ void CamearEditor::PresetMenu()
 			fread(&_listv[2], sizeof(CameraData), 1, fp);
 			fread(&_listv[3], sizeof(CameraData), 1, fp);
 			fread(&_listv[4], sizeof(CameraData), 1, fp);
-
+			fclose(fp);
 			//int b = _cameraDataList.size(); //デバッグ用
 
 			for (int cnt = 0; cnt < size; cnt++) {
@@ -419,7 +419,7 @@ void CamearEditor::PresetMenu()
 				data->SetCameraData(_listv[cnt]); //読み込んだデータを入れる
 			}
 			int a = _cameraDataList.size(); //デバッグ
-			fclose(fp);
+			//fclose(fp);
 		}
 
 		ImGui::End();

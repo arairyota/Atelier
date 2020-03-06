@@ -37,7 +37,6 @@ void Player::Init()
 	//_model->Load("asset/miku_01.obj");
 
 	_cameraList.clear();
-	_cameraListv.clear();
 }
 
 void Player::Uninit()
@@ -250,7 +249,6 @@ XMFLOAT3 Player::GetCameraPosition()
 void Player::SetActionCamera()
 {
 	_cameraList.clear();
-	_cameraListv.clear();
 	
 	FILE* fp = fopen("CameraData/skill.bin", "rb");
 
@@ -258,11 +256,12 @@ void Player::SetActionCamera()
 
 	int size;
 	fread(&size, sizeof(int), 1, fp);
+	for (int cnt = 0; cnt < size; cnt++) {
 
-	_cameraListv.resize(size);
+		fread(&_cameraListv[cnt], sizeof(CameraData), 1, fp);
+	}
 
-	fread(&_cameraListv[0], sizeof(CameraData), size, fp);
-
+	fclose(fp);
 	//int b = _cameraDataList.size(); //デバッグ用
 
 	for (int cnt = 0; cnt < size; cnt++) {
@@ -271,5 +270,5 @@ void Player::SetActionCamera()
 
 	CManager::GetScene()->GetGameObject<CCamera>(TYPE_CAMERA)->SetCameraData(_cameraList);
 
-	fclose(fp);
+	
 }
